@@ -725,7 +725,7 @@ void Battery_management(float P_s,MQTTClient* client)
 		Soc_Inject.Value = Final_Soc;
 
 	// ON CHARGE Ps>=0
-	if (Delta_Soc >= 0)
+	if (Delta_SOC >= 0)
 	{
 		printf("CHARGE DE LA BATTERIE\n");
 		INJ=0;
@@ -738,12 +738,12 @@ void Battery_management(float P_s,MQTTClient* client)
 		Inverter_Allowed.Value = true; //Param 1124;
 
 
-		if(Soc_backup > SOCmax) {
-			Soc_backup.Value = SOCmax;
+		if(Soc_Backup > SOCmax) {
+			Soc_Backup.Value = SOCmax;
 			Soc_Inject.Value = SOCmax;
 		}
-		else if (Soc_backup < SOCmin) {
-			Soc_backup.Value = SOCmin;
+		else if (Soc_Backup < SOCmin) {
+			Soc_Backup.Value = SOCmin;
 			Soc_Inject.Value = SOCmin;
 		}
 		Write_bat(&Soc_Backup,client);
@@ -779,12 +779,12 @@ void Battery_management(float P_s,MQTTClient* client)
 			//Activer l'onduleur;
 			Inverter_Allowed.Value = true; //Param 1124;
 
-			if(Soc_backup > SOCmax) {
-				Soc_backup.Value = SOCmax;
+			if(Soc_Backup > SOCmax) {
+				Soc_Backup.Value = SOCmax;
 				Soc_Inject.Value = SOCmax;
 			}
-			else if (Soc_backup < SOCmin) {
-				Soc_backup.Value = SOCmin;
+			else if (Soc_Backup < SOCmin) {
+				Soc_Backup.Value = SOCmin;
 				Soc_Inject.Value = SOCmin;
 			}
 			Write_bat(&Soc_Backup,client);
@@ -828,12 +828,12 @@ void Battery_management(float P_s,MQTTClient* client)
 			//Utilisation de la batterie comme source prioritaire;
 			Batt_priority_source.Value = true; //Param 1296;
 
-			if(Soc_backup > SOCmax) {
-				Soc_backup.Value = SOCmax;
+			if(Soc_Backup > SOCmax) {
+				Soc_Backup.Value = SOCmax;
 				Soc_Inject.Value = SOCmax;
 			}
-			else if (Soc_backup < SOCmin) {
-				Soc_backup.Value = SOCmin;
+			else if (Soc_Backup < SOCmin) {
+				Soc_Backup.Value = SOCmin;
 				Soc_Inject.Value = SOCmin;
 			}
 			Write_bat(&Soc_Backup,client);
