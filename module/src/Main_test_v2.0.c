@@ -750,7 +750,7 @@ void Battery_management(float P_s,MQTTClient* client)
 		Write_bat(&Soc_Inject,client);
 
 		//MODE INSPECT CONTROL : Calcul de la courant max de charge;
-		Battery_Charge_current_DC.Value = fabs(P_s) / i_Battery_Voltage_Studer.Value
+		Battery_Charge_current_DC.Value = fabs(P_s) / i_Battery_Voltage_Studer.Value;
 		printf("Battery current charge limit : %f\n",i_Battery_Current_Charge_limit.Value);
 		//printf("Battery Charge Current DC : %f\n",Battery_Charge_current_DC.Value);
     	if(Battery_Charge_current_DC.Value >= i_Battery_Current_Charge_limit.Value) Battery_Charge_current_DC.Value = i_Battery_Current_Charge_limit.Value;
@@ -794,7 +794,7 @@ void Battery_management(float P_s,MQTTClient* client)
 			Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
 			//printf("Max grid feeding current : %f\n", Max_Grid_Feeding_current.Value);
 			//printf("Max battery current discharge : %f\n", i_Battery_Current_Discharge_Limit.Value);
-			if(Max_Grid_Feeding_current.Value >= i_Battery_Current_Discharge_limit.Value) Max_Grid_Feeding_current.Value = i_Battery_Current_Discharge_Limit.Value;													//value dynamic for discharge
+			if(Max_Grid_Feeding_current.Value >= i_Battery_Current_Discharge_limit.Value) Max_Grid_Feeding_current.Value = i_Battery_Current_Discharge_limit.Value;													//value dynamic for discharge
 			if(Max_Grid_Feeding_current.Value >= 30) Max_Grid_Feeding_current.Value = 30; // 8.6 pour 2 kW
 			/*printf("Max grid feeding current discharge : %f\n",Max_Grid_Feeding_current.Value);*/
       			//Autoriser l'injection;
@@ -1188,7 +1188,7 @@ int main()
 
   	if ((rc_charger = MQTTClient_connect(client_charger, &conn_opts_charger)) != MQTTCLIENT_SUCCESS)
   	{
-      	printf("Failed to connect, return code %d\n", rc);
+      	printf("Failed to connect, return code %d\n", rc_charger);
       	exit(EXIT_FAILURE);
   	}
   	printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
@@ -1208,7 +1208,7 @@ int main()
 
 		if ((rc_bat = MQTTClient_connect(client_bat, &conn_opts_bat)) != MQTTCLIENT_SUCCESS)
 		{
-				printf("Failed to connect, return code %d\n", rc);
+				printf("Failed to connect, return code %d\n", rc_bat);
 				exit(EXIT_FAILURE);
 		}
 		printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
@@ -1247,9 +1247,9 @@ int main()
 	   	Write_p(client_charger);//&frame, &property,buffer,sizeof(buffer), &ipv4_struct,&data,ret_val);
 
 	 		// Commented for test json
-	 		Read(&i_Battery_cycle_phase,client);
-	 		Read(&i_Battery_Charge_current,client);
-	 		Read(&i_Input_current_AC_IN,client);
+	 		Read(&i_Battery_cycle_phase,client_charger);
+	 		Read(&i_Battery_Charge_current,client_charger);
+	 		Read(&i_Input_current_AC_IN,client_charger);
 
 			//display value in terminal
 
