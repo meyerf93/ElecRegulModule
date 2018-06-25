@@ -722,7 +722,7 @@ void Battery_management(float P_s,MQTTClient* client)
 	//Calcul for next SOC
 	// Bk et inj identique car PV coté AC _in en AC coupling et pas du coté batterie
 		Soc_Backup.Value = Final_SOC;
-		Soc_Inject.Value = Final_Soc;
+		Soc_Inject.Value = Final_SOC;
 
 	// ON CHARGE Ps>=0
 	if (Delta_SOC >= 0)
@@ -738,11 +738,11 @@ void Battery_management(float P_s,MQTTClient* client)
 		Inverter_Allowed.Value = true; //Param 1124;
 
 
-		if(Soc_Backup > SOCmax) {
+		if(Soc_Backup.Value > SOCmax) {
 			Soc_Backup.Value = SOCmax;
 			Soc_Inject.Value = SOCmax;
 		}
-		else if (Soc_Backup < SOCmin) {
+		else if (Soc_Backup.Value < SOCmin) {
 			Soc_Backup.Value = SOCmin;
 			Soc_Inject.Value = SOCmin;
 		}
@@ -779,11 +779,11 @@ void Battery_management(float P_s,MQTTClient* client)
 			//Activer l'onduleur;
 			Inverter_Allowed.Value = true; //Param 1124;
 
-			if(Soc_Backup > SOCmax) {
+			if(Soc_Backup.Value > SOCmax) {
 				Soc_Backup.Value = SOCmax;
 				Soc_Inject.Value = SOCmax;
 			}
-			else if (Soc_Backup < SOCmin) {
+			else if (Soc_Backup.Value < SOCmin) {
 				Soc_Backup.Value = SOCmin;
 				Soc_Inject.Value = SOCmin;
 			}
@@ -828,16 +828,16 @@ void Battery_management(float P_s,MQTTClient* client)
 			//Utilisation de la batterie comme source prioritaire;
 			Batt_priority_source.Value = true; //Param 1296;
 
-			if(Soc_Backup > SOCmax) {
+			if(Soc_Backup.Value > SOCmax) {
 				Soc_Backup.Value = SOCmax;
 				Soc_Inject.Value = SOCmax;
 			}
-			else if (Soc_Backup < SOCmin) {
+			else if (Soc_Backup.Value < SOCmin) {
 				Soc_Backup.Value = SOCmin;
 				Soc_Inject.Value = SOCmin;
 			}
 			Write_bat(&Soc_Backup,client);
-			Write_(&Soc_Inject,client);
+			Write_bat(&Soc_Inject,client);
 // PCO a priori pas de sécu à mettre ici pour batterie
     	MAX_current_of_AC_IN.Value = (Plsec-fabs(Ps))/i_Input_voltage_AC_IN.Value;
     	if (MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value=34.0;
@@ -881,8 +881,8 @@ void Calculs_p_k(void)
 
 	// pas max decharge pas utilisé ci dessous
 	// tester l'algo ...
-	Psmax_discharge = i_Battery_Current_Discharge_limit.value * i_Battery_Voltage_Discharge_limit.value;
-	Psmax_charge = i_Battery_Current_Charge_limit.value * i_Battery_Voltage_Charge_limit.value;
+	Psmax_discharge = i_Battery_Current_Discharge_limit.Value * i_Battery_Voltage_Discharge_limit.Value;
+	Psmax_charge = i_Battery_Current_Charge_limit.Value * i_Battery_Voltage_Charge_limit.Value;
 
 
 	Prmax = 8000; //Puissance max de demande au réseau ou du réseau slon donnée blue factory / Groupe e
@@ -1182,11 +1182,11 @@ int main()
 		//crée le client mqtt pour le charger inverter --------------------------------------------
   	MQTTClient_create(&client_charger, ADDRESS, CLIENTID,
     MQTTCLIENT_PERSISTENCE, NULL);
-  	conn_opts.keepAliveInterval = 20;
-  	conn_opts.cleansession = 1;
+  	conn_opts_charger.keepAliveInterval = 20;
+  	conn_opts_charger.cleansession = 1;
   	MQTTClient_setCallbacks(client_charger, NULL, connlost, msgarrvd, delivered);
 
-  	if ((rc = MQTTClient_connect(client_charger, &conn_opts_charger)) != MQTTCLIENT_SUCCESS)
+  	if ((rc_charger = MQTTClient_connect(client_charger, &conn_opts_charger)) != MQTTCLIENT_SUCCESS)
   	{
       	printf("Failed to connect, return code %d\n", rc);
       	exit(EXIT_FAILURE);
@@ -1202,11 +1202,11 @@ int main()
 		int rc_bat;
 		MQTTClient_create(&client_bat, ADDRESS, CLIENTID,
 		MQTTCLIENT_PERSISTENCE, NULL);
-		conn_opts.keepAliveInterval = 20;
-		conn_opts.cleansession = 1;
+		conn_opts_bat.keepAliveInterval = 20;
+		conn_opts_bat.cleansession = 1;
 		MQTTClient_setCallbacks(client_bat, NULL, connlost, msgarrvd, delivered);
 
-		if ((rc = MQTTClient_connect(client_bat, &conn_opts_bat)) != MQTTCLIENT_SUCCESS)
+		if ((rc_bat = MQTTClient_connect(client_bat, &conn_opts_bat)) != MQTTCLIENT_SUCCESS)
 		{
 				printf("Failed to connect, return code %d\n", rc);
 				exit(EXIT_FAILURE);
@@ -1241,7 +1241,7 @@ int main()
 			Read_p(client_charger);//&frame, &property,buffer,sizeof(buffer), &ipv4_struct,&data,ret_val);
 
 			printf("\n========== Algorithme =========\n");
-			Algo();
+			Algo(client_bat);
 			printf("\n========== Ecriture des parametres sur Onduleur ==========\n");
 
 	   	Write_p(client_charger);//&frame, &property,buffer,sizeof(buffer), &ipv4_struct,&data,ret_val);
