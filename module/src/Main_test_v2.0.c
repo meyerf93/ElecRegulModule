@@ -706,7 +706,7 @@ int Init(MQTTClient* client){
 void Battery_management(float P_s,MQTTClient* client)
 {
 	// Unité de P_s en Watt
-	float Forcage_KWh_Charge_Decharge
+	float Forcage_KWh_Charge_Decharge;
 	float Delta_SOC;
 	float Final_SOC;
 
@@ -715,14 +715,14 @@ void Battery_management(float P_s,MQTTClient* client)
 
 	Read_bat(&i_soc_value_battery,client); // Param 7002
 	Read_bat(&i_State_of_Health, client); // Param 7057
-	Bat_Capacite_disponible = i_State_of_Health.value* Bat_Capacite_nominale*(i_soc_value_battery.value - SOCmin);
+	Bat_Capacite_disponible = i_State_of_Health.Value* Bat_Capacite_nominale*(i_soc_value_battery.Value - SOCmin);
 	Delta_SOC=Forcage_KWh_Charge_Decharge/Bat_Capacite_disponible*100;
-	Final_SOC= i_soc_value_battery + Delta_SOC;
+	Final_SOC= i_soc_value_battery.Value + Delta_SOC;
 
 	//Calcul for next SOC
 	// Bk et inj identique car PV coté AC _in en AC coupling et pas du coté batterie
-		Soc_Backup.value = Final_SOC;
-		Soc_Inject.value = Final_Soc;
+		Soc_Backup.Value = Final_SOC;
+		Soc_Inject.Value = Final_Soc;
 
 	// ON CHARGE Ps>=0
 	if (Delta_Soc >= 0)
@@ -739,12 +739,12 @@ void Battery_management(float P_s,MQTTClient* client)
 
 
 		if(Soc_backup > SOCmax) {
-			Soc_backup.value = SOCmax;
-			Soc_Inject.value = SOCmax;
+			Soc_backup.Value = SOCmax;
+			Soc_Inject.Value = SOCmax;
 		}
 		else if (Soc_backup < SOCmin) {
-			Soc_backup.value = SOCmin;
-			Soc_Inject.value = SOCmin;
+			Soc_backup.Value = SOCmin;
+			Soc_Inject.Value = SOCmin;
 		}
 		Write_bat(&Soc_Backup,client);
 		Write_bat(&Soc_Inject,client);
@@ -780,12 +780,12 @@ void Battery_management(float P_s,MQTTClient* client)
 			Inverter_Allowed.Value = true; //Param 1124;
 
 			if(Soc_backup > SOCmax) {
-				Soc_backup.value = SOCmax;
-				Soc_Inject.value = SOCmax;
+				Soc_backup.Value = SOCmax;
+				Soc_Inject.Value = SOCmax;
 			}
 			else if (Soc_backup < SOCmin) {
-				Soc_backup.value = SOCmin;
-				Soc_Inject.value = SOCmin;
+				Soc_backup.Value = SOCmin;
+				Soc_Inject.Value = SOCmin;
 			}
 			Write_bat(&Soc_Backup,client);
 			Write_bat(&Soc_Inject,client);
@@ -829,12 +829,12 @@ void Battery_management(float P_s,MQTTClient* client)
 			Batt_priority_source.Value = true; //Param 1296;
 
 			if(Soc_backup > SOCmax) {
-				Soc_backup.value = SOCmax;
-				Soc_Inject.value = SOCmax;
+				Soc_backup.Value = SOCmax;
+				Soc_Inject.Value = SOCmax;
 			}
 			else if (Soc_backup < SOCmin) {
-				Soc_backup.value = SOCmin;
-				Soc_Inject.value = SOCmin;
+				Soc_backup.Value = SOCmin;
+				Soc_Inject.Value = SOCmin;
 			}
 			Write_bat(&Soc_Backup,client);
 			Write_(&Soc_Inject,client);
