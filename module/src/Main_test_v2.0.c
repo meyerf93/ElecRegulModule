@@ -377,8 +377,8 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 		else if (strstr(payload,POWER_OF_SECOND_COS_PHI_POINT) != NULL){
 		Power_of_second_cos_phi_point.Value=(float)data->valuedouble;
 		}
-		else if (strstr(payload,I_BATTERY_VOLTAGE) != NULL){
-		i_Battery_Voltage.Value=(float)data->valuedouble;
+		else if (strstr(payload,I_BATTERY_VOLTAGE_STUDER) != NULL){
+		i_Battery_Voltage_Studer.Value=(float)data->valuedouble;
 		}
 		else if (strstr(payload,I_WANTED_BATTERY_CHARGE_CURRENT) != NULL){
 		i_Wanted_battery_charge_current.Value=(float)data->valuedouble;
@@ -750,7 +750,7 @@ void Battery_management(float P_s,MQTTClient* client)
 		Write_bat(&Soc_Inject,client);
 
 		//MODE INSPECT CONTROL : Calcul de la courant max de charge;
-		Battery_Charge_current_DC.Value = fabs(P_s) / i_Battery_Voltage.Value
+		Battery_Charge_current_DC.Value = fabs(P_s) / i_Battery_Voltage_Studer.Value
 		printf("Battery current charge limit : %f\n",i_Battery_Current_Charge_limit.Value);
 		//printf("Battery Charge Current DC : %f\n",Battery_Charge_current_DC.Value);
     	if(Battery_Charge_current_DC.Value >= i_Battery_Current_Charge_limit.Value) Battery_Charge_current_DC.Value = i_Battery_Current_Charge_limit.Value;
@@ -1018,7 +1018,7 @@ void Write_p(MQTTClient* client)/*scom_frame_t* frame,scom_property_t* property 
 /*-------------------- Routine de lectures des parametres necessaires pour l'algo -------------*/
 void Read_p(MQTTClient *client)/*scom_frame_t* frame,scom_property_t* property ,char* buffer,size_t buffer_length, struct connection* socket_struct, struct studer_data* data,char* ret_val)MQTTClient *client)*/
 {
- 	Read(&i_Battery_Voltage,client);
+ 	Read(&i_Battery_Voltage_Studer,client);
  	Read(&i_Input_voltage_AC_IN,client);
  	Read(&i_State_of_charge,client);
  	Read(&i_Battery_Charge_current,client);
@@ -1062,7 +1062,7 @@ void catch_alarm (int sig)
    	printf("Pb = %f;", Pb);
    	printf("Plsec = %f;", Plsec);
    	printf("Ibat = %f;", i_Battery_Charge_current.Value);
-   	printf("Ubat = %f;",i_Battery_Voltage.Value);
+   	printf("Ubat = %f;",i_Battery_Voltage_Studer.Value);
    	printf("Iac_in = %f;", i_Input_current_AC_IN.Value);
    	printf("Uac = %f;\n",i_Input_voltage_AC_IN.Value);
 
@@ -1078,7 +1078,7 @@ void catch_alarm (int sig)
    	fprintf(fd,"Pb = %f;", Pb);
    	fprintf(fd,"Plsec = %f;", Plsec);
    	fprintf(fd,"Ibat = %f;", i_Battery_Charge_current.Value);
-   	fprintf(fd,"Ubat = %f;",i_Battery_Voltage.Value);
+   	fprintf(fd,"Ubat = %f;",i_Battery_Voltage_Studer.Value);
    	fprintf(fd,"Iac_in = %f;", i_Input_current_AC_IN.Value);
    	fprintf(fd,"Uac = %f;\n",i_Input_voltage_AC_IN.Value);
   	fclose(fd);
@@ -1261,7 +1261,7 @@ int main()
 			printf("Pb = %f;", Pb);
 			printf("Plsec = %f;", Plsec);
 			printf("Ibat = %f;", i_Battery_Charge_current.Value);
-			printf("Ubat = %f;",i_Battery_Voltage.Value);
+			printf("Ubat = %f;",i_Battery_Voltage_Studer.Value);
 			printf("Iac_in = %f;", i_Input_current_AC_IN.Value);
 			printf("Uac = %f;",i_Input_voltage_AC_IN.Value);
 			printf("Kg = %f;\n", Kg);
@@ -1280,7 +1280,7 @@ int main()
 			fprintf(fd,"Pb = %f;", Pb);
 			fprintf(fd,"Plsec = %f;", Plsec);
 			fprintf(fd,"Ibat = %f;", i_Battery_Charge_current.Value);
-			fprintf(fd,"Ubat = %f;",i_Battery_Voltage.Value);
+			fprintf(fd,"Ubat = %f;",i_Battery_Voltage_Studer.Value);
 			fprintf(fd,"Iac_in = %f;", i_Input_current_AC_IN.Value);
 			fprintf(fd,"Uac = %f;\n",i_Input_voltage_AC_IN.Value);
 			fclose(fd);

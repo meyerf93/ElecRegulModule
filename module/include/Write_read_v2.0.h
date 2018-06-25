@@ -175,7 +175,7 @@ int Write(t_param* Parametre,MQTTClient* client);
 	t_param Power_of_second_cos_phi_point =  {1613, 2, 5, 6,   50};//step 5% of Pnom, à voir parm inutile
 /*------------------------------------------------------------------------------*/
 	//Format : BOOL(1) FORMAT(2) ENUM(3) ERROR(4) INT32(5) FLOAT(6) STRING(7) DYNAMIC(8) BYTE_STREAM(9) LONG_ENUM(10) SHORT_ENUM(11)
-#define I_BATTERY_VOLTAGE  "xcom1/:101/:/config/:/3000"
+#define I_BATTERY_VOLTAGE_STUDER  "xcom1/:101/:/config/:/3000"
 #define I_WANTED_BATTERY_CHARGE_CURRENT  "xcom1/:101/:/config/:/3004"
 #define I_BATTERY_CHARGE_CURRENT  "xcom1/:101/:/config/:/3005"
 #define I_STATE_OF_CHARGE  "xcom1/:101/:/config/:/3007"
@@ -205,7 +205,7 @@ int Write(t_param* Parametre,MQTTClient* client);
 #define I_FORCED_GRID_FEEDING_ACTIVE "xcom1/:101/:/config/:/3162"
 
 /*--------------------------- Xtender_Infos --------------------------------------*/
-	t_param i_Battery_Voltage = 				       {3000, 1, 1,  6, Not_Value};
+	t_param i_Battery_Voltage_Studer = 				 {3000, 1, 1,  6, Not_Value};
 	t_param i_Wanted_battery_charge_current =  {3004, 1, 1,  6, Not_Value};
 	t_param i_Battery_Charge_current = 			   {3005, 1, 1,  6, Not_Value};
 	t_param i_State_of_charge = 				       {3007, 1, 1,  6, Not_Value};
@@ -253,7 +253,7 @@ int Write(t_param* Parametre,MQTTClient* client);
 // psmax = courant_decharge_limite IAdc (param 7064) x tension_dc (param 7000)
 // a voir s'il faut pas remplacer par des valeur moyenne de 1 min, autre param disponibles
 
-	t_param i_Battery_Voltage = {7000,1,1,6,Not_Value};
+	t_param i_Battery_Voltage = {7000,1,1,6, Not_Value};
 	t_param i_Battery_Current = {7001,1,1,6,Not_Value};
 	t_param i_soc_value_battery = {7002, 1, 1, 6, Not_value};
 	t_param i_State_of_Health = {7057,1,1,6,Not_value};
