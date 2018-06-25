@@ -1290,5 +1290,5 @@ int main()
 	MQTTClient_destroy(&client_charger);
 	MQTTClient_disconnect(client_bat, 10000);
 	MQTTClient_destroy(&client_bat);
-	return rc;
+	return rc_charger;
 }
