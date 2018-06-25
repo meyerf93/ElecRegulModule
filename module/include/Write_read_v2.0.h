@@ -254,17 +254,17 @@ int Write(t_param* Parametre,MQTTClient* client);
 // a voir s'il faut pas remplacer par des valeur moyenne de 1 min, autre param disponibles
 
 	t_param i_Battery_Voltage = {7000,1,1,6, Not_Value};
-	t_param i_Battery_Current = {7001,1,1,6,Not_Value};
+	t_param i_Battery_Current = {7001,1,1,6, Not_Value};
 	t_param i_soc_value_battery = {7002, 1, 1, 6, Not_value};
-	t_param i_State_of_Health = {7057,1,1,6,Not_value};
+	t_param i_State_of_Health = {7057,1,1,6, Not_value};
 
 
 	t_param i_Battery_Voltage_Charge_limit = 	 {7061, 1, 1, 6, Not_Value};
 	t_param i_Battery_Voltage_Discharge_limit =	 {7062, 1, 1, 6, Not_Value};
 	t_param i_Battery_Current_Charge_limit = 	 {7063, 1, 1, 6, Not_Value};
 	t_param i_Battery_Current_Discharge_limit =	 {7064, 1, 1, 6, Not_Value};
-	t_param i_Battery_Current_Charge_recommanded = {7065,1,1,6,Not_Value};
-	t_param i_Battery_Current_Discharge_recommanded = {7066,1,1,6,Not_Value};
+	t_param i_Battery_Current_Charge_recommanded = {7065,1,1,6, Not_Value};
+	t_param i_Battery_Current_Discharge_recommanded = {7066,1,1,6, Not_Value};
 
 // PCO : En mode inspect control, soit Xtender master
   // On peut lire la tension de charge à appliquer sur {1140} et {1156} (={7061}) (floating et absorption voltages)
