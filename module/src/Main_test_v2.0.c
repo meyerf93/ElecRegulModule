@@ -635,7 +635,7 @@ int Write_bat(t_param* Parametre,MQTTClient* client)
 
 
 /*------------- Routine d'initialization de touts les parametres et de l'Xtender ---------------*/
-int Init(MQTTClient* client)
+int Init(MQTTClient* client){
 	Write(&Parameters_saved_in_flash_memory,client);
 	Write(&Over_Voltage_Value_allowed,client);
 	Write(&Voltage_After_Over_allowed,client);
