@@ -936,7 +936,7 @@ void Algo(MQTTClient* client)
 	Calculs_p_k();
 	// PCO : a défaut d'une valeur Ps (stockage) calculée dans un algorithme d'optimisation, Ps =Pb (balance)
 	Ps=Pb;
-	Printf("ps : %f, pb : %f\n",Ps,Pb);
+	printf("ps : %f, pb : %f\n",Ps,Pb);
 	Battery_management(Ps,client);
 	// On produit?
 	if (Eb >= 0)
