@@ -130,7 +130,7 @@ volatile MQTTClient_deliveryToken deliveredtoken;
 void delivered(void *context, MQTTClient_deliveryToken dt)
 {
     UNUSED(context);
-    printf("Message with token value %d delivery confirmed\n", dt);
+    //printf("Message with token value %d delivery confirmed\n", dt);
     deliveredtoken = dt;
 }
 int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message)
@@ -568,7 +568,7 @@ int Read(t_param* Parametre,MQTTClient* client) /*,scom_frame_t* frame, scom_pro
 {
   char data[64];
   sprintf(data,"[%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_READ);
-  printf("data : %s\n",data);
+  //printf("data : %s\n",data);
 	send_json_obj(client,TOPIC_WRITE,data,XCOM,XCOM_ID_CHARGER);
 	return 1;
 }
@@ -578,7 +578,7 @@ int Read_bat(t_param* Parametre,MQTTClient* client) /*,scom_frame_t* frame, scom
 {
   char data[64];
   sprintf(data,"[%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_READ);
-  printf("data : %s\n",data);
+  //printf("data : %s\n",data);
 	send_json_obj(client,TOPIC_WRITE,data,XCOM,XCOM_ID_BAT);
 	return 1;
 }
