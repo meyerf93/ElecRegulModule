@@ -252,8 +252,8 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	//parse packet for xcom
 	if (strstr(payload,XCOM_ID_CHARGER) != NULL){
 		root = cJSON_Parse(payload);
-    printf("receive paylaod with xcom : %s\n",payload);
-    printf("palyoad parsed : %s\n",cJSON_Print(root));
+    //printf("receive paylaod with xcom : %s\n",payload);
+    //printf("palyoad parsed : %s\n",cJSON_Print(root));
 
 		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 		if (strstr(payload,CHARGER_ALLOWED) != NULL){
@@ -463,8 +463,8 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	}
 	else if (strstr(payload,XCOM_ID_BAT) != NULL){
 			root = cJSON_Parse(payload);
-			printf("receive paylaod with xcom bat  : %s\n",payload);
-			printf("palyoad parsed : %s\n",cJSON_Print(root));
+			//printf("receive paylaod with xcom bat  : %s\n",payload);
+			//printf("palyoad parsed : %s\n",cJSON_Print(root));
 
 			cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 		if(strstr(payload,SOC_BACKUP) != NULL){
@@ -481,11 +481,9 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 		}
 		else if (strstr(payload,I_SOC_VALUE_BATTERY)!= NULL){
 			i_soc_value_battery.Value=(float) data->valueint;
-			printf("value soc bat : %f\n",i_soc_value_battery.Value);
 		}
 		else if (strstr(payload,I_STATE_OF_HEALTH)!= NULL){
 			i_State_of_Health.Value=(float) data->valueint;
-			printf("State of health : %f\n",i_State_of_Health.Value);
 		}
 		else if (strstr(payload,I_BATTERY_VOLTAGE_CHARGE_LIMIT)!= NULL){
 			i_Battery_Voltage_Charge_limit.Value=(float) data->valueint;
@@ -788,7 +786,7 @@ void Battery_management(float P_s,MQTTClient* client)
 		Battery_Charge_current_DC.Value = fabs(P_s) / i_Battery_Voltage_Studer.Value;
 		printf("Battery current charge limit : %f\n",i_Battery_Current_Charge_limit.Value);
 		//printf("Battery Charge Current DC : %f\n",Battery_Charge_current_DC.Value);
-    	if(Battery_Charge_current_DC.Value >= i_Battery_Current_Charge_limit.Value) Battery_Charge_current_DC.Value = i_Battery_Current_Charge_limit.Value;
+    if(Battery_Charge_current_DC.Value >= i_Battery_Current_Charge_limit.Value) Battery_Charge_current_DC.Value = i_Battery_Current_Charge_limit.Value;
 		if(Battery_Charge_current_DC.Value >= 55) Battery_Charge_current_DC.Value = 55;
 		printf("Battery charge current DC = %f\n", Battery_Charge_current_DC.Value);
 
@@ -897,6 +895,7 @@ void Calculs_p_k(void)
 	Pb = (Ppv - Pl);  //Puissance bilan
 
 	SOC = i_State_of_charge.Value;
+	printf("Soc value : %f\n",SOC);
 	//SOC = 90;
 
 	//Plsec = 500;     //Puissance des charges securisées
@@ -910,8 +909,8 @@ void Calculs_p_k(void)
 
 	Psmax = 2800;
 	// PCO
-    // psmax = courant_decharge_limite IAdc (param 7064) x tension_dc (param 7000)
-    // a voir s'il faut pas remplacer par des valeur moyenne de 1 min, autre param disponibles
+  // psmax = courant_decharge_limite IAdc (param 7064) x tension_dc (param 7000)
+  // a voir s'il faut pas remplacer par des valeur moyenne de 1 min, autre param disponibles
 	//Puissance max de domande au stockage 55A x 50V, mais ne marche pas en mode Xcan active control puisqu'on sera au courant max recommandé
 
 	// pas max decharge pas utilisé ci dessous
