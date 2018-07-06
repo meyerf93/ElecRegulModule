@@ -717,7 +717,7 @@ void Battery_management(float P_s,MQTTClient* client)
 	Read_bat(&i_State_of_Health, client); // Param 7057
 	Bat_Capacite_disponible = i_State_of_Health.Value* Bat_Capacite_nominale*(i_soc_value_battery.Value - SOCmin);
 	printf("Value for bat cap : %f, state of healt : %f, bat cap nomi : %f, soc value : %f, socmin %f\n",
-				  Bat_Capacite_disponible, i_State_of_Health.Value, Bat_Capacite_nominale, i_soc_value_battery.Value, Socmin);
+				  Bat_Capacite_disponible, i_State_of_Health.Value, Bat_Capacite_nominale, i_soc_value_battery.Value, SOCmin);
 	Delta_SOC=Forcage_KWh_Charge_Decharge/Bat_Capacite_disponible*100;
 	printf("Delta soc : %f, Forcage kwh : %f,Bap cat dispo : %f\n",Delta_SOC, Forcage_KWh_Charge_Decharge, Bat_Capacite_disponible);
 	Final_SOC= i_soc_value_battery.Value + Delta_SOC;
