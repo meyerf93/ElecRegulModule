@@ -1055,7 +1055,7 @@ void catch_alarm (int sig)
  		get_Time();
    	printf("%d:%d;", (int)(Time_now/60), (int)(Time_now - (int)(Time_now/60)*60));
 		printf(" Soc_Backup, = %f;", Soc_Backup);
-		printf(" Soc_inject, = %f;", Soc_inject);
+		printf(" Soc_Inject, = %f;", Soc_Inject);
    	printf(" SOC = %f;", SOC);
    	printf(" Kg = %f;", Kg);
    	printf("Ps = %f;", Ps);
@@ -1073,7 +1073,7 @@ void catch_alarm (int sig)
    	fprintf(fd,"STATE = %d;",STATE);
    	fprintf(fd,"%d:%d;", (int)(Time_now/60), (int)(Time_now - (int)(Time_now/60)*60));
 		fprintf(fd," Soc_Backup, = %f;", Soc_Backup);
-		fprintf(fd," Soc_inject, = %f;", Soc_inject);
+		fprintf(fd," Soc_Inject, = %f;", Soc_Inject);
    	fprintf(fd," SOC = %f;", SOC);
    	fprintf(fd," Kg = %f;", Kg);
    	fprintf(fd,"Ps = %f;", Ps);
