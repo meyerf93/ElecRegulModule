@@ -1059,13 +1059,16 @@ void Read_p(MQTTClient *client,MQTTClient *client_bat)/*scom_frame_t* frame,scom
  	Read(&i_Battery_Charge_current,client);
  	Read(&i_Output_voltage_AC_OUT,client);
  	Read(&i_Output_power_AC_OUT,client);
- 	Read(&i_Battery_Current_Charge_limit,client_bat);
-	Read(&i_Battery_Current_Discharge_limit,client_bat);
-	Read(&i_Battery_Current_Charge_recommanded, client_bat);
-	Read(&i_Battery_Current_Discharge_recommanded,client_bat);
-	Read(&i_Battery_Voltage_Charge_limit, client_bat);
+ 	Read(&i_Battery_Voltage,client_bat);
+	Read(&i_Battery_Current,client_bat);
+	Read(&i_soc_value_battery,client_bat);
+	Read(&i_State_of_Health,client_bat);
+	Read(&i_Battery_Voltage_Charge_limit,client_bat);
+	Read(&i_Battery_Voltage_Discharge_limit,client_bat);
 	Read(&i_Battery_Current_Charge_limit,client_bat);
-
+	Read(&i_Battery_Current_Discharge_limit,client_bat);
+	Read(&i_Battery_Current_Charge_recommanded,client_bat);
+	Read(&i_Battery_Current_Discharge_recommanded,client_bat);
 }
 /*----------------------------------------------------------------------------------------------*/
 
