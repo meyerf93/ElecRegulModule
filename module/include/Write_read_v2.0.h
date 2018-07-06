@@ -238,14 +238,13 @@ int Write(t_param* Parametre,MQTTClient* client);
 	#define I_BATTERY_VOLTAVGE "xcom1/:600/:/config/:/7000"
 	#define I_BATTERYY_CURRENT "xcom1/:600/:/config/:/7001"
 	#define I_SOC_VALUE_BATTERY "xcom1/:600/:/config/:/7002"
-	#define I_STATE_OF_HEALTH "xcom1/:600/:/config/:/70057"
+	#define I_STATE_OF_HEALTH "xcom1/:600/:/config/:/7057"
 	#define I_BATTERY_VOLTAGE_CHARGE_LIMIT "xcom1/:600/:/config/:/7061"
 	#define I_BATTERY_VOLTAGE_DISCHARGE_LIMIT "xcom1/:600/:/config/:/7062"
 	#define I_BATTERY_CURRENT_CHARGE_LIMIT "xcom1/:600/:/config/:/7063"
 	#define I_BATTERY_CURRENT_DISCHARGE_LIMIT "xcom1/:600/:/config/:/7064"
 	#define I_BATTERY_CURRENT_CHARGE_RECOMMANDED "xcom1/:600/:/config/:/7065"
 	#define I_BATTERY_CURRENT_DISCHARGE_RECOMMANDED "xcom1/:600/:/config/:/7066"
-
 	/*--------------------------- Batterry info --------------------------------------*/
 
 
