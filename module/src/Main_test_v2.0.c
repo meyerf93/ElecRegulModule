@@ -60,7 +60,8 @@ Parametres:
 #define MQTTCLIENT_PERSISTENCE 0
 #define ADDRESS     "192.168.2.3:1883"
 //#define ADDRESS		"128.179.181.106"
-#define CLIENTID    "Regul_elec"
+#define CLIENTID_CHARGER	"Regul_elec_charger"
+#define CLIENTID_BAT 			"Regul_elec_bat"
 
 #define TOPIC  			"new.statements"
 #define TOPIC_WRITE "device.command.set.value"
@@ -247,7 +248,6 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 
 		//printf("receive data : %f,%f,%f\n",Ppv,Pl,Kg);
 	}
-	//-------------------------------------------
 
 	//parse packet for xcom
 	if (strstr(payload,XCOM_ID_CHARGER) != NULL){
@@ -1222,7 +1222,8 @@ int main()
 
   	int rc_charger;
 		//crée le client mqtt pour le charger inverter --------------------------------------------
-  	MQTTClient_create(&client_charger, ADDRESS, CLIENTID,
+  	MQTTClient_create(&client_charger, ADDRESS, CLIENTID_CHARGER
+,
     MQTTCLIENT_PERSISTENCE, NULL);
   	conn_opts_charger.keepAliveInterval = 20;
   	conn_opts_charger.cleansession = 1;
@@ -1234,7 +1235,7 @@ int main()
       	exit(EXIT_FAILURE);
   	}
   	printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
-		"Press Q<Enter> to quit\n\n", TOPIC, CLIENTID, QOS);
+		"Press Q<Enter> to quit\n\n", TOPIC, CLIENTID_CHARGER, QOS);
 
   	MQTTClient_subscribe(client_charger, TOPIC, QOS);
 
@@ -1242,7 +1243,7 @@ int main()
 
 		//Crée le client mqtt pour la batterie -------------------------------------------------
 		int rc_bat;
-		MQTTClient_create(&client_bat, ADDRESS, CLIENTID,
+		MQTTClient_create(&client_bat, ADDRESS, CLIENTID_BAT,
 		MQTTCLIENT_PERSISTENCE, NULL);
 		conn_opts_bat.keepAliveInterval = 20;
 		conn_opts_bat.cleansession = 1;
@@ -1254,7 +1255,7 @@ int main()
 				exit(EXIT_FAILURE);
 		}
 		printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
-		"Press Q<Enter> to quit\n\n", TOPIC, CLIENTID, QOS);
+		"Press Q<Enter> to quit\n\n", TOPIC, CLIENTID_BAT, QOS);
 
 		MQTTClient_subscribe(client_bat, TOPIC, QOS);
 
