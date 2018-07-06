@@ -936,7 +936,7 @@ void Algo(MQTTClient* client)
 	Calculs_p_k();
 	// PCO : a défaut d'une valeur Ps (stockage) calculée dans un algorithme d'optimisation, Ps =Pb (balance)
 	Ps=Pb;
-	printf("ps : %f, pb : %f\n",Ps,Pb);
+	Printf("ps : %f, pb : %f\n",Ps,Pb);
 	Battery_management(Ps,client);
 	// On produit?
 	if (Eb >= 0)
@@ -1051,7 +1051,7 @@ void Write_p(MQTTClient* client)/*scom_frame_t* frame,scom_property_t* property 
 
 
 /*-------------------- Routine de lectures des parametres necessaires pour l'algo -------------*/
-void Read_p(MQTTClient *client)/*scom_frame_t* frame,scom_property_t* property ,char* buffer,size_t buffer_length, struct connection* socket_struct, struct studer_data* data,char* ret_val)MQTTClient *client)*/
+void Read_p(MQTTClient *client,MQTTClient *client_bat)/*scom_frame_t* frame,scom_property_t* property ,char* buffer,size_t buffer_length, struct connection* socket_struct, struct studer_data* data,char* ret_val)MQTTClient *client)*/
 {
  	Read(&i_Battery_Voltage_Studer,client);
  	Read(&i_Input_voltage_AC_IN,client);
@@ -1059,12 +1059,12 @@ void Read_p(MQTTClient *client)/*scom_frame_t* frame,scom_property_t* property ,
  	Read(&i_Battery_Charge_current,client);
  	Read(&i_Output_voltage_AC_OUT,client);
  	Read(&i_Output_power_AC_OUT,client);
- 	Read(&i_Battery_Current_Charge_limit,client);
-	Read(&i_Battery_Current_Discharge_limit,client);
-	Read(&i_Battery_Current_Charge_recommanded, client);
-	Read(&i_Battery_Current_Discharge_recommanded,client);
-	Read(&i_Battery_Voltage_Charge_limit, client);
-	Read(&i_Battery_Current_Charge_limit,client);
+ 	Read(&i_Battery_Current_Charge_limit,client_bat);
+	Read(&i_Battery_Current_Discharge_limit,client_bat);
+	Read(&i_Battery_Current_Charge_recommanded, client_bat);
+	Read(&i_Battery_Current_Discharge_recommanded,client_bat);
+	Read(&i_Battery_Voltage_Charge_limit, client_bat);
+	Read(&i_Battery_Current_Charge_limit,client_bat);
 
 }
 /*----------------------------------------------------------------------------------------------*/
@@ -1277,7 +1277,7 @@ int main()
 			//printf(" ********************** %d : %d **********************\n", (int)(Time_now/60), (int)(Time_now - (int)(Time_now/60)*60));
 			//printf("========== Lecture des    printf("Ibat = %f;", i_Battery_Charge_current.Value);informations Onduleur ==========\n");
 			printf("\n===========read =============\n");
-			Read_p(client_charger);//&frame, &property,buffer,sizeof(buffer), &ipv4_struct,&data,ret_val);
+			Read_p(client_charger,client_bat);//&frame, &property,buffer,sizeof(buffer), &ipv4_struct,&data,ret_val);
 
 			printf("\n========== Algorithme =========\n");
 			Algo(client_bat);
