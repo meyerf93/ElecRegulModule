@@ -69,7 +69,6 @@ Parametres:
 #define XCOM_ID_CHARGER "xcom1/:101/:/config"
 #define XCOM_ID_BAT "xcom1/:600/:/config"
 
-
 #define XCOM_READ 1
 #define XCOM_WRITE 2
 
@@ -251,7 +250,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	//-------------------------------------------
 
 	//parse packet for xcom
-	if (strstr(payload,XCOM_ID_CHARGER) != NULL){
+	if (strstr(payload,XCOM_ID_CHARGER) != NULL || strstr(payload,XCOM_ID_BAT) != NULL){
 		root = cJSON_Parse(payload);
     //printf("receive paylaod with xcom : %s\n",payload);
     //printf("palyoad parsed : %s\n",cJSON_Print(root));
