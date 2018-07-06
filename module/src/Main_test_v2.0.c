@@ -62,7 +62,7 @@ Parametres:
 //#define ADDRESS		"128.179.181.106"
 #define CLIENTID    "Regul_elec"
 
-#define TOPIC  			"new.statement"
+#define TOPIC  			"new.statements"
 #define TOPIC_WRITE "device.command.set.value"
 
 #define XCOM 				"xcom1"
