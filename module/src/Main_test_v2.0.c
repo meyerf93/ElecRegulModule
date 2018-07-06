@@ -567,7 +567,7 @@ void Deconnection(struct connection* socket_struct)
 int Read(t_param* Parametre,MQTTClient* client) /*,scom_frame_t* frame, scom_property_t* property ,char* buffer,size_t buffer_length, struct connection* socket_struct, struct studer_data* data,char * ret_val)*/
 {
   char data[64];
-  sprintf(data,"[%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_READ);
+  //sprintf(data,"[%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_READ);
   //printf("data : %s\n",data);
 	send_json_obj(client,TOPIC_WRITE,data,XCOM,XCOM_ID_CHARGER);
 	return 1;
@@ -577,7 +577,7 @@ int Read(t_param* Parametre,MQTTClient* client) /*,scom_frame_t* frame, scom_pro
 int Read_bat(t_param* Parametre,MQTTClient* client) /*,scom_frame_t* frame, scom_property_t* property ,char* buffer,size_t buffer_length, struct connection* socket_struct, struct studer_data* data,char * ret_val)*/
 {
   char data[64];
-  sprintf(data,"[%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_READ);
+  //sprintf(data,"[%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_READ);
   //printf("data : %s\n",data);
 	send_json_obj(client,TOPIC_WRITE,data,XCOM,XCOM_ID_BAT);
 	return 1;
