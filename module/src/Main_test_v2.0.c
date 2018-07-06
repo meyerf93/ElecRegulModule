@@ -745,12 +745,12 @@ void Battery_management(float P_s,MQTTClient* client)
 	Read_bat(&i_soc_value_battery,client); // Param 7002
 	Read_bat(&i_State_of_Health, client); // Param 7057
 	Bat_Capacite_disponible = i_State_of_Health.Value* Bat_Capacite_nominale*(i_soc_value_battery.Value - SOCmin);
-	printf("Value for bat cap : %f, state of healt : %f, bat cap nomi : %f, soc value : %f, socmin %f\n",
-				  Bat_Capacite_disponible, i_State_of_Health.Value, Bat_Capacite_nominale, i_soc_value_battery.Value, SOCmin);
+	/*printf("Value for bat cap : %f, state of healt : %f, bat cap nomi : %f, soc value : %f, socmin %f\n",
+				  Bat_Capacite_disponible, i_State_of_Health.Value, Bat_Capacite_nominale, i_soc_value_battery.Value, SOCmin);*/
 	Delta_SOC=Forcage_KWh_Charge_Decharge/Bat_Capacite_disponible*100;
-	printf("Delta soc : %f, Forcage kwh : %f,Bap cat dispo : %f\n",Delta_SOC, Forcage_KWh_Charge_Decharge, Bat_Capacite_disponible);
+	//printf("Delta soc : %f, Forcage kwh : %f,Bap cat dispo : %f\n",Delta_SOC, Forcage_KWh_Charge_Decharge, Bat_Capacite_disponible);
 	Final_SOC= i_soc_value_battery.Value + Delta_SOC;
-	printf("Final soc : %f, I soc value : %f, Delta soc : %f\n",Final_SOC,i_soc_value_battery.Value, Delta_SOC);
+	//printf("Final soc : %f, I soc value : %f, Delta soc : %f\n",Final_SOC,i_soc_value_battery.Value, Delta_SOC);
 
 	//Calcul for next SOC
 	// Bk et inj identique car PV coté AC _in en AC coupling et pas du coté batterie
@@ -936,6 +936,7 @@ void Algo(MQTTClient* client)
 	Calculs_p_k();
 	// PCO : a défaut d'une valeur Ps (stockage) calculée dans un algorithme d'optimisation, Ps =Pb (balance)
 	Ps=Pb;
+	Printf("ps : %f, pb : %f\n",Ps,Pb);
 	Battery_management(Ps,client);
 	// On produit?
 	if (Eb >= 0)
@@ -1083,7 +1084,7 @@ void catch_alarm (int sig)
  	//printf("I'm running %d\n", i);
  	//printf("**%d\n", i);
  	printf(" ");
- 	//algo_on = 1;
+ 	algo_on = 1;
  	i++;
  	if(i == 6) i = 0;
  		get_Time();
