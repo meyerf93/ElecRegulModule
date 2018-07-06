@@ -250,7 +250,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	//-------------------------------------------
 
 	//parse packet for xcom
-	if (strstr(payload,XCOM_ID_CHARGER) != NULL || strstr(payload,XCOM_ID_BAT) != NULL){
+	if (strstr(payload,XCOM_ID_CHARGER) != NULL){
 		root = cJSON_Parse(payload);
     //printf("receive paylaod with xcom : %s\n",payload);
     //printf("palyoad parsed : %s\n",cJSON_Print(root));
@@ -463,8 +463,8 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	}
 	else if (strstr(payload,XCOM_ID_BAT) != NULL){
 			root = cJSON_Parse(payload);
-			//printf("receive paylaod with xcom : %s\n",payload);
-			//printf("palyoad parsed : %s\n",cJSON_Print(root));
+			printf("receive paylaod with xcom bat  : %s\n",payload);
+			printf("palyoad parsed : %s\n",cJSON_Print(root));
 
 			cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 		if(strstr(payload,SOC_BACKUP) != NULL){
@@ -472,6 +472,33 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 		}
 		else if (strstr(payload,SOC_INJECT)!= NULL){
 			Soc_Inject.Value=(float) data->valueint;
+		}
+		else if (strstr(payload,I_BATTERY_VOLTAVGE)!= NULL){
+			i_Battery_Voltage.Value=(float) data->valueint;
+		}
+		else if (strstr(payload,I_BATTERYY_CURRENT)!= NULL){
+			i_Battery_Current.Value=(float) data->valueint;
+		}
+		else if (strstr(payload,I_STATE_OF_HEALTH)!= NULL){
+			i_State_of_Health.Value=(float) data->valueint;
+		}
+		else if (strstr(payload,I_BATTERY_VOLTAGE_CHARGE_LIMIT)!= NULL){
+			i_Battery_Voltage_Charge_limit.Value=(float) data->valueint;
+		}
+		else if (strstr(payload,I_BATTERY_VOLTAGE_DISCHARGE_LIMIT)!= NULL){
+			i_Battery_Voltage_Discharge_limit.Value=(float) data->valueint;
+		}
+		else if (strstr(payload,I_BATTERY_CURRENT_CHARGE_LIMIT)!= NULL){
+			i_Battery_Current_Charge_limit.Value=(float) data->valueint;
+		}
+		else if (strstr(payload,I_BATTERY_CURRENT_DISCHARGE_LIMIT)!= NULL){
+			i_Battery_Current_Discharge_limit.Value=(float) data->valueint;
+		}
+		else if (strstr(payload,I_BATTERY_CURRENT_CHARGE_RECOMMANDED)!= NULL){
+			i_Battery_Current_Charge_recommanded.Value=(float) data->valueint;
+		}
+		else if (strstr(payload,I_BATTERY_CURRENT_DISCHARGE_RECOMMANDED)!= NULL){
+			i_Battery_Current_Discharge_recommanded.Value=(float) data->valueint;
 		}
 	}
 	 MQTTClient_freeMessage(&message);
