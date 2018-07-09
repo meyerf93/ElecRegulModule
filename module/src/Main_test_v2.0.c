@@ -872,7 +872,7 @@ void Battery_management(float P_s,MQTTClient* client)
 			Write_bat(&Soc_Backup,client);
 			Write_bat(&Soc_Inject,client);*/
 // PCO a priori pas de sécu à mettre ici pour batterie
-    	MAX_current_of_AC_IN.Value = (Plsec-fabs(Ps))/i_Input_voltage_AC_IN.Value;
+    	MAX_current_of_AC_IN.Value = (Plsec-fabs(Pr))/i_Input_voltage_AC_IN.Value;
     	if (MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value=34.0;
 			Force_floating.Value = 1.0;
 		}
