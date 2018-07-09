@@ -735,30 +735,31 @@ int Init(MQTTClient* client){
 void Battery_management(float P_s,MQTTClient* client)
 {
 	// Unité de P_s en Watt
-	/*float Forcage_KWh_Charge_Decharge;
-	float Delta_SOC;
-	float Final_SOC;
+	//float Forcage_KWh_Charge_Decharge;
+	//float Delta_SOC;
+	//float Final_SOC;
 
-	Forcage_KWh_Charge_Decharge=P_s/1000*0.5 ; //Unité kWh 0.5 pour 30 min corriger avec le pas de temps de la boucle du programme e
-	MAX_current_of_AC_IN.Value=35.0; // 1107 deja dans le writeread.h
+	//Forcage_KWh_Charge_Decharge=P_s/1000*0.5 ; //Unité kWh 0.5 pour 30 min corriger avec le pas de temps de la boucle du programme e
+	//MAX_current_of_AC_IN.Value=35.0; // 1107 deja dans le writeread.h
 
-	Read_bat(&i_soc_value_battery,client); // Param 7002
-	Read_bat(&i_State_of_Health, client); // Param 7057
-	Bat_Capacite_disponible = i_State_of_Health.Value* Bat_Capacite_nominale*(i_soc_value_battery.Value - SOCmin);
+	//Read_bat(&i_soc_value_battery,client); // Param 7002
+	//Read_bat(&i_State_of_Health, client); // Param 7057
+	//Bat_Capacite_disponible = i_State_of_Health.Value* Bat_Capacite_nominale*(i_soc_value_battery.Value - SOCmin);
 	//printf("Value for bat cap : %f, state of healt : %f, bat cap nomi : %f, soc value : %f, socmin %f\n",
 	//	 			Bat_Capacite_disponible, i_State_of_Health.Value, Bat_Capacite_nominale, i_soc_value_battery.Value, SOCmin);
-	Delta_SOC=Forcage_KWh_Charge_Decharge/Bat_Capacite_disponible*100;
+	//Delta_SOC=Forcage_KWh_Charge_Decharge/Bat_Capacite_disponible*100;
 	//printf("Delta soc : %f, Forcage kwh : %f,Bap cat dispo : %f\n",Delta_SOC, Forcage_KWh_Charge_Decharge, Bat_Capacite_disponible);
-	Final_SOC= i_soc_value_battery.Value + Delta_SOC;
+	//Final_SOC= i_soc_value_battery.Value + Delta_SOC;
 	//printf("Final soc : %f, I soc value : %f, Delta soc : %f\n",Final_SOC,i_soc_value_battery.Value, Delta_SOC);
 
 	//Calcul for next SOC
 	// Bk et inj identique car PV coté AC _in en AC coupling et pas du coté batterie
-		Soc_Backup.Value = Final_SOC;
-		Soc_Inject.Value = Final_SOC;
+	//Soc_Backup.Value = Final_SOC;
+	//Soc_Inject.Value = Final_SOC;
 
 	// ON CHARGE Ps>=0
-	if (Delta_SOC >= 0)
+	//if (Delta_SOC >= 0)
+	if(Ps >= 0)
 	{
 		printf("CHARGE DE LA BATTERIE\n");
 		INJ=0;
@@ -771,7 +772,7 @@ void Battery_management(float P_s,MQTTClient* client)
 		Inverter_Allowed.Value = true; //Param 1124;
 
 
-		if(Soc_Backup.Value > SOCmax) {
+		/*if(Soc_Backup.Value > SOCmax) {
 			Soc_Backup.Value = SOCmax;
 			Soc_Inject.Value = SOCmax;
 		}
@@ -780,7 +781,7 @@ void Battery_management(float P_s,MQTTClient* client)
 			Soc_Inject.Value = SOCmin;
 		}
 		Write_bat(&Soc_Backup,client);
-		Write_bat(&Soc_Inject,client);
+		Write_bat(&Soc_Inject,client);*/
 
 		//MODE INSPECT CONTROL : Calcul de la courant max de charge;
 		Battery_Charge_current_DC.Value = fabs(P_s) / i_Battery_Voltage_Studer.Value;
@@ -797,47 +798,46 @@ void Battery_management(float P_s,MQTTClient* client)
   	else // ON DECHARGE
 	{
     	//Puissance des batteries suffisante pour alimenter le CS ?
-    		charge_on = 0;
-		Batt_priority_source.Value = false;
+    	charge_on = 0;
+			Batt_priority_source.Value = false;
 
-		if (fabs(P_s) > Plsec)
-		{
-      //printf("========== Injceter sur le reseaux ==========\n");
+			if (fabs(P_s) > Plsec)
+			{
+      	printf("========== Injceter sur le reseaux ==========\n");
+				printf("DECHARGE DE LA BATTERIE\n");
 
-			printf("DECHARGE DE LA BATTERIE\n");
+				//Bloquer la charge;
+				Charger_allowed.Value = false;//Param 1125;
 
-			//Bloquer la charge;
-			Charger_allowed.Value = false;//Param 1125;
+				//Activer l'onduleur;
+				Inverter_Allowed.Value = true; //Param 1124;
 
-			//Activer l'onduleur;
-			Inverter_Allowed.Value = true; //Param 1124;
+				/*if(Soc_Backup.Value > SOCmax) {
+					Soc_Backup.Value = SOCmax;
+					Soc_Inject.Value = SOCmax;
+				}
+				else if (Soc_Backup.Value < SOCmin) {
+					Soc_Backup.Value = SOCmin;
+					Soc_Inject.Value = SOCmin;
+				}
+				Write_bat(&Soc_Backup,client);
+				Write_bat(&Soc_Inject,client);*/
 
-			if(Soc_Backup.Value > SOCmax) {
-				Soc_Backup.Value = SOCmax;
-				Soc_Inject.Value = SOCmax;
-			}
-			else if (Soc_Backup.Value < SOCmin) {
-				Soc_Backup.Value = SOCmin;
-				Soc_Inject.Value = SOCmin;
-			}
-			Write_bat(&Soc_Backup,client);
-			Write_bat(&Soc_Inject,client);*/
+				//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
+				Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
+				//printf("Max grid feeding current : %f\n", Max_Grid_Feeding_current.Value);
+				//printf("Max battery current discharge : %f\n", i_Battery_Current_Discharge_Limit.Value);
+				if(Max_Grid_Feeding_current.Value >= i_Battery_Current_Discharge_limit.Value) Max_Grid_Feeding_current.Value = i_Battery_Current_Discharge_limit.Value;													//value dynamic for discharge
+				if(Max_Grid_Feeding_current.Value >= 30) Max_Grid_Feeding_current.Value = 30; // 8.6 pour 2 kW
+				/*printf("Max grid feeding current discharge : %f\n",Max_Grid_Feeding_current.Value);*/
+	      			//Autoriser l'injection;
+				Grid_Feeding_allowed.Value = true; //Param 1127;
 
-			//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
-			Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
-			//printf("Max grid feeding current : %f\n", Max_Grid_Feeding_current.Value);
-			//printf("Max battery current discharge : %f\n", i_Battery_Current_Discharge_Limit.Value);
-			if(Max_Grid_Feeding_current.Value >= i_Battery_Current_Discharge_limit.Value) Max_Grid_Feeding_current.Value = i_Battery_Current_Discharge_limit.Value;													//value dynamic for discharge
-			if(Max_Grid_Feeding_current.Value >= 30) Max_Grid_Feeding_current.Value = 30; // 8.6 pour 2 kW
-			/*printf("Max grid feeding current discharge : %f\n",Max_Grid_Feeding_current.Value);*/
-      			//Autoriser l'injection;
-			Grid_Feeding_allowed.Value = true; //Param 1127;
-
-			//Temps d'injection;
-			Start_Time_forced_injection.Value = Time_now+1; //L?injection débuterai dans 1 minute
-			Stop_Time_forced_injection.Value = Start_Time_forced_injection.Value +1+INJ;
-			//L'injection s'arrêtera après le nouveau cycle;
-			INJ++;
+				//Temps d'injection;
+				Start_Time_forced_injection.Value = Time_now+1; //L?injection débuterai dans 1 minute
+				Stop_Time_forced_injection.Value = Start_Time_forced_injection.Value +1+INJ;
+				//L'injection s'arrêtera après le nouveau cycle;
+				INJ++;
 		}
 		else
 		{
@@ -861,7 +861,7 @@ void Battery_management(float P_s,MQTTClient* client)
 			//Utilisation de la batterie comme source prioritaire;
 			Batt_priority_source.Value = true; //Param 1296;
 
-			if(Soc_Backup.Value > SOCmax) {
+			/*if(Soc_Backup.Value > SOCmax) {
 				Soc_Backup.Value = SOCmax;
 				Soc_Inject.Value = SOCmax;
 			}
@@ -870,7 +870,7 @@ void Battery_management(float P_s,MQTTClient* client)
 				Soc_Inject.Value = SOCmin;
 			}
 			Write_bat(&Soc_Backup,client);
-			Write_bat(&Soc_Inject,client);
+			Write_bat(&Soc_Inject,client);*/
 // PCO a priori pas de sécu à mettre ici pour batterie
     	MAX_current_of_AC_IN.Value = (Plsec-fabs(Ps))/i_Input_voltage_AC_IN.Value;
     	if (MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value=34.0;
@@ -982,10 +982,10 @@ void Algo(MQTTClient* client)
 			// la batterie est elle vraiment vide ?
 			if (SOCmin >= SOC)
 			{
-      				STATE = 2;
-      				printf("STATE = 2;");
-      				Ps = Psmax_charge;
-							Pr = Pb;
+      	STATE = 2;
+      	printf("STATE = 2;");
+      	Ps = Psmax_charge;
+				Pr = Pb;
 			}
 			else
 			{
@@ -994,7 +994,7 @@ void Algo(MQTTClient* client)
 		}
 		else
 		{
-      STATE = 1;
+    	STATE = 1;
     	printf("STATE = 1;");
 			Ps = Pb;
 			Pr = 0;
