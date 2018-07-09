@@ -139,9 +139,9 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
   char* payloadptr;
   cJSON * root;
 
-    UNUSED(payloadptr);
-    UNUSED(context);
-    UNUSED(topicLen);
+  UNUSED(payloadptr);
+  UNUSED(context);
+  UNUSED(topicLen);
 
 
 	bool I_paquet;
@@ -463,46 +463,46 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	}
 	else if (strstr(payload,XCOM_ID_BAT) != NULL){
 			root = cJSON_Parse(payload);
-			printf("receive paylaod with xcom bat  : %s\n",payload);
-			printf("palyoad parsed : %s\n",cJSON_Print(root));
+			//printf("receive paylaod with xcom bat  : %s\n",payload);
+			//printf("palyoad parsed : %s\n",cJSON_Print(root));
 
 			cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
-		if(strstr(payload,SOC_BACKUP) != NULL){
-			Soc_Backup.Value=(float) data->valueint;
-		}
-		else if (strstr(payload,SOC_INJECT)!= NULL){
-			Soc_Inject.Value=(float) data->valueint;
-		}
-		else if (strstr(payload,I_BATTERY_VOLTAVGE)!= NULL){
-			i_Battery_Voltage.Value=(float) data->valueint;
-		}
-		else if (strstr(payload,I_BATTERYY_CURRENT)!= NULL){
-			i_Battery_Current.Value=(float) data->valueint;
-		}
-		else if (strstr(payload,I_SOC_VALUE_BATTERY)!= NULL){
-			i_soc_value_battery.Value=(float) data->valueint;
-		}
-		else if (strstr(payload,I_STATE_OF_HEALTH)!= NULL){
-			i_State_of_Health.Value=(float) data->valueint;
-		}
-		else if (strstr(payload,I_BATTERY_VOLTAGE_CHARGE_LIMIT)!= NULL){
-			i_Battery_Voltage_Charge_limit.Value=(float) data->valueint;
-		}
-		else if (strstr(payload,I_BATTERY_VOLTAGE_DISCHARGE_LIMIT)!= NULL){
-			i_Battery_Voltage_Discharge_limit.Value=(float) data->valueint;
-		}
-		else if (strstr(payload,I_BATTERY_CURRENT_CHARGE_LIMIT)!= NULL){
-			i_Battery_Current_Charge_limit.Value=(float) data->valueint;
-		}
-		else if (strstr(payload,I_BATTERY_CURRENT_DISCHARGE_LIMIT)!= NULL){
-			i_Battery_Current_Discharge_limit.Value=(float) data->valueint;
-		}
-		else if (strstr(payload,I_BATTERY_CURRENT_CHARGE_RECOMMANDED)!= NULL){
-			i_Battery_Current_Charge_recommanded.Value=(float) data->valueint;
-		}
-		else if (strstr(payload,I_BATTERY_CURRENT_DISCHARGE_RECOMMANDED)!= NULL){
-			i_Battery_Current_Discharge_recommanded.Value=(float) data->valueint;
-		}
+			if(strstr(payload,SOC_BACKUP) != NULL){
+				Soc_Backup.Value=(float) data->valueint;
+			}
+			else if (strstr(payload,SOC_INJECT)!= NULL){
+				Soc_Inject.Value=(float) data->valueint;
+			}
+			else if (strstr(payload,I_BATTERY_VOLTAVGE)!= NULL){
+				i_Battery_Voltage.Value=(float) data->valueint;
+			}
+			else if (strstr(payload,I_BATTERYY_CURRENT)!= NULL){
+				i_Battery_Current.Value=(float) data->valueint;
+			}
+			else if (strstr(payload,I_SOC_VALUE_BATTERY)!= NULL){
+				i_soc_value_battery.Value=(float) data->valueint;
+			}
+			else if (strstr(payload,I_STATE_OF_HEALTH)!= NULL){
+				i_State_of_Health.Value=(float) data->valueint;
+			}
+			else if (strstr(payload,I_BATTERY_VOLTAGE_CHARGE_LIMIT)!= NULL){
+				i_Battery_Voltage_Charge_limit.Value=(float) data->valueint;
+			}
+			else if (strstr(payload,I_BATTERY_VOLTAGE_DISCHARGE_LIMIT)!= NULL){
+				i_Battery_Voltage_Discharge_limit.Value=(float) data->valueint;
+			}
+			else if (strstr(payload,I_BATTERY_CURRENT_CHARGE_LIMIT)!= NULL){
+				i_Battery_Current_Charge_limit.Value=(float) data->valueint;
+			}
+			else if (strstr(payload,I_BATTERY_CURRENT_DISCHARGE_LIMIT)!= NULL){
+				i_Battery_Current_Discharge_limit.Value=(float) data->valueint;
+			}
+			else if (strstr(payload,I_BATTERY_CURRENT_CHARGE_RECOMMANDED)!= NULL){
+				i_Battery_Current_Charge_recommanded.Value=(float) data->valueint;
+			}
+			else if (strstr(payload,I_BATTERY_CURRENT_DISCHARGE_RECOMMANDED)!= NULL){
+				i_Battery_Current_Discharge_recommanded.Value=(float) data->valueint;
+			}
 	}
 	 MQTTClient_freeMessage(&message);
 	 MQTTClient_free(topicName);
@@ -1055,16 +1055,16 @@ void Read_p(MQTTClient *client,MQTTClient *client_bat)/*scom_frame_t* frame,scom
  	Read(&i_Battery_Charge_current,client);
  	Read(&i_Output_voltage_AC_OUT,client);
  	Read(&i_Output_power_AC_OUT,client);
- 	Read(&i_Battery_Voltage,client_bat);
-	Read(&i_Battery_Current,client_bat);
-	Read(&i_soc_value_battery,client_bat);
-	Read(&i_State_of_Health,client_bat);
-	Read(&i_Battery_Voltage_Charge_limit,client_bat);
-	Read(&i_Battery_Voltage_Discharge_limit,client_bat);
-	Read(&i_Battery_Current_Charge_limit,client_bat);
-	Read(&i_Battery_Current_Discharge_limit,client_bat);
-	Read(&i_Battery_Current_Charge_recommanded,client_bat);
-	Read(&i_Battery_Current_Discharge_recommanded,client_bat);
+ 	Read_bat(&i_Battery_Voltage,client_bat);
+	Read_bat(&i_Battery_Current,client_bat);
+	Read_bat(&i_soc_value_battery,client_bat);
+	Read_bat(&i_State_of_Health,client_bat);
+	Read_bat(&i_Battery_Voltage_Charge_limit,client_bat);
+	Read_bat(&i_Battery_Voltage_Discharge_limit,client_bat);
+	Read_bat(&i_Battery_Current_Charge_limit,client_bat);
+	Read_bat(&i_Battery_Current_Discharge_limit,client_bat);
+	Read_bat(&i_Battery_Current_Charge_recommanded,client_bat);
+	Read_bat(&i_Battery_Current_Discharge_recommanded,client_bat);
 }
 /*----------------------------------------------------------------------------------------------*/
 
