@@ -575,6 +575,7 @@ int Read(t_param* Parametre,MQTTClient* client)
 /*----------------------------------------------------------------------------------------------*/
 /*---------------------- Routine de lecture d'un parametre sur l'Xtender -----------------------*/
 int Read_bat(t_param* Parametre,MQTTClient* client)
+{
   char data[64];
   sprintf(data,"[%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_READ);
   //printf("data : %s\n",data);
