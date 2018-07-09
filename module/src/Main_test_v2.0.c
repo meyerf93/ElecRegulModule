@@ -774,6 +774,8 @@ void Battery_management(float P_s,MQTTClient* client)
 		Charger_allowed.Value = true; //Param 1125;
 		//tran transfert allowed
 		Transfer_relay_allowed.Value = 1; //Param 1128
+		//force un nouveau cycle
+		Force_new_cycle.Value = 1;
 
 		//MODE INSPECT CONTROL : Calcul de la courant max de charge;
 		Battery_Charge_current_DC.Value = fabs(P_s) / i_Battery_Voltage_Studer.Value;
@@ -785,10 +787,8 @@ void Battery_management(float P_s,MQTTClient* client)
 		MAX_current_of_AC_IN.Value = 8000 / i_Input_voltage_AC_IN.Value;
 		printf("Max current of ac in : %f\n", MAX_current_of_AC_IN.Value);
 		if(MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value = 34.0; // 8.6 pour 2 kw
-
-		Force_new_cycle.Value = 1;
 	}
-  	else // ON DECHARGE
+  else // ON DECHARGE
 	{
     	//Puissance des batteries suffisante pour alimenter le CS ?
     	charge_on = 0;
@@ -803,6 +803,13 @@ void Battery_management(float P_s,MQTTClient* client)
 				Inverter_Allowed.Value = true; //Param 1124;
 				//Autoriser l'injection;
 				Grid_Feeding_allowed.Value = true; //Param 1127;
+				//Activation du SmartBoost;
+				Smart_boost_allowed.Value = true; //Param 1126;
+				//tran transfert allowed
+				Transfer_relay_allowed.Value = 1; //Param 1128
+				//force un nouveau cycle
+				Force_new_cycle.Value = 1;
+
 
 				//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
 				Max_Grid_Feeding_current.Value = fabs(Pr) / i_Input_voltage_AC_IN.Value;
@@ -1137,7 +1144,7 @@ void Time_init(void)
 
 
 int main()
-{	/*
+{
 	// 1. fork off the parent process
 	fork_process();
 
@@ -1185,7 +1192,7 @@ int main()
 	if (dup2 (STDIN_FILENO, STDERR_FILENO) != STDERR_FILENO) {
 		syslog (LOG_ERR, "ERROR while opening '/dev/null' for stderr");
 		exit (1);
-	}*/
+	}
   	MQTTClient  client_charger;
   	MQTTClient_connectOptions conn_opts_charger = MQTTClient_connectOptions_initializer;
 
