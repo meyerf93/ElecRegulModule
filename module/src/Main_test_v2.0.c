@@ -1145,7 +1145,7 @@ void Time_init(void)
 
 
 int main()
-{
+{/*
 	// 1. fork off the parent process
 	fork_process();
 
@@ -1193,7 +1193,7 @@ int main()
 	if (dup2 (STDIN_FILENO, STDERR_FILENO) != STDERR_FILENO) {
 		syslog (LOG_ERR, "ERROR while opening '/dev/null' for stderr");
 		exit (1);
-	}
+	}*/
   	MQTTClient  client_charger;
   	MQTTClient_connectOptions conn_opts_charger = MQTTClient_connectOptions_initializer;
 
