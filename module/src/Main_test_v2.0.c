@@ -766,7 +766,7 @@ void Battery_management(float P_s,MQTTClient* client)
      	//printf("========== Battery en charge ==========\n");
 
 		//Bloquer l'injection;
-		Grid_Feeding_allowed.Value = false; //Param 1127;
+		Grid_Feeding_allowed.Value = true; //Param 1127;
 
 		//Activer l'onduleur;
 		Inverter_Allowed.Value = true; //Param 1124;
@@ -938,6 +938,7 @@ void Algo(MQTTClient* client)
 	Ps=Pb;
 	printf("ps : %f, pb : %f\n",Ps,Pb);
 	Battery_management(Ps,client);
+//9:19;SOC = 43.000000;Eb = 449.309814;Pr = 0.000000;Ps = 449.309814;Pl = 5087.889648;Ppv = 3189.609863;Pb = 449.309814;Plsec = 2640.625000;Ibat = -11.000000;Ubat = 54.062500;Iac_in = 8.250000;Uac = 239.000000;
 	// On produit?
 	if (Eb >= 0)
 	{
