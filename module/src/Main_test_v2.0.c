@@ -1108,7 +1108,8 @@ void catch_alarm (int sig)
    	printf("Ibat = %f;", i_Battery_Charge_current.Value);
    	printf("Ubat = %f;",i_Battery_Voltage_Studer.Value);
    	printf("Iac_in = %f;", i_Input_current_AC_IN.Value);
-   	printf("Uac = %f;\n",i_Input_voltage_AC_IN.Value);
+   	printf("Uac = %f;",i_Input_voltage_AC_IN.Value);
+		printf("Max_grid_geed = %f;\n",Max_Grid_Feeding_current.Value);
 
    	FILE * fd = 0;
    	fd = fopen("read_fast.txt", "a");
@@ -1128,7 +1129,8 @@ void catch_alarm (int sig)
    	fprintf(fd,"Ibat = %f;", i_Battery_Charge_current.Value);
    	fprintf(fd,"Ubat = %f;",i_Battery_Voltage_Studer.Value);
    	fprintf(fd,"Iac_in = %f;", i_Input_current_AC_IN.Value);
-   	fprintf(fd,"Uac = %f;\n",i_Input_voltage_AC_IN.Value);
+   	fprintf(fd,"Uac = %f;",i_Input_voltage_AC_IN.Value);
+		fprintf(fd,"Max_grid_geed = %f;\n",Max_Grid_Feeding_current.Value);
   	fclose(fd);
 
   	//printf("time now %d:%d\n", (int)(Time_now/60), (int)(Time_now - (int)(Time_now/60)*60));
@@ -1170,7 +1172,7 @@ void Time_init(void)
 
 
 int main()
-{
+{	/*
 	// 1. fork off the parent process
 	fork_process();
 
@@ -1218,7 +1220,7 @@ int main()
 	if (dup2 (STDIN_FILENO, STDERR_FILENO) != STDERR_FILENO) {
 		syslog (LOG_ERR, "ERROR while opening '/dev/null' for stderr");
 		exit (1);
-	}
+	}*/
   	MQTTClient  client_charger;
   	MQTTClient_connectOptions conn_opts_charger = MQTTClient_connectOptions_initializer;
 
