@@ -130,7 +130,7 @@ volatile MQTTClient_deliveryToken deliveredtoken;
 void delivered(void *context, MQTTClient_deliveryToken dt)
 {
     UNUSED(context);
-    printf("Message with token value %d delivery confirmed\n", dt);
+    //printf("Message with token value %d delivery confirmed\n", dt);
     deliveredtoken = dt;
 }
 int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message)
