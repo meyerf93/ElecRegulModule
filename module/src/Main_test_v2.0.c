@@ -538,7 +538,7 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64]
   pubmsg.payload = payload_json;
   pubmsg.payloadlen = strlen(payload_json);
   pubmsg.qos = QOS;
-    	pubmsg.retained = 0;
+  pubmsg.retained = 0;
 
 	//printf("json message send : %s\n",pubmsg.payload);
     	MQTTClient_publishMessage(client, topic, &pubmsg, &token);
@@ -564,7 +564,7 @@ void Deconnection(struct connection* socket_struct)
 
 
 /*---------------------- Routine de lecture d'un parametre sur l'Xtender -----------------------*/
-int Read(t_param* Parametre,MQTTClient* client) /*,scom_frame_t* frame, scom_property_t* property ,char* buffer,size_t buffer_length, struct connection* socket_struct, struct studer_data* data,char * ret_val)*/
+int Read(t_param* Parametre,MQTTClient* client)
 {
   char data[64];
   sprintf(data,"[%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_READ);
@@ -574,8 +574,7 @@ int Read(t_param* Parametre,MQTTClient* client) /*,scom_frame_t* frame, scom_pro
 }
 /*----------------------------------------------------------------------------------------------*/
 /*---------------------- Routine de lecture d'un parametre sur l'Xtender -----------------------*/
-int Read_bat(t_param* Parametre,MQTTClient* client) /*,scom_frame_t* frame, scom_property_t* property ,char* buffer,size_t buffer_length, struct connection* socket_struct, struct studer_data* data,char * ret_val)*/
-{
+int Read_bat(t_param* Parametre,MQTTClient* client)
   char data[64];
   sprintf(data,"[%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_READ);
   //printf("data : %s\n",data);
@@ -735,7 +734,7 @@ int Init(MQTTClient* client){
 void Battery_management(float P_s,MQTTClient* client)
 {
 	// Unité de P_s en Watt
-	float Forcage_KWh_Charge_Decharge;
+	/*float Forcage_KWh_Charge_Decharge;
 	float Delta_SOC;
 	float Final_SOC;
 
@@ -745,8 +744,8 @@ void Battery_management(float P_s,MQTTClient* client)
 	Read_bat(&i_soc_value_battery,client); // Param 7002
 	Read_bat(&i_State_of_Health, client); // Param 7057
 	Bat_Capacite_disponible = i_State_of_Health.Value* Bat_Capacite_nominale*(i_soc_value_battery.Value - SOCmin);
-	/*printf("Value for bat cap : %f, state of healt : %f, bat cap nomi : %f, soc value : %f, socmin %f\n",
-				  Bat_Capacite_disponible, i_State_of_Health.Value, Bat_Capacite_nominale, i_soc_value_battery.Value, SOCmin);*/
+	//printf("Value for bat cap : %f, state of healt : %f, bat cap nomi : %f, soc value : %f, socmin %f\n",
+	//	 			Bat_Capacite_disponible, i_State_of_Health.Value, Bat_Capacite_nominale, i_soc_value_battery.Value, SOCmin);
 	Delta_SOC=Forcage_KWh_Charge_Decharge/Bat_Capacite_disponible*100;
 	//printf("Delta soc : %f, Forcage kwh : %f,Bap cat dispo : %f\n",Delta_SOC, Forcage_KWh_Charge_Decharge, Bat_Capacite_disponible);
 	Final_SOC= i_soc_value_battery.Value + Delta_SOC;
@@ -802,7 +801,7 @@ void Battery_management(float P_s,MQTTClient* client)
 
 		if (fabs(P_s) > Plsec)
 		{
-      		//printf("========== Injceter sur le reseaux ==========\n");
+      //printf("========== Injceter sur le reseaux ==========\n");
 
 			printf("DECHARGE DE LA BATTERIE\n");
 
@@ -821,7 +820,7 @@ void Battery_management(float P_s,MQTTClient* client)
 				Soc_Inject.Value = SOCmin;
 			}
 			Write_bat(&Soc_Backup,client);
-			Write_bat(&Soc_Inject,client);
+			Write_bat(&Soc_Inject,client);*/
 
 			//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
 			Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
@@ -894,7 +893,7 @@ void Calculs_p_k(void)
 	Pl = Pl;//Pl_1[(int)Time_now];
 	Pb = (Ppv - Pl);  //Puissance bilan
 
-	SOC = i_State_of_charge.Value;
+	SOC = i_soc_value_battery.Value;
 	printf("Soc value : %f\n",SOC);
 	//SOC = 90;
 
@@ -941,13 +940,14 @@ void Algo(MQTTClient* client)
 	// On produit?
 	if (Eb >= 0)
 	{
+		//la batterie est elle presque pleine ?
 		if (SOC >= 0.97*SOCmax)
 		{
-
+			//la batterie est trop pleine ?
 			if (SOC >= SOCmax)
 			{
-      				printf("STATE = 4;");
-      				STATE = 4;
+      	printf("STATE = 4;");
+      	STATE = 4;
 				Ps = 0;
 				Pr = Pb;
 			}
@@ -960,22 +960,25 @@ void Algo(MQTTClient* client)
 
 		}
 		else
-		{
-      			printf("STATE = 3;");
-      			STATE = 3;
+		{	//la batterie n'est pas trop pas encore pleine
+      printf("STATE = 3;");
+      STATE = 3;
 			Ps = Pb;
 			Pr = 0;
 		}
 		Battery_management(Ps,client);
+		// la puissance max demander au réseau est elle trop grande ?
 		if (fabs(Pr) >= Prmax)
 		{
 			Pr = Prmax;
 		}
 	}
 	else
-	{
+	{ // non on ne produit pas
+		// la batterie est elle presque vide ?
 		if (1.03*SOCmin >= SOC)
 		{
+			// la batterie est elle vraiment vide ?
 			if (SOCmin >= SOC)
 			{
       				STATE = 2;
@@ -990,8 +993,8 @@ void Algo(MQTTClient* client)
 		}
 		else
 		{
-      			STATE = 1;
-      			printf("STATE = 1;");
+      STATE = 1;
+    	printf("STATE = 1;");
 			Ps = Pb;
 			Pr = 0;
 			//Kr = Ppv / Pl;
@@ -1022,18 +1025,12 @@ void Write_p(MQTTClient* client)/*scom_frame_t* frame,scom_property_t* property 
 
  	if(INJ==1)
 	{
-  		/*Write(&Start_Time_forced_injection, frame, property,
- 			buffer, buffer_length, socket_struct,data,ret_val);	*/
  		Write(&Start_Time_forced_injection,client);
-  	}
-  	/*Write(&Stop_Time_forced_injection, frame, property,
- 		buffer, buffer_length, socket_struct,data,ret_val);*/
+  }
   	Write(&Stop_Time_forced_injection,client);
 
   	if(Force_floating.Value == 1)
 	{
-    	/*Write(&Force_floating, frame, property,buffer,
-			buffer_length, socket_struct,data,ret_val); */
     	Write(&Force_floating,client);
 
     	Force_floating.Value = 0;
@@ -1041,8 +1038,6 @@ void Write_p(MQTTClient* client)/*scom_frame_t* frame,scom_property_t* property 
 
  	if(Force_new_cycle.Value == 1)
 	{
- 		/*Write(&Force_new_cycle, frame, property,
-			buffer, buffer_length, socket_struct,data,ret_val);*/
 		Write(&Force_new_cycle,client);
 		Force_new_cycle.Value = 0;
 	}
@@ -1092,10 +1087,12 @@ void catch_alarm (int sig)
  	if(i == 6) i = 0;
  		get_Time();
    	printf("%d:%d;", (int)(Time_now/60), (int)(Time_now - (int)(Time_now/60)*60));
-		printf(" Soc_Backup, = %f;", Soc_Backup);
-		printf(" Soc_Inject, = %f;", Soc_Inject);
-   	printf(" SOC = %f;", SOC);
-   	printf(" Kg = %f;", Kg);
+		//printf(" Soc_Backup, = %f;", Soc_Backup);
+		//printf(" Soc_Inject, = %f;", Soc_Inject);
+   	printf("SOC = %f;", SOC);
+		printf("Eb = %f;", Eb);
+		printf("Pr = %f;", Pr);
+   	//printf("Kg = %f;", Kg);
    	printf("Ps = %f;", Ps);
    	printf("Pl = %f;", Pl);
    	printf("Ppv = %f;", Ppv);
@@ -1110,10 +1107,12 @@ void catch_alarm (int sig)
    	fd = fopen("read_fast.txt", "a");
    	fprintf(fd,"STATE = %d;",STATE);
    	fprintf(fd,"%d:%d;", (int)(Time_now/60), (int)(Time_now - (int)(Time_now/60)*60));
-		fprintf(fd," Soc_Backup, = %f;", Soc_Backup);
-		fprintf(fd," Soc_Inject, = %f;", Soc_Inject);
-   	fprintf(fd," SOC = %f;", SOC);
-   	fprintf(fd," Kg = %f;", Kg);
+		//fprintf(fd," Soc_Backup, = %f;", Soc_Backup);
+		//fprintf(fd," Soc_Inject, = %f;", Soc_Inject);
+   	fprintf(fd,"SOC = %f;", SOC);
+		fprintf(fd,"Eb = %f;",Eb);
+		fpruntf(fd,"Pr = %f;",Pr);
+   	//fprintf(fd," Kg = %f;", Kg);
    	fprintf(fd,"Ps = %f;", Ps);
    	fprintf(fd,"Pl = %f;", Pl);
    	fprintf(fd,"Ppv = %f;", Ppv);
@@ -1165,7 +1164,7 @@ void Time_init(void)
 
 int main()
 {
-
+	/*
 	// 1. fork off the parent process
 	fork_process();
 
@@ -1213,7 +1212,7 @@ int main()
 	if (dup2 (STDIN_FILENO, STDERR_FILENO) != STDERR_FILENO) {
 		syslog (LOG_ERR, "ERROR while opening '/dev/null' for stderr");
 		exit (1);
-	}
+	}*/
   	MQTTClient  client_charger;
   	MQTTClient_connectOptions conn_opts_charger = MQTTClient_connectOptions_initializer;
 
