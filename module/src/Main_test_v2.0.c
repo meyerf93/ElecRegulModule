@@ -772,6 +772,8 @@ void Battery_management(float P_s,MQTTClient* client)
 		Smart_boost_allowed.Value = true; //Param 1126;
 		//Autoriser la charge;
 		Charger_allowed.Value = true; //Param 1125;
+		//tran transfert allowed
+		Transfer_relay_allowed.Value = 1; //Param 1128
 
 		//MODE INSPECT CONTROL : Calcul de la courant max de charge;
 		Battery_Charge_current_DC.Value = fabs(P_s) / i_Battery_Voltage_Studer.Value;
@@ -781,15 +783,16 @@ void Battery_management(float P_s,MQTTClient* client)
 		printf("Battery charge current DC = %f\n", Battery_Charge_current_DC.Value);
 
 		MAX_current_of_AC_IN.Value = 8000 / i_Input_voltage_AC_IN.Value;
-		printf("Max grid feeding current : %f\n", MAX_current_of_AC_IN.Value);
+		printf("Max current of ac in : %f\n", MAX_current_of_AC_IN.Value);
 		if(MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value = 34.0; // 8.6 pour 2 kw
+
+		Force_new_cycle.Value = 1;
 	}
   	else // ON DECHARGE
 	{
     	//Puissance des batteries suffisante pour alimenter le CS ?
     	charge_on = 0;
-			Batt_priority_source.Value = false;
-
+			Batt_priority_source.Value = false;x
 			if (fabs(P_s) > Plsec)
 			{
       	printf("========== Injceter sur le reseaux ==========\n");
@@ -798,13 +801,13 @@ void Battery_management(float P_s,MQTTClient* client)
 				Charger_allowed.Value = false;//Param 1125;
 				//Activer l'onduleur;
 				Inverter_Allowed.Value = true; //Param 1124;
+				//Autoriser l'injection;
+				Grid_Feeding_allowed.Value = true; //Param 1127;
 
 				//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
 				Max_Grid_Feeding_current.Value = fabs(Pr) / i_Input_voltage_AC_IN.Value;
 				if(Max_Grid_Feeding_current.Value >= i_Battery_Current_Discharge_limit.Value) Max_Grid_Feeding_current.Value = i_Battery_Current_Discharge_limit.Value;													//value dynamic for discharge
 				if(Max_Grid_Feeding_current.Value >= 34.0) Max_Grid_Feeding_current.Value = 34.0; // 8.6 pour 2 kW
-	      //Autoriser l'injection;
-				Grid_Feeding_allowed.Value = true; //Param 1127;
 
 				//Temps d'injection;
 				Start_Time_forced_injection.Value = Time_now+1; //L?injection débuterai dans 1 minute
@@ -998,12 +1001,12 @@ void Write_p(MQTTClient* client)/*scom_frame_t* frame,scom_property_t* property 
   }
   	Write(&Stop_Time_forced_injection,client);
 
-  	if(Force_floating.Value == 1)
+  if(Force_floating.Value == 1)
 	{
     	Write(&Force_floating,client);
 
     	Force_floating.Value = 0;
-    }
+  }
 
  	if(Force_new_cycle.Value == 1)
 	{

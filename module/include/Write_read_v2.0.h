@@ -134,7 +134,7 @@ int Write(t_param* Parametre,MQTTClient* client);
 #define SMART_BOOS_ALLOWED  "xcom1/:101/:/config/:/1126"
 #define MAX_CURRENT_OF_AC_IN  "xcom1/:101/:/config/:/1107"
 	/*-------------------- AC-IN and transfert ---------------------*/
-	t_param Transfer_relay_allowed = {1128, 2, 5, 1, 1}; // PCO param inutile
+	t_param Transfer_relay_allowed = {1128, 2, 5, 1, 1}; // PCO param inutile ?
 	t_param Smart_boost_allowed = 	 {1126, 2, 5, 1, 1}; // PCO OK voir alogo ensuite
 	t_param MAX_current_of_AC_IN =   {1107, 2, 5, 6, 35};//step 1 PCO : OK
 	/*-------------------------------------------------------------*/
