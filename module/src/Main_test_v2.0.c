@@ -746,7 +746,7 @@ void Battery_management(float P_s,MQTTClient* client)
 	//Read_bat(&i_State_of_Health, client); // Param 7057
 	//Bat_Capacite_disponible = i_State_of_Health.Value* Bat_Capacite_nominale*(i_soc_value_battery.Value - SOCmin);
 	//printf("Value for bat cap : %f, state of healt : %f, bat cap nomi : %f, soc value : %f, socmin %f\n",
-	//	 			Bat_Capacite_disponible, i_State_of_Health.Value, Bat_Capacite_nominale, i_soc_value_battery.Value, SOCmin);
+	//Bat_Capacite_disponible, i_State_of_Health.Value, Bat_Capacite_nominale, i_soc_value_battery.Value, SOCmin);
 	//Delta_SOC=Forcage_KWh_Charge_Decharge/Bat_Capacite_disponible*100;
 	//printf("Delta soc : %f, Forcage kwh : %f,Bap cat dispo : %f\n",Delta_SOC, Forcage_KWh_Charge_Decharge, Bat_Capacite_disponible);
 	//Final_SOC= i_soc_value_battery.Value + Delta_SOC;
@@ -762,42 +762,27 @@ void Battery_management(float P_s,MQTTClient* client)
 	if(Ps >= 0)
 	{
 		printf("CHARGE DE LA BATTERIE\n");
+		printf("========== Battery en charge ==========\n");
 		INJ=0;
-     	//printf("========== Battery en charge ==========\n");
-
 		//Bloquer l'injection;
-		Grid_Feeding_allowed.Value = true; //Param 1127;
-
+		Grid_Feeding_allowed.Value = false; //Param 1127;
 		//Activer l'onduleur;
 		Inverter_Allowed.Value = true; //Param 1124;
-
-
-		/*if(Soc_Backup.Value > SOCmax) {
-			Soc_Backup.Value = SOCmax;
-			Soc_Inject.Value = SOCmax;
-		}
-		else if (Soc_Backup.Value < SOCmin) {
-			Soc_Backup.Value = SOCmin;
-			Soc_Inject.Value = SOCmin;
-		}
-		Write_bat(&Soc_Backup,client);
-		Write_bat(&Soc_Inject,client);*/
+		//Activation du SmartBoost;
+		Smart_boost_allowed.Value = true; //Param 1126;
+		//Autoriser la charge;
+		Charger_allowed.Value = true; //Param 1125;
 
 		//MODE INSPECT CONTROL : Calcul de la courant max de charge;
 		Battery_Charge_current_DC.Value = fabs(P_s) / i_Battery_Voltage_Studer.Value;
 		printf("Battery current charge limit : %f\n",i_Battery_Current_Charge_limit.Value);
-		//printf("Battery Charge Current DC : %f\n",Battery_Charge_current_DC.Value);
     if(Battery_Charge_current_DC.Value >= i_Battery_Current_Charge_limit.Value) Battery_Charge_current_DC.Value = i_Battery_Current_Charge_limit.Value;
 		if(Battery_Charge_current_DC.Value >= 55) Battery_Charge_current_DC.Value = 55;
 		printf("Battery charge current DC = %f\n", Battery_Charge_current_DC.Value);
 
 		MAX_current_of_AC_IN.Value = 8000 / i_Input_voltage_AC_IN.Value;
 		printf("Max grid feeding current : %f\n", MAX_current_of_AC_IN.Value);
-		if(MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value = 34.0; // 8.6 pour 2 kW
-
-		//Autoriser la charge;
-		Charger_allowed.Value = true; //Param 1125;
-
+		if(MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value = 34.0; // 8.6 pour 2 kw
 	}
   	else // ON DECHARGE
 	{
@@ -809,32 +794,16 @@ void Battery_management(float P_s,MQTTClient* client)
 			{
       	printf("========== Injceter sur le reseaux ==========\n");
 				printf("DECHARGE DE LA BATTERIE\n");
-
 				//Bloquer la charge;
 				Charger_allowed.Value = false;//Param 1125;
-
 				//Activer l'onduleur;
 				Inverter_Allowed.Value = true; //Param 1124;
 
-				/*if(Soc_Backup.Value > SOCmax) {
-					Soc_Backup.Value = SOCmax;
-					Soc_Inject.Value = SOCmax;
-				}
-				else if (Soc_Backup.Value < SOCmin) {
-					Soc_Backup.Value = SOCmin;
-					Soc_Inject.Value = SOCmin;
-				}
-				Write_bat(&Soc_Backup,client);
-				Write_bat(&Soc_Inject,client);*/
-
 				//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
 				Max_Grid_Feeding_current.Value = fabs(Pr) / i_Input_voltage_AC_IN.Value;
-				//printf("Max grid feeding current : %f\n", Max_Grid_Feeding_current.Value);
-				//printf("Max battery current discharge : %f\n", i_Battery_Current_Discharge_Limit.Value);
 				if(Max_Grid_Feeding_current.Value >= i_Battery_Current_Discharge_limit.Value) Max_Grid_Feeding_current.Value = i_Battery_Current_Discharge_limit.Value;													//value dynamic for discharge
 				if(Max_Grid_Feeding_current.Value >= 34.0) Max_Grid_Feeding_current.Value = 34.0; // 8.6 pour 2 kW
-				/*printf("Max grid feeding current discharge : %f\n",Max_Grid_Feeding_current.Value);*/
-	      			//Autoriser l'injection;
+	      //Autoriser l'injection;
 				Grid_Feeding_allowed.Value = true; //Param 1127;
 
 				//Temps d'injection;
@@ -846,41 +815,35 @@ void Battery_management(float P_s,MQTTClient* client)
 			else
 			{
 				printf("ALIMENTATION DES CHARGES SECURISEES");
-
 				INJ=0;
-	      			//printf("========== Puissance insuff pour injecter, alim le charge securisé ==========\n");
-
+	     	//printf("========== Puissance insuff pour injecter, alim le charge securisé ==========\n");
 				//Bloquer la charge
 				Charger_allowed.Value = false; //Param 1125;
-
 				//Bloquer l'injection;
 				Grid_Feeding_allowed.Value = false; //Param 1127;
-
 				//Activer l'onduleur;
 				Inverter_Allowed.Value = true; //Param 1124;
-
 				//Activation du SmartBoost;
 				Smart_boost_allowed.Value = true; //Param 1126;
-
 				//Utilisation de la batterie comme source prioritaire;
 				Batt_priority_source.Value = true; //Param 1296;
 
-				/*if(Soc_Backup.Value > SOCmax) {
-					Soc_Backup.Value = SOCmax;
-					Soc_Inject.Value = SOCmax;
-				}
-				else if (Soc_Backup.Value < SOCmin) {
-					Soc_Backup.Value = SOCmin;
-					Soc_Inject.Value = SOCmin;
-				}
-				Write_bat(&Soc_Backup,client);
-				Write_bat(&Soc_Inject,client);*/
 				// PCO a priori pas de sécu à mettre ici pour batterie
 	    	MAX_current_of_AC_IN.Value = (Plsec-fabs(Ps))/i_Input_voltage_AC_IN.Value;
 	    	if (MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value=34.0;
 				Force_floating.Value = 1.0;
 		}
 	}
+	/*if(Soc_Backup.Value > SOCmax) {
+		Soc_Backup.Value = SOCmax;
+		Soc_Inject.Value = SOCmax;
+	}
+	else if (Soc_Backup.Value < SOCmin) {
+		Soc_Backup.Value = SOCmin;
+		Soc_Inject.Value = SOCmin;
+	}
+	Write_bat(&Soc_Backup,client);
+	Write_bat(&Soc_Inject,client);*/
 }
 /*----------------------------------------------------------------------------------------------*/
 
