@@ -568,7 +568,7 @@ int Read(t_param* Parametre,MQTTClient* client)
 {
   char data[64];
   sprintf(data,"[%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_READ);
-  printf("data : %s\n",data);
+  //printf("data : %s\n",data);
 	send_json_obj(client,TOPIC_WRITE,data,XCOM,XCOM_ID_CHARGER);
 	return 1;
 }
@@ -578,7 +578,7 @@ int Read_bat(t_param* Parametre,MQTTClient* client)
 {
   char data[64];
   sprintf(data,"[%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_READ);
-  printf("data : %s\n",data);
+  //printf("data : %s\n",data);
 	send_json_obj(client,TOPIC_WRITE,data,XCOM,XCOM_ID_BAT);
 	return 1;
 }
