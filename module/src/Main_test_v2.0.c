@@ -349,7 +349,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 		else if (strstr(payload,GRID_FEEDING_ALLOWED) != NULL){
 		Grid_Feeding_allowed.Value=(float)data->valueint;
 		}
-		else if (strstr(payload,MAX_GRID_FEEDIN_CURRENT) != NULL){
+		else if (strstr(payload,MAX_GRID_FEEDING_CURRENT) != NULL){
 		Max_Grid_Feeding_current.Value=(float)data->valuedouble;
 		}
 		else if (strstr(payload,BATTERY_VOLTAGE_FORCED_FEEDING) != NULL){
@@ -759,6 +759,7 @@ void Battery_management(float P_s,MQTTClient* client)
 
 	// ON CHARGE Ps>=0
 	//if (Delta_SOC >= 0)
+	Ps = -Ps;
 	if(Ps >= 0)
 	{
 		printf("CHARGE DE LA BATTERIE\n");
@@ -807,9 +808,6 @@ void Battery_management(float P_s,MQTTClient* client)
 				Smart_boost_allowed.Value = true; //Param 1126;
 				//tran transfert allowed
 				Transfer_relay_allowed.Value = 1; //Param 1128
-				//force un nouveau cycle
-				Force_new_cycle.Value = 1;
-
 
 				//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
 				Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
@@ -954,7 +952,7 @@ void Algo(MQTTClient* client)
 		{
 			Pr = Prmax;
 		}
-	}
+	} // -------------------------------------------------------------------------
 	else
 	{ // non on ne produit pas
 		// la batterie est elle presque vide ?

@@ -153,7 +153,7 @@ int Write(t_param* Parametre,MQTTClient* client);
 	/*---------------------------------------------------------*/
 
 #define GRID_FEEDING_ALLOWED  "xcom1/:101/:/config/:/1127"
-#define MAX_GRID_FEEDIN_CURRENT  "xcom1/:101/:/config/:/1523"
+#define MAX_GRID_FEEDING_CURRENT  "xcom1/:101/:/config/:/1523"
 #define BATTERY_VOLTAGE_FORCED_FEEDING  "xcom1/:101/:/config/:/1524"
 #define START_TIME_FORCED_INJECTION  "xcom1/:101/:/config/:/1525"
 #define STOP_TIME_FORCED_INJECTION  "xcom1/:101/:/config/:/1526"
