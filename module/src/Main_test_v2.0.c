@@ -758,8 +758,6 @@ void Battery_management(float P_s,MQTTClient* client)
 	//Soc_Inject.Value = Final_SOC;
 
 	// ON CHARGE Ps>=0
-	//if (Delta_SOC >= 0)
-	Ps = -Ps;
 	if(Ps >= 0)
 	{
 		printf("CHARGE DE LA BATTERIE\n");
