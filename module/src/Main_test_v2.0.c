@@ -768,7 +768,7 @@ void Battery_management(float P_s,MQTTClient* client)
 		//Activer l'onduleur;
 		Inverter_Allowed.Value = false; //Param 1124;
 		//Activation du SmartBoost;
-		Smart_boost_allowed.Value = true; //Param 1126;
+		Smart_boost_allowed.Value = false; //Param 1126;
 		//Autoriser la charge;
 		Charger_allowed.Value = true; //Param 1125;
 		//tran transfert allowed
