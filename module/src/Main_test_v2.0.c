@@ -812,7 +812,7 @@ void Battery_management(float P_s,MQTTClient* client)
 
 
 				//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
-				Max_Grid_Feeding_current.Value = fabs(Pr) / i_Input_voltage_AC_IN.Value;
+				Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
 				if(Max_Grid_Feeding_current.Value >= i_Battery_Current_Discharge_limit.Value) Max_Grid_Feeding_current.Value = i_Battery_Current_Discharge_limit.Value;													//value dynamic for discharge
 				if(Max_Grid_Feeding_current.Value >= 34.0) Max_Grid_Feeding_current.Value = 34.0; // 8.6 pour 2 kW
 
