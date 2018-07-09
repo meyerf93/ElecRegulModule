@@ -791,10 +791,10 @@ void Battery_management(float P_s,MQTTClient* client)
 		if(Battery_Charge_current_DC.Value >= 55) Battery_Charge_current_DC.Value = 55;
 		printf("Battery charge current DC = %f\n", Battery_Charge_current_DC.Value);
 
-		MAX_CURRENT_OF_AC_IN.Value = 8000 / i_Input_voltage_AC_IN.Value;
-		printf("Max grid feeding current : %f\n", MAX_CURRENT_OF_AC_IN.Value);
+		MAX_current_of_AC_IN.Value = 8000 / i_Input_voltage_AC_IN.Value;
+		printf("Max grid feeding current : %f\n", MAX_current_of_AC_IN.Value);
 		printf("Max battery current discharge : %f\n", i_Battery_Current_Discharge_Limit.Value);
-		if(MAX_CURRENT_OF_AC_IN.Value >= 34.0) MAX_CURRENT_OF_AC_IN.Value = 34.0; // 8.6 pour 2 kW
+		if(MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value = 34.0; // 8.6 pour 2 kW
 
 		//Autoriser la charge;
 		Charger_allowed.Value = true; //Param 1125;
