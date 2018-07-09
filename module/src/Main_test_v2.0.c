@@ -1112,7 +1112,7 @@ void catch_alarm (int sig)
 		//fprintf(fd," Soc_Inject, = %f;", Soc_Inject);
    	fprintf(fd,"SOC = %f;", SOC);
 		fprintf(fd,"Eb = %f;",Eb);
-		fpruntf(fd,"Pr = %f;",Pr);
+		fprintf(fd,"Pr = %f;",Pr);
    	//fprintf(fd," Kg = %f;", Kg);
    	fprintf(fd,"Ps = %f;", Ps);
    	fprintf(fd,"Pl = %f;", Pl);
