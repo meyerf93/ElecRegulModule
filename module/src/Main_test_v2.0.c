@@ -792,7 +792,7 @@ void Battery_management(float P_s,MQTTClient* client)
 	{
     	//Puissance des batteries suffisante pour alimenter le CS ?
     	charge_on = 0;
-			Batt_priority_source.Value = false;x
+			Batt_priority_source.Value = false;
 			if (fabs(P_s) > Plsec)
 			{
       	printf("========== Injceter sur le reseaux ==========\n");
