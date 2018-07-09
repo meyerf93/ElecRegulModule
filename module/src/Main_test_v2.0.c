@@ -252,8 +252,8 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	//parse packet for xcom
 	if (strstr(payload,XCOM_ID_CHARGER) != NULL){
 		root = cJSON_Parse(payload);
-    //printf("receive paylaod with xcom : %s\n",payload);
-    //printf("palyoad parsed : %s\n",cJSON_Print(root));
+    printf("receive paylaod with xcom : %s\n",payload);
+    printf("palyoad parsed : %s\n",cJSON_Print(root));
 
 		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 		if (strstr(payload,CHARGER_ALLOWED) != NULL){
