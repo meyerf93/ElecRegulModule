@@ -237,7 +237,7 @@ int Write(t_param* Parametre,MQTTClient* client);
 
 	#define I_BATTERY_VOLTAVGE "xcom1/:600/:/config/:/7000"
 	#define I_BATTERYY_CURRENT "xcom1/:600/:/config/:/7001"
-	#define I_SOC_VALUE_BATTERY "xcom1/:600/:/config/:/7002"
+	#define I_SOC_VALUE_BATTERY "xcom1/:600/:/config/:/7047"
 	#define I_STATE_OF_HEALTH "xcom1/:600/:/config/:/7057"
 	#define I_BATTERY_VOLTAGE_CHARGE_LIMIT "xcom1/:600/:/config/:/7061"
 	#define I_BATTERY_VOLTAGE_DISCHARGE_LIMIT "xcom1/:600/:/config/:/7062"
@@ -254,7 +254,7 @@ int Write(t_param* Parametre,MQTTClient* client);
 
 	t_param i_Battery_Voltage = 	{7000, 1, 1, 6, 0};
 	t_param i_Battery_Current = 	{7001, 1, 1, 6, 0};
-	t_param i_soc_value_battery = {7002, 1, 1, 6, 0};
+	t_param i_soc_value_battery = {7047, 1, 1, 6, 0};
 	t_param i_State_of_Health = 	{7057, 1, 1, 6, 0};
 
 
