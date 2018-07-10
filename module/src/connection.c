@@ -15,7 +15,7 @@
  *
  * Project:		HEIA-FR /Open MicropGrid Management System
  *
- * Abstract: 	srouce file containing the information for the connection to 
+ * Abstract: 	srouce file containing the information for the connection to
  *				the module Xcon-232i
  *
  * @author 	Florian Meyer
@@ -32,7 +32,6 @@
 #include <unistd.h>
 #include <errno.h>
 #include <arpa/inet.h>
-
 #include "connection.h"
 
 /**
@@ -110,8 +109,8 @@ void clear_serial_port(struct connection* self){
  * * \return number of byte read
  */
 size_t read_serial_port(struct connection* self){
-	
-	//try to read the data on the port	
+
+	//try to read the data on the port
 	size_t byte_read = 0;
 	while(byte_read !=self->buf_rx_length){
 		byte_read = read(self->fd,&self->buf_rx[self->start_read],self->buf_rx_length);
@@ -128,7 +127,7 @@ size_t read_serial_port(struct connection* self){
 	}
 	printf("\n");
 	printf("total byte read : %ld\n",byte_read);*/
-	return byte_read;	
+	return byte_read;
 }
 
 /**
@@ -150,7 +149,7 @@ int write_serial_port(struct connection* self){
 			}
 			usleep(100000);//MUST HAVE
 		}
-		//printf("byte send : %d\n",byte_send);	
+		//printf("byte send : %d\n",byte_send);
 	}
 	else{
 		fprintf(stderr,"ERROR : can't send a null or negative number of byte\n");
@@ -186,19 +185,19 @@ void close_serial_port(struct connection* self){
 	socket_struct->connection_write = &write_socket_ipv4;
 	socket_struct->connection_clear = &clear_socket_ipv4;
 	socket_struct->start_read = 0;
-	
+
 	//create a socket ipv4
 	socket_struct->fd = socket(AF_INET, SOCK_STREAM, 0);
 	socket_struct->connect.socket.sin_family = AF_INET;
 	inet_pton(AF_INET,addresse, &socket_struct->connect.socket.sin_addr);
 	socket_struct->connect.socket.sin_port = htons(4001);
 	connect (socket_struct->fd, (struct sockaddr *) &socket_struct->connect.socket,sizeof(socket_struct->connect.socket));
-	
+
 	clear_socket_ipv4(socket_struct);
-	
+
 
 	//try to open a socket ipv4
-	
+
     if(socket_struct->fd == -1){
 		fprintf(stderr,"ERROR : can't open serial port fd\n");
 		return -1;
@@ -211,17 +210,17 @@ void close_serial_port(struct connection* self){
     return 0;
  }
 
- 
+
  void clear_socket_ipv4(struct connection* self){
 	 //clear the rx/tx buffer
 	for(unsigned int i=0;i<sizeof(self->buf_tx);++i){
 		self->buf_tx[i]=0x0;
 		self->buf_rx[i]=0x0;
-	}	 
+	}
  }
- 
+
  size_t read_socket_ipv4(struct connection* self){
-	//try to read the data on the s	
+	//try to read the data on the s
 	size_t byte_read = 0;
 	while(byte_read !=self->buf_rx_length){
 		byte_read = read(self->fd,&self->buf_rx[self->start_read],self->buf_rx_length);
@@ -238,9 +237,9 @@ void close_serial_port(struct connection* self){
 	}
 	printf("\n");
 	printf("total byte read : %ld\n",byte_read);*/
-	return byte_read;	
+	return byte_read;
  }
- 
+
  int write_socket_ipv4(struct connection* self){
 	int byte_send = 0;
 	//try to send a single byte
@@ -254,7 +253,7 @@ void close_serial_port(struct connection* self){
 			}
 			//usleep(100000);//MUST HAVE
 		}
-		//printf("byte send : %d\n",byte_send);	
+		//printf("byte send : %d\n",byte_send);
 	}
 	else{
 		fprintf(stderr,"ERROR : can't send a null or negative number of byte\n");
@@ -269,8 +268,8 @@ void close_serial_port(struct connection* self){
 	printf("%d byte is send to port ttyUSB0 successfully\n",byte_send);*/
 	return byte_send;
  }
- 
+
  void close_socket_ipv4(struct connection* socket_struct){
 	 //try to close the socket
-	 close(socket_struct->fd);	 
+	 close(socket_struct->fd);
  }
