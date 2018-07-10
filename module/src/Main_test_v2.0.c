@@ -143,7 +143,6 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
   UNUSED(context);
   UNUSED(topicLen);
 
-
 	bool I_paquet;
 	int select_meters;
 	 //select right mqtt packet ----------
@@ -519,17 +518,17 @@ void connlost(void *context, char *cause)
 // MQTTT communication with studer
 void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64], char id[64])
 {
-  printf("value receive in send_json : %s,%s,%s,%s\n",topic,data,mdl,id);
+  //printf("value receive in send_json : %s,%s,%s,%s\n",topic,data,mdl,id);
   cJSON * root;
 	root = cJSON_CreateObject();
   cJSON_AddStringToObject(root,"mdl",mdl);
   cJSON_AddStringToObject(root,"cmd",id);
   cJSON_AddStringToObject(root,"value",data);
 	char* payload_json = cJSON_Print(root);
-  printf("message xcom to send json : %s\n",payload_json);
+  //printf("message xcom to send json : %s\n",payload_json);
 	strip(payload_json,SPACE);
 	char *temp_ptr = strstr(payload_json,"\"[");
-	printf("%s\n",temp_ptr);
+	//printf("%s\n",temp_ptr);
 	strip(temp_ptr,"\"");
 
 	MQTTClient_deliveryToken token;
@@ -540,7 +539,7 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64]
   pubmsg.qos = QOS;
   pubmsg.retained = 0;
 
-	printf("json message send : %s\n",pubmsg.payload);
+	//printf("json message send : %s\n",pubmsg.payload);
   MQTTClient_publishMessage(client, topic, &pubmsg, &token);
 }
 
@@ -618,7 +617,7 @@ int Write(t_param* Parametre,MQTTClient* client)
 		printf("ERROR : can't convert this format\n");
 	}
 
-	printf("data : %s\n",data);
+	//printf("data : %s\n",data);
 	send_json_obj(client,TOPIC_WRITE,data,XCOM,XCOM_ID_CHARGER);
 	return 1;
 }
