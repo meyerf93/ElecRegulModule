@@ -786,6 +786,9 @@ void Battery_management(float P_s,MQTTClient* client)
 		MAX_current_of_AC_IN.Value = 8000 / i_Input_voltage_AC_IN.Value;
 		printf("Max current of ac in : %f\n", MAX_current_of_AC_IN.Value);
 		if(MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value = 34.0; // 8.6 pour 2 kw
+
+		printf("==========================================\n");
+
 	}
   else // ON DECHARGE
 	{
@@ -820,12 +823,13 @@ void Battery_management(float P_s,MQTTClient* client)
 				Stop_Time_forced_injection.Value = Start_Time_forced_injection.Value +1+INJ;
 				//L'injection s'arrêtera après le nouveau cycle;
 				INJ++;
+				printf("==========================================\n");
 			}
 			else
 			{
-				printf("ALIMENTATION DES CHARGES SECURISEES");
+				printf("ALIMENTATION DES CHARGES SECURISEES\n");
 				INJ=0;
-	     	//printf("========== Puissance insuff pour injecter, alim le charge securisé ==========\n");
+	     	printf("========== Puissance insuff pour injecter, alim le charge securisé ==========\n");
 				//Bloquer la charge
 				Charger_allowed.Value = false; //Param 1125;
 				//Bloquer l'injection;
@@ -841,6 +845,9 @@ void Battery_management(float P_s,MQTTClient* client)
 	    	MAX_current_of_AC_IN.Value = (Plsec-fabs(Ps))/i_Input_voltage_AC_IN.Value;
 	    	if (MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value=34.0;
 				Force_floating.Value = 1.0;
+
+				printf("==========================================\n");
+
 		}
 	}
 	/*if(Soc_Backup.Value > SOCmax) {
@@ -924,14 +931,14 @@ void Algo(MQTTClient* client)
 			//la batterie est trop pleine ?
 			if (SOC >= SOCmax)
 			{
-      	printf("STATE = 4;");
+      	printf("STATE = 4;\n");
       	STATE = 4;
 				Ps = 0;
 				Pr = Pb;
 			}
 			else
 			{
-				printf("STATE = 5;");
+				printf("STATE = 5;\n");
 				STATE = 5;
 				Ps =  Ps;
 			}
@@ -939,7 +946,7 @@ void Algo(MQTTClient* client)
 		}
 		else
 		{	//la batterie n'est pas trop pas encore pleine
-      printf("STATE = 3;");
+      printf("STATE = 3;\n");
       STATE = 3;
 			Ps = Pb;
 			Pr = 0;
@@ -960,7 +967,7 @@ void Algo(MQTTClient* client)
 			if (SOCmin >= SOC)
 			{
       	STATE = 2;
-      	printf("STATE = 2;");
+      	printf("STATE = 2;\n");
       	Ps = Psmax_charge;
 				Pr = Pb;
 			}
@@ -972,7 +979,7 @@ void Algo(MQTTClient* client)
 		else
 		{
     	STATE = 1;
-    	printf("STATE = 1;");
+    	printf("STATE = 1;\n");
 			Ps = Pb;
 			Pr = 0;
 			//Kr = Ppv / Pl;
@@ -1143,7 +1150,7 @@ void Time_init(void)
 
 
 int main()
-{/*
+{
 	// 1. fork off the parent process
 	fork_process();
 
@@ -1191,7 +1198,7 @@ int main()
 	if (dup2 (STDIN_FILENO, STDERR_FILENO) != STDERR_FILENO) {
 		syslog (LOG_ERR, "ERROR while opening '/dev/null' for stderr");
 		exit (1);
-	}*/
+	}
   	MQTTClient  client_charger;
   	MQTTClient_connectOptions conn_opts_charger = MQTTClient_connectOptions_initializer;
 
