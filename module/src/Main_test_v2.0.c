@@ -544,24 +544,6 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64]
 }
 
 
-/*---------------------- Routine de connection à la cible via IPV4 ----------------------------- */
-int Connection(const char* address,struct connection* socket_struct)
-     	{
-	if(connection == IPV4) result = initialize_socket_ipv4(address,socket_struct);
-		if(result == -1) return result;
-		return 1;
-     	}
-/*----------------------------------------------------------------------------------------------*/
-
-
-/*---------------------- Routine de connection à la cible via IPV4 -----------------------------*/
-void Deconnection(struct connection* socket_struct)
-     {
-      if(connection == IPV4) close_socket_ipv4(socket_struct);
-     }
-/*----------------------------------------------------------------------------------------------*/
-
-
 /*---------------------- Routine de lecture d'un parametre sur l'Xtender -----------------------*/
 int Read(t_param* Parametre,MQTTClient* client)
 {
