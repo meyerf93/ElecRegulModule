@@ -31,11 +31,7 @@ Parametres:
 #include <time.h>
 #include <syslog.h>
 
-
 #include "Write_read_v2.0.h"
-#include "api_studer.h"
-#include "scom_data_link.h"
-#include "scom_property.h"
 
 #include <MQTTClient.h>
 //#include <json-c/json.h>
