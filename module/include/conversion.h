@@ -6,11 +6,11 @@
 //Date 	  : 13.07.2018
 //Status  : test
 
-#include "connection.h"
-#include "cJSON.h"
+//#include "connection.h"
+//#include "cJSON.h"
 
-#include <json.h>
-#include <MQTTClient.h>
+//#include <json.h>
+//#include <MQTTClient.h>
 
 #define BOOL_F 1
 #define FLOAT_F 6
