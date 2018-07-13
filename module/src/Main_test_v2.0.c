@@ -15,7 +15,6 @@ Parametres:
 
 #include <stdio.h>
 #include <string.h>
-#include <scom_property.h>
 #include <stdbool.h>
 #include <math.h>
 
