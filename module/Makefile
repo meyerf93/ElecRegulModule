@@ -28,8 +28,8 @@ JSON = -ljson-c
 #object,src and exec for the test of studer lib
 #on mac -I/usr/local/include -L/usr/local/lib option and -ljson-c option
 
-OBJECTS =$(OBJDIR)/cJSON.o $(OBJDIR)/scom_data_link.o $(OBJDIR)/api_studer.o $(OBJDIR)/scom_property.o $(OBJDIR)/connection.o $(OBJDIR)/Main_test_v2.0.o -lm
-SRCS = $(SRCDIR)/cJSON.c $(SRCDIR)/scom_data_link.c $(SRCDIR)/api_studer.c $(SRCCDIR)/scom_property.c $(SRCDIR)/Main_test_v2.0.c $(SRCDIR)/connection.c
+OBJECTS =$(OBJDIR)/cJSON.o $(OBJDIR)/scom_data_link.o  $(OBJDIR)/scom_property.o $(OBJDIR)/Main_test_v2.0.o -lm
+SRCS = $(SRCDIR)/cJSON.c $(SRCDIR)/scom_data_link.c .c $(SRCCDIR)/scom_property.c $(SRCDIR)/Main_test_v2.0.c
 EXEC = $(OBJDIR)/test_alog
 MAC = -I/usr/local/include -L/usr/local/lib -ljson-c
 
