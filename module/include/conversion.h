@@ -21,8 +21,8 @@
 
 void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64], char id[64]);
 
-int parse_energy_meters(string* payload);
+int parse_energy_meters(char* payload);
 
-void parse_studer_message(string* payload);
+void parse_studer_message(char* payload);
 
-void parse_batt_message(string* payload);
+void parse_batt_message(char* payload);

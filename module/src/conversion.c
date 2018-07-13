@@ -42,7 +42,7 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64]
 }
 
 //Parse the message from MQTT
-int parse_energy_meters(string* payload){
+int parse_energy_meters(char* payload){
   f (strstr(payload,PV_WEST) != NULL) {
 		return = 0;
 	}
@@ -91,7 +91,7 @@ int parse_energy_meters(string* payload){
   else return -1;
 }
 
-void parse_studer_message(string* payload) {
+void parse_studer_message(char* payload) {
   if (strstr(payload,CHARGER_ALLOWED) != NULL){
     Charger_allowed.Value =(float)data->valueint;
   }
@@ -298,7 +298,7 @@ void parse_studer_message(string* payload) {
   }
 }
 
-void parse_batt_message(string* payload){
+void parse_batt_message(char* payload){
   if(strstr(payload,SOC_BACKUP) != NULL){
     Soc_Backup.Value=(float) data->valueint;
   }

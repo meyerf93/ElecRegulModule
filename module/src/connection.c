@@ -97,7 +97,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 }
 
 /*---------------------- Routine de lecture d'un parametre sur l'Xtender -----------------------*/
-int Read(t_param* Parametre,MQTTClient* client,)
+int Read(t_param* Parametre,MQTTClient* client)
 {
   char data[64];
   sprintf(data,"[%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_READ);
