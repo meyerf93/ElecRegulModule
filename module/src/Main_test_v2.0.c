@@ -75,9 +75,6 @@ Parametres:
 
 #include "cJSON.h"
 
-char* address = "101";
-int connection = IPV4;
-int result = 0;
 double meters[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,0.0,0.0,0.0,0.0};
 
 
