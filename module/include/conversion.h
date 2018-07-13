@@ -11,7 +11,6 @@
 
 //#include <json.h>
 //#include <MQTTClient.h>
-
 #define BOOL_F 1
 #define FLOAT_F 6
 #define INT32_F 5
