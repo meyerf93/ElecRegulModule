@@ -34,7 +34,6 @@ Parametres:
 
 #include "Write_read_v2.0.h"
 #include "api_studer.h"
-#include "connection.h"
 #include "scom_data_link.h"
 #include "scom_property.h"
 
