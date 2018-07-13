@@ -1,10 +1,6 @@
 #ifndef INCLUDE_WRITE_READ_V1_H_
 #define INCLUDE_WRITE_READ_V1_H_
 
-#include "api_studer.h"
-#include "scom_data_link.h"
-#include "scom_property.h"
-#include "connection.h"
 #include <MQTTClient.h>
 
 //Fichier : Write_read_v1.h
@@ -38,9 +34,6 @@ typedef struct Parametres {
 			   float 	Value;
 			   }t_param;
 //commented for mqtt
-int Read(t_param* Parametre,MQTTClient* client);
-int Write(t_param* Parametre,MQTTClient* client);
-
 
 #define Not_Value -10
 #define PV_WEST 	"knx1/:1.1.8/:/power.1"
