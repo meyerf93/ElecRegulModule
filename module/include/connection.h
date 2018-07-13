@@ -40,7 +40,7 @@ void delivered(void *context, MQTTClient_deliveryToken dt);
 int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message);
 
 /*---------------------- Routine de lecture d'un parametre sur l'Xtender -----------------------*/
-int Read(t_param* Parametre,MQTTClient* client,);
+int Read(t_param* Parametre,MQTTClient* client);
 /*----------------------------------------------------------------------------------------------*/
 /*---------------------- Routine de lecture d'un parametre sur l'Xtender -----------------------*/
 int Read_bat(t_param* Parametre,MQTTClient* client);
