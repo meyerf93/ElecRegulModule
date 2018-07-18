@@ -12,6 +12,9 @@
 //Date 	  : 21.03.2017
 //Status  : test
 
+#define ARRAY_OF(x) (sizeof(x)/sizeof(x[0]))
+#define UNUSED(x) (void)(x)
+
 #define Not_Value -10
 #define PV_WEST 	"knx1/:1.1.8/:/power.1"
 #define PV_EAST 	"knx1/:1.1.10/:/power.1"

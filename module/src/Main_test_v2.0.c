@@ -41,10 +41,6 @@ Parametres:
 #define int_temp_us 0
 
 #include "cJSON.h"
-
-
-#define ARRAY_OF(x) (sizeof(x)/sizeof(x[0]))
-#define UNUSED(x) (void)(x)
 ;
 
 static int signal_catched = 0;
