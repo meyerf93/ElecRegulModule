@@ -46,6 +46,7 @@
 #define PAYLOAD     "Hello World!"
 #define QOS         1
 #define TIMEOUT     10000L
+;
 
 void connlost(void *context, char *cause);
 

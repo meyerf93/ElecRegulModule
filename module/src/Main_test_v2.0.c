@@ -44,8 +44,6 @@ Parametres:
 
 #include "cJSON.h"
 
-double meters[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,0.0,0.0,0.0,0.0};
-
 
 #define ARRAY_OF(x) (sizeof(x)/sizeof(x[0]))
 #define UNUSED(x) (void)(x)

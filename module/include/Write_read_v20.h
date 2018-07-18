@@ -269,6 +269,9 @@ typedef struct Parametres {
 	//Format : BOOL(1) FORMAT(2) ENUM(3) ERROR(4) INT32(5) FLOAT(6) STRING(7) DYNAMIC(8) BYTE_STREAM(9) LONG_ENUM(10) SHORT_ENUM(11)
   t_param Parameters_saved_in_flash_memory = {1550, 2, 5, 1, 0};
 
+double meters[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,0.0,0.0,0.0,0.0};
+
+
 float Bat_Capacite_nominale = 10.8;
 float Bat_Capacite_disponible =10.8; // avec un state of health de 100% batterie pleine et SOCmin=0%, 10.8 justeune valeu par défaut
 
