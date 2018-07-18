@@ -26,9 +26,7 @@
 
 #include "cJSON.h"
 #include <json.h>
-#include "MQTTClient.h"
-#include "MQTTClientPersistence.h"
-#include "MQTTAsync.h"
+#include <MQTTClient.h>
 
 #define BOOL_F 1
 #define FLOAT_F 6

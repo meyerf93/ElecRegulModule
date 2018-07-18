@@ -27,9 +27,7 @@
 #include <syslog.h>
 
 #include <json.h>
-#include "MQTTClient.h"
-#include "MQTTClientPersistence.h"
-#include "MQTTAsync.h"
+#include <MQTTClient.h>
 #include "cJSON.h"
 #include "type.h"
 
