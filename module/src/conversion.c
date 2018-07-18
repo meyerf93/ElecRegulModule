@@ -104,7 +104,7 @@ int parse_energy_meters(char* payload){
 		return 13;
 	}
 	else if (strstr(payload,OPTI_POWER) != NULL){
-		return = 14;
+		return 14;
 	}
   else return -1;
 }
