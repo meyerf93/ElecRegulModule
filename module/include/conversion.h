@@ -6,7 +6,7 @@
 //Date 	  : 13.07.2018
 //Status  : test
 
-#include "connection.h"
+//#include "connection.h"
 #include "cJSON.h"
 
 #include <json.h>
