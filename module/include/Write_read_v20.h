@@ -2,8 +2,6 @@
 #define INCLUDE_WRITE_READ_V1_H_
 
 #include <MQTTClient.h>
-#include "type.h"
-
 
 //Fichier : Write_read_v1.h
 //Projet  : PS6 Pilotage-micro réseau - Solar Decathlon 2017
