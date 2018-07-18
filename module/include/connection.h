@@ -27,7 +27,6 @@
 #include "MQTTAsync.h"
 #include "cJSON.h"
 #include "type.h"
-
 #define MQTTCLIENT_PERSISTENCE 0
 #define ADDRESS     "192.168.2.3:1883"
 #define CLIENTID_CHARGER	"Regul_elec_charger"
