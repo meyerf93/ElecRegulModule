@@ -239,8 +239,8 @@ void Battery_management(float P_s,MQTTClient* client)
 /*----------------------------------------------------------------------------------------------*/
 
 void state_management(int state){
-	switch case state:
-	case 1:{
+	switch (state){
+	case 1:
 		printf("case 1 of state management ----------------\n");
 		//Bloquer l'onduleur;
 		Inverter_Allowed.Value = false; //Param 1124;
@@ -260,12 +260,12 @@ void state_management(int state){
 		//L'injection s'arrêtera après le nouveau cycle;
 		Force_new_cycle.Value = true;
 		printf("end case 1 :--------------------------------------\n");
-  	}
-	break;
+		break;
+		
 	case 2:
 	case 3:
 	case 4:
-	case 5:{
+	case 5:
 		printf("case 2,3, 4 and 5 of state management ----------------\n");
 		Inverter_Allowed.Value = false; //Param 1124;
 		//Activer la charge
@@ -287,8 +287,8 @@ void state_management(int state){
 		printf("Charge current of bat : %f\n",Battery_Charge_current_DC.Value);
 
 		printf("end case 2,3,4 & 5 :--------------------------------------\n");
+		break;
 	}
-	break;
 }
 
 /*---------------------------- Routine de Calculs des coefficients ----------------------------*/
