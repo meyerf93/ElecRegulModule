@@ -6,11 +6,24 @@
 //Date 	  : 13.07.2018
 //Status  : test
 
-//#include "conversion.h"
-//#include "cJSON.h"
+#include "conversion.h"
+#include "cJSON.h"
 
-//#include <json.h>
-//#include <MQTTClient.h>
+#include <json.h>
+#include <MQTTClient.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include <math.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <time.h>
+#include <syslog.h>
 
 #define MQTTCLIENT_PERSISTENCE 0
 #define ADDRESS     "192.168.2.3:1883"

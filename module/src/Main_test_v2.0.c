@@ -108,7 +108,7 @@ static void strip(char *s,char * to_remove)
 
 // Question est-ce que smartboost toujours autorisé? aujourd'hui c'est initialisé TRUE dans le fichier Write_read.h
 
-void Battery_management(float P_s,MQTTClient* client)
+/*void Battery_management(float P_s,MQTTClient* client)
 {
 	// Unité de P_s en Watt
 	//float Forcage_KWh_Charge_Decharge;
@@ -235,7 +235,7 @@ void Battery_management(float P_s,MQTTClient* client)
 	}
 	Write_bat(&Soc_Backup,client);
 	Write_bat(&Soc_Inject,client);*/
-}
+}*/
 /*----------------------------------------------------------------------------------------------*/
 
 void State_management(int state){
