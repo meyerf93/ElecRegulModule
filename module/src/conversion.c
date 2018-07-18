@@ -13,6 +13,7 @@
 #include "MQTTClient.h"
 #include "MQTTClientPersistence.h"
 #include "MQTTAsync.h"
+#include "Write_read_v20.h"
 
 
 void strip(char *s,char * to_remove)
