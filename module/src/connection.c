@@ -98,7 +98,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 			//printf("palyoad parsed : %s\n",cJSON_Print(root));
 
 			cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
-      UNSUED(data);
+      UNUSED(data);
 			parse_batt_message(payload,data);
 	}
 	 MQTTClient_freeMessage(&message);
