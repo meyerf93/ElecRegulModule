@@ -42,7 +42,6 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
   UNUSED(context);
   UNUSED(topicLen);
 
-	bool I_paquet = false;
 	int select_meters;
 	 //select right mqtt packet ----------
 	char payload[message->payloadlen+1];
@@ -68,7 +67,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 
 	//-------------------------------------------
 	//extract data ------------------------------
-	if(I_paquet){
+	if(select_meters != -1){
 		root = cJSON_Parse(payload);
 		printf("receive paylaod with mqtt : %s\n",payload);
 		printf("palyoad parsed : %s\n",cJSON_Print(root));
