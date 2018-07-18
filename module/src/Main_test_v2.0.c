@@ -819,7 +819,7 @@ int main()
 		printf("initialize the var for mqtt\n");
   	int rc_charger;
 		//crée le client mqtt pour le charger inverter --------------------------------------------
-  	MQTTClient_create(&client_charger, ADDRESS, CLIENTID_CHARGER,MQTTCLIENT_PERSISTENCE, NULL);
+  	//MQTTClient_create(&client_charger, ADDRESS, CLIENTID_CHARGER,MQTTCLIENT_PERSISTENCE, NULL);
 
 		printf("create the first mqtt client\n");
 
