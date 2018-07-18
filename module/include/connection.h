@@ -7,10 +7,6 @@
 //Status  : test
 
 //#include "conversion.h"
-#include "cJSON.h"
-
-#include <json.h>
-#include <MQTTClient.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -24,6 +20,10 @@
 #include <signal.h>
 #include <time.h>
 #include <syslog.h>
+
+#include <json.h>
+#include <MQTTClient.h>
+#include "cJSON.h"
 
 #define MQTTCLIENT_PERSISTENCE 0
 #define ADDRESS     "192.168.2.3:1883"

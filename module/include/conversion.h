@@ -7,10 +7,6 @@
 //Status  : test
 
 //#include "connection.h"
-#include "cJSON.h"
-
-#include <json.h>
-#include <MQTTClient.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -24,6 +20,10 @@
 #include <signal.h>
 #include <time.h>
 #include <syslog.h>
+
+#include "cJSON.h"
+#include <json.h>
+#include <MQTTClient.h>
 
 #define BOOL_F 1
 #define FLOAT_F 6
