@@ -90,8 +90,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
     //printf("palyoad parsed : %s\n",cJSON_Print(root));
 
 		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
-    UNSUED(data);
-		parse_studer_message(payload);
+		parse_studer_message(payload,data);
 	}
 	else if (strstr(payload,XCOM_ID_BAT) != NULL){
 			root = cJSON_Parse(payload);
@@ -100,7 +99,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 
 			cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
       UNSUED(data);
-			parse_batt_message(payload);
+			parse_batt_message(payload,data);
 	}
 	 MQTTClient_freeMessage(&message);
 	 MQTTClient_free(topicName);

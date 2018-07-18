@@ -16,7 +16,7 @@
 #include "MQTTAsync.h"
 
 
-static void strip(char *s,char * to_remove)
+void strip(char *s,char * to_remove)
 {
     char *p = s;
     int n;
@@ -61,7 +61,7 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64]
 
 //Parse the message from MQTT
 int parse_energy_meters(char* payload){
-  f (strstr(payload,PV_WEST) != NULL) {
+  if (strstr(payload,PV_WEST) != NULL) {
 		return = 0;
 	}
 	else if (strstr(payload,PV_EAST) != NULL) {
@@ -109,7 +109,7 @@ int parse_energy_meters(char* payload){
   else return -1;
 }
 
-void parse_studer_message(char* payload) {
+void parse_studer_message(char* payload,cJSON* data) {
   if (strstr(payload,CHARGER_ALLOWED) != NULL){
     Charger_allowed.Value =(float)data->valueint;
   }
@@ -316,7 +316,7 @@ void parse_studer_message(char* payload) {
   }
 }
 
-void parse_batt_message(char* payload){
+void parse_batt_message(char* payload,cJSON* data){
   if(strstr(payload,SOC_BACKUP) != NULL){
     Soc_Backup.Value=(float) data->valueint;
   }
