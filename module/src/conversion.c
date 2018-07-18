@@ -15,7 +15,7 @@
 #include "MQTTClientPersistence.h"
 #include "MQTTAsync.h"
 #include "type.h"
-
+;
 
 void strip(char *s,char * to_remove)
 {
