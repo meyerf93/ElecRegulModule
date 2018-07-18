@@ -235,7 +235,7 @@ static void strip(char *s,char * to_remove)
 	}
 	Write_bat(&Soc_Backup,client);
 	Write_bat(&Soc_Inject,client);*/
-}*/
+//}*/
 /*----------------------------------------------------------------------------------------------*/
 
 void State_management(int state){
