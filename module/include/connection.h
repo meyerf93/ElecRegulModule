@@ -21,8 +21,6 @@
 #include <time.h>
 #include <syslog.h>
 
-
-#include "type.h"
 #include <json.h>
 #include "MQTTClient.h"
 #include "MQTTClientPersistence.h"

@@ -8,12 +8,13 @@
 #include "connection.h"
 #include "conversion.h"
 #include "cJSON.h"
+#include "Write_read_v20.h"
 
 #include <json.h>
 #include "MQTTClient.h"
 #include "MQTTClientPersistence.h"
 #include "MQTTAsync.h"
-#include "Write_read_v20.h"
+#include "type.h"
 
 
 void strip(char *s,char * to_remove)
