@@ -6,8 +6,8 @@
 //Date 	  : 13.07.2018
 //Status  : test
 
-#ifndef _CONVERSION_H
-#define _CONVERSION_H
+#ifndef CONVERSION_H
+#define CONVERSION_H
 
 //#include "connection.h"
 #include <stdio.h>

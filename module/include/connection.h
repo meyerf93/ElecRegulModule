@@ -7,8 +7,8 @@
 //Status  : test
 
 //#include "conversion.h"
-#ifndef _CONNETION_H
-#define _CONNECTION_H
+#ifndef CONNETION_H
+#define CONNECTION_H
 
 // Header code here
 
