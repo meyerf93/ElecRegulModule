@@ -195,10 +195,9 @@ void Battery_management(float P_s,MQTTClient* client)
 				if(Max_Grid_Feeding_current.Value >= 34.0) Max_Grid_Feeding_current.Value = 34.0; // 8.6 pour 2 kW
 
 				//Temps d'injection;
-				Start_Time_forced_injection.Value = Time_now+1; //L?injection débuterai dans 1 minute
-				Stop_Time_forced_injection.Value = Start_Time_forced_injection.Value +1+INJ;
+				Start_Time_forced_injection.Value = Time_now; //L?injection débuterai dans 1 minute
+				Stop_Time_forced_injection.Value = Start_Time_forced_injection.Value +1;
 				//L'injection s'arrêtera après le nouveau cycle;
-				INJ++;
 				printf("==========================================\n");
 			}
 			else
@@ -239,6 +238,58 @@ void Battery_management(float P_s,MQTTClient* client)
 }
 /*----------------------------------------------------------------------------------------------*/
 
+void state_management(int state){
+	switch case state:
+	case 1:{
+		printf("case 1 of state management ----------------\n");
+		//Bloquer l'onduleur;
+		Inverter_Allowed.Value = false; //Param 1124;
+		//Activer la charge
+		Charger_allowed.Value = true; //Param 1125;
+		//Activation du SmartBoost;
+		Smart_boost_allowed.Value = true; //Param 1126;
+		//Activation l'injection;
+		Grid_Feeding_allowed.Value = true; //Param 1127;
+
+		Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
+		if(Max_Grid_Feeding_current.Value >= (i_Battery_Current_Discharge_limit.Value*i_Battery_Voltage.Value)/i_Input_voltage_AC_IN.Value)
+		Max_Grid_Feeding_current.Value = (i_Battery_Current_Discharge_limit.Value*i_Battery_Voltage.Value)/i_Input_voltage_AC_IN.Value;													//value dynamic for discharge
+		if(Max_Grid_Feeding_current.Value >= 34.0) Max_Grid_Feeding_current.Value = 34.0; // 8.6 pour 2 kW
+
+		printf("Max grid feeding : %f\n",	Max_Grid_Feeding_current.Value );
+		//L'injection s'arrêtera après le nouveau cycle;
+		Force_new_cycle.Value = true;
+		printf("end case 1 :--------------------------------------\n");
+  	}
+	break;
+	case 2:
+	case 3:
+	case 4:
+	case 5:{
+		printf("case 2,3, 4 and 5 of state management ----------------\n");
+		Inverter_Allowed.Value = false; //Param 1124;
+		//Activer la charge
+		Charger_allowed.Value = true; //Param 1125;
+		//Activation du SmartBoost;
+		Smart_boost_allowed.Value = true; //Param 1126;
+		//Activation l'injection;
+		Grid_Feeding_allowed.Value = false; //Param 1127;
+
+
+		Battery_Charge_current_DC.Value = fabs(Ps)/i_Battery_Voltage.Value;
+		if(Battery_Charge_current_DC.Value > i_Battery_Current_Charge_limit.Value)
+	 	Battery_Charge_current_DC.Value = i_Battery_Current_Charge_limit.Value;
+		if(Battery_Charge_current_DC.Value > 200) //limit des disjoncteur des batteries
+		Battery_Charge_current_DC.Value = 190;
+
+		Force_new_cycle.Value = true;
+
+		printf("Charge current of bat : %f\n",Battery_Charge_current_DC.Value);
+
+		printf("end case 2,3,4 & 5 :--------------------------------------\n");
+	}
+	break;
+}
 
 /*---------------------------- Routine de Calculs des coefficients ----------------------------*/
 void Calculs_p_k(void)
@@ -262,7 +313,7 @@ void Calculs_p_k(void)
 
 	//Ps = Ps_opti*1000;        //Puissance demandée au stockage
 
-	Ps = 0;
+	Ps = 0;				//puissance échanger avec le réseau
 	Pr = 0;        //Puissance demandé au réseau
 	//Ps = 0;
 
@@ -296,7 +347,7 @@ void Algo(MQTTClient* client)
 	// PCO : a défaut d'une valeur Ps (stockage) calculée dans un algorithme d'optimisation, Ps =Pb (balance)
 	Ps=Pb;
 	printf("ps : %f, pb : %f\n",Ps,Pb);
-	Battery_management(Ps,client);
+	State_management(STATE);
 //9:19;SOC = 43.000000;Eb = 449.309814;Pr = 0.000000;Ps = 449.309814;Pl = 5087.889648;Ppv = 3189.609863;Pb = 449.309814;Plsec = 2640.625000;Ibat = -11.000000;Ubat = 54.062500;Iac_in = 8.250000;Uac = 239.000000;
 	// On produit?
 	if (Eb >= 0)
@@ -307,15 +358,15 @@ void Algo(MQTTClient* client)
 			//la batterie est trop pleine ?
 			if (SOC >= SOCmax)
 			{
-      	printf("STATE = 4;\n");
-      	STATE = 4;
-				Ps = 0;
+      	printf("STATE = 5;\n");
+      	STATE = 5;
+				Ps = 0; //couvre l'autoconsomation de la batterie'
 				Pr = Pb;
 			}
 			else
 			{
-				printf("STATE = 5;\n");
-				STATE = 5;
+				printf("STATE = 4;\n");
+				STATE = 4;
 				Ps =  Ps;
 			}
 
@@ -327,7 +378,7 @@ void Algo(MQTTClient* client)
 			Ps = Pb;
 			Pr = 0;
 		}
-		Battery_management(Ps,client);
+		State_management(STATE);
 		// la puissance max demander au réseau est elle trop grande ?
 		if (fabs(Pr) >= Prmax)
 		{
@@ -344,7 +395,7 @@ void Algo(MQTTClient* client)
 			{
       	STATE = 2;
       	printf("STATE = 2;\n");
-      	Ps = Psmax_charge;
+      	Ps = 5; //couvre l'autoconsomation de la batterie'
 				Pr = Pb;
 			}
 			else
@@ -361,7 +412,7 @@ void Algo(MQTTClient* client)
 			//Kr = Ppv / Pl;
 		}
 		//Ps = Ps * 3;
-		Battery_management(Ps,client);
+		State_management(STATE);
 		if (fabs(Pr) >= Prmax)
 		{
 			//Kr = Prmax / Pr;
@@ -469,7 +520,7 @@ void Time_init(void)
 
 
 int main()
-{
+{/*
 	// 1. fork off the parent process
 	fork_process();
 
@@ -517,7 +568,10 @@ int main()
 	if (dup2 (STDIN_FILENO, STDERR_FILENO) != STDERR_FILENO) {
 		syslog (LOG_ERR, "ERROR while opening '/dev/null' for stderr");
 		exit (1);
-	}
+	}*/
+
+	// end of the code for the service
+
   	MQTTClient  client_charger;
   	MQTTClient_connectOptions conn_opts_charger = MQTTClient_connectOptions_initializer;
 
