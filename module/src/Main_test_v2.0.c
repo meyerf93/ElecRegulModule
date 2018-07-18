@@ -30,12 +30,10 @@ Parametres:
 #include <time.h>
 #include <syslog.h>
 
-#include "Write_read_v20.h"
-
 #include <MQTTClient.h>
 #include "conversion.h"
-
 #include "connection.h"
+
 
 #define true 1
 #define false 0
