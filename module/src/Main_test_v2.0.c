@@ -664,6 +664,96 @@ void Time_init(void)
 	Time_old = Time_now;
 }
 
+void connlost(void *context, char *cause)
+{
+    UNUSED(context);
+    printf("\nConnection lost\n");
+    printf("     cause: %s\n", cause);
+}
+
+/*-----------------------MQTT handler --------------------------------------------------------*/
+void delivered(void *context, MQTTClient_deliveryToken dt)
+{
+    UNUSED(context);
+    //printf("Message with token value %d delivery confirmed\n", dt);
+    deliveredtoken = dt;
+}
+
+int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message)
+{
+    /* EXEMPLE CODE MQTT*/
+  char* payloadptr;
+  cJSON * root;
+
+  UNUSED(payloadptr);
+  UNUSED(context);
+  UNUSED(topicLen);
+
+	bool I_paquet = false;
+	int select_meters;
+	 //select right mqtt packet ----------
+	char payload[message->payloadlen+1];
+	memcpy (payload, message->payload, message->payloadlen);
+	payload[message->payloadlen] = 0;
+	//printf("payload display : %s\n",payload);
+
+  int offset = 0;
+	char* dst= payload;
+	do {
+	    while (dst[offset] == '[') ++offset;
+	    *dst = dst[offset];
+	} while (*dst++);
+
+ 	offset = 0;
+ 	do {
+ 	   while (dst[offset] == ']') ++offset;
+ 	   *dst = dst[offset];
+ 	} while (*dst++);
+
+	select_meters = parse_energy_meters(payload);
+	//	printf("payload display : %s\n", payload);
+
+	//-------------------------------------------
+	//extract data ------------------------------
+	if(I_paquet){
+		root = cJSON_Parse(payload);
+		//printf("receive paylaod with mqtt : %s\n",payload);
+		//printf("palyoad parsed : %s\n",cJSON_Print(root));
+		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
+		if (cJSON_IsNumber(data))
+		{
+  		meters[select_meters] = data->valuedouble;
+		}
+		Ppv = meters[0]+meters[1]+meters[2];
+		Pl = meters[3]+meters[4]+meters[5]+meters[6]+meters[7]+meters[8]+meters[9]; //+ meters[10];
+		Kg = meters[11];
+		Ps_opti = meters[14];
+		//printf("receive data : %f,%f,%f\n",Ppv,Pl,Kg);
+	}
+
+	//parse packet for xcom
+	if (strstr(payload,XCOM_ID_CHARGER) != NULL){
+		root = cJSON_Parse(payload);
+    //printf("receive paylaod with xcom : %s\n",payload);
+    //printf("palyoad parsed : %s\n",cJSON_Print(root));
+
+		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
+		parse_studer_message(payload,data);
+	}
+	else if (strstr(payload,XCOM_ID_BAT) != NULL){
+			root = cJSON_Parse(payload);
+			//printf("receive paylaod with xcom bat  : %s\n",payload);
+			//printf("palyoad parsed : %s\n",cJSON_Print(root));
+
+			cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
+      UNUSED(data);
+			parse_batt_message(payload,data);
+	}
+	 MQTTClient_freeMessage(&message);
+	 MQTTClient_free(topicName);
+	return 1;
+}
+
 
 int main()
 {
