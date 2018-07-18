@@ -820,7 +820,7 @@ int main()
 		printf("initialize the var for mqtt\n");
   	int rc_charger;
 		//crée le client mqtt pour le charger inverter --------------------------------------------
-  	MQTTClient_create(&client_charger, ADDRESS, CLIENTID_CHARGER,MQTTCLIENT_PERSISTENCE, NULL);
+  	MQTTClient_create(&client_charger, ADDRESS, CLIENTID_CHARGER,MQTTCLIENT_PERSISTENCE_NONE, NULL);
 
 		printf("create the first mqtt client\n");
 
@@ -844,7 +844,7 @@ int main()
 
 		//Crée le client mqtt pour la batterie -------------------------------------------------
 		int rc_bat;
-		MQTTClient_create(&client_bat, ADDRESS, CLIENTID_BAT,MQTTCLIENT_PERSISTENCE, NULL);
+		MQTTClient_create(&client_bat, ADDRESS, CLIENTID_BAT,MQTTCLIENT_PERSISTENCE_NONE, NULL);
 		conn_opts_bat.keepAliveInterval = 20;
 		conn_opts_bat.cleansession = 1;
 		MQTTClient_setCallbacks(client_bat, NULL, connlost, msgarrvd, delivered);
