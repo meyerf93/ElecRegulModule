@@ -26,13 +26,6 @@
 	//Format : BOOL(1) FORMAT(2) ENUM(3) ERROR(4) INT32(5) FLOAT(6) STRING(7) DYNAMIC(8) BYTE_STREAM(9) LONG_ENUM(10) SHORT_ENUM(11)
   */
 void create_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64], char id[64]);
-typedef struct Parametres {
-			   uint32_t User_ref;
-			   int 		Object_type;
-			   uint16_t Proprety_id;
-			   int 		Format;
-			   float 	Value;
-			   }t_param;
 //commented for mqtt
 
 #define Not_Value -10

@@ -21,6 +21,7 @@
 #include <time.h>
 #include <syslog.h>
 
+#include "type.h"
 #include "cJSON.h"
 #include <json.h>
 #include "MQTTClient.h"
@@ -35,6 +36,7 @@
 #define ENUM 3
 
 #define SPACE "\t\r\n"
+
 
 void strip(char *s,char * to_remove);
 
