@@ -50,8 +50,6 @@ Parametres:
 
 #define SPACE "\t\r\n"
 
-static void strip(char *s,char * to_remove);
-
 static int signal_catched = 0;
 
 static void catch_signal (int signal)
@@ -69,21 +67,6 @@ static void fork_process()
 	default: exit(0);  // exit parent process with success
 	}
 }
-
-static void strip(char *s,char * to_remove)
-{
-    char *p = s;
-    int n;
-    while (*s)
-    {
-        n = strcspn(s, to_remove);
-        strncpy(p, s, n);
-        p += n;
-        s += n + strspn(s+n, to_remove);
-    }
-    *p = 0;
-}
-
 
 /*-------------- Routine de la gestion de la batterie, charger, decharger, injecter ------------*/
 // PCO : hypothèse  la batterie va recevoir une instruction de charger ou décharger à la puissance ps
