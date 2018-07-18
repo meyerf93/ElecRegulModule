@@ -5,7 +5,7 @@
 //Version : 2.1
 //Date 	  : 13.07.2018
 //Status  : test
-
+#include "connection.h"
 #include "conversion.h"
 #include "cJSON.h"
 
