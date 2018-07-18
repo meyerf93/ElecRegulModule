@@ -5,6 +5,10 @@
 //Version : 2.1
 //Date 	  : 13.07.2018
 //Status  : test
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include <math.h>
 
 
 void connlost(void *context, char *cause)
