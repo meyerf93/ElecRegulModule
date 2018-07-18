@@ -22,7 +22,6 @@
 #include <syslog.h>
 
 #include "cJSON.h"
-;
 #include <json.h>
 #include <MQTTClient.h>
 
