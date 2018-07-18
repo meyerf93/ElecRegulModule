@@ -225,7 +225,7 @@ static void strip(char *s,char * to_remove)
 
 		}
 	}
-	/*if(Soc_Backup.Value > SOCmax) {
+	if(Soc_Backup.Value > SOCmax) {
 		Soc_Backup.Value = SOCmax;
 		Soc_Inject.Value = SOCmax;
 	}
@@ -234,8 +234,8 @@ static void strip(char *s,char * to_remove)
 		Soc_Inject.Value = SOCmin;
 	}
 	Write_bat(&Soc_Backup,client);
-	Write_bat(&Soc_Inject,client);*/
-//}*/
+	Write_bat(&Soc_Inject,client);
+}*/
 /*----------------------------------------------------------------------------------------------*/
 
 void State_management(int state){

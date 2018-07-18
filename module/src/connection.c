@@ -62,7 +62,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
  	   *dst = dst[offset];
  	} while (*dst++);
 
-	select_meters = parse_energy_meters(&payload);
+	select_meters = parse_energy_meters(payload);
 	//	printf("payload display : %s\n", payload);
 
 	//-------------------------------------------
