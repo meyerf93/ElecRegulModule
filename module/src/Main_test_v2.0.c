@@ -238,7 +238,7 @@ void Battery_management(float P_s,MQTTClient* client)
 }
 /*----------------------------------------------------------------------------------------------*/
 
-void state_management(int state){
+void State_management(int state){
 	switch (state){
 	case 1:
 		printf("case 1 of state management ----------------\n");
@@ -261,7 +261,6 @@ void state_management(int state){
 		Force_new_cycle.Value = true;
 		printf("end case 1 :--------------------------------------\n");
 		break;
-		
 	case 2:
 	case 3:
 	case 4:
@@ -341,7 +340,7 @@ void Calculs_p_k(void)
 
 
 /*----------------------- Algorithme d'optimisation energetique -------------------------------*/
-void Algo(MQTTClient* client)
+void Algo()
 {
 	Calculs_p_k();
 	// PCO : a défaut d'une valeur Ps (stockage) calculée dans un algorithme d'optimisation, Ps =Pb (balance)
@@ -642,7 +641,7 @@ int main()
 			Read_p(client_charger,client_bat);//&frame, &property,buffer,sizeof(buffer), &ipv4_struct,&data,ret_val);
 
 			printf("\n========== Algorithme =========\n");
-			Algo(client_bat);
+			Algo();
 			printf("\n========== Ecriture des parametres sur Onduleur ==========\n");
 
 	   	Write_p(client_charger);//&frame, &property,buffer,sizeof(buffer), &ipv4_struct,&data,ret_val);
