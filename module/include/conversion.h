@@ -34,7 +34,7 @@
 #define SHORT_ENUM 11
 #define ENUM 3
 
-#define SPACE " "
+#define SPACE "\t\r\n"
 
 void strip(char *s,char * to_remove);
 

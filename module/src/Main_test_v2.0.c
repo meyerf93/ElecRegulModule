@@ -46,8 +46,6 @@ Parametres:
 #define ARRAY_OF(x) (sizeof(x)/sizeof(x[0]))
 #define UNUSED(x) (void)(x)
 
-#define SPACE "\t\r\n"
-
 static int signal_catched = 0;
 
 static void catch_signal (int signal)
