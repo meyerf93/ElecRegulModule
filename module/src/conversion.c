@@ -10,7 +10,10 @@
 #include "cJSON.h"
 
 #include <json.h>
-#include <MQTTClient.h>
+#include "MQTTClient.h"
+#include "MQTTClientPersistence.h"
+#include "MQTTAsync.h"
+#include "Write_read_v2.0.h"
 
 
 // MQTTT communication with studer

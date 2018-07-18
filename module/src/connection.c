@@ -12,6 +12,7 @@
 #include "MQTTClient.h"
 #include "MQTTClientPersistence.h"
 #include "MQTTAsync.h"
+#include "Write_read_v2.0.h"
 
 void connlost(void *context, char *cause)
 {
