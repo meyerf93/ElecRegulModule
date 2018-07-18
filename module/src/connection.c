@@ -9,7 +9,9 @@
 #include "cJSON.h"
 
 #include <json.h>
-#include <MQTTClient.h>
+#include "MQTTClient.h"
+#include "MQTTClientPersistence.h"
+#include "MQTTAsync.h"
 
 void connlost(void *context, char *cause)
 {
