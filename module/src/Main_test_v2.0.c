@@ -726,7 +726,7 @@ int main()
 
 		MQTTClient client_bat;
   	MQTTClient_connectOptions conn_opts_bat = MQTTClient_connectOptions_initializer;
-
+		printf("initialize the var for mqtt\n");
   	int rc_charger;
 		//crée le client mqtt pour le charger inverter --------------------------------------------
   	MQTTClient_create(&client_charger, ADDRESS, CLIENTID_CHARGER,MQTTCLIENT_PERSISTENCE, NULL);
