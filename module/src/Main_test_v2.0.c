@@ -719,7 +719,7 @@ int main()
 
 	// end of the code for the service
 
-		printf("hiiii : the algorithm launched\n");
+		printd("hiiii : the algorithm launched\n");
 
   	MQTTClient  client_charger;
   	MQTTClient_connectOptions conn_opts_charger = MQTTClient_connectOptions_initializer;
@@ -727,19 +727,18 @@ int main()
 		MQTTClient client_bat;
   	MQTTClient_connectOptions conn_opts_bat = MQTTClient_connectOptions_initializer;
 
-		printf("client mqtt declared\n");
   	int rc_charger;
 		//crée le client mqtt pour le charger inverter --------------------------------------------
-  	MQTTClient_create(&client_charger, ADDRESS, CLIENTID_CHARGER
+  	MQTTClient_create(&client_charger, ADDRESS, CLIENTID_CHARGER);
 
-		printf("create the first client\n");
+		printf("create the first mqtt client\n");
 ,
     MQTTCLIENT_PERSISTENCE, NULL);
   	conn_opts_charger.keepAliveInterval = 20;
   	conn_opts_charger.cleansession = 1;
   	MQTTClient_setCallbacks(client_charger, NULL, connlost, msgarrvd, delivered);
 
-		printf("set the callback for mqtt\n");
+		printf("set the first callback methods\n);
 
   	if ((rc_charger = MQTTClient_connect(client_charger, &conn_opts_charger)) != MQTTCLIENT_SUCCESS)
   	{
