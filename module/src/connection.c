@@ -47,7 +47,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	char payload[message->payloadlen+1];
 	memcpy (payload, message->payload, message->payloadlen);
 	payload[message->payloadlen] = 0;
-	printf("payload display : %s\n",payload);
+	//printf("payload display : %s\n",payload);
 
   int offset = 0;
 	char* dst= payload;
@@ -63,14 +63,14 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
  	} while (*dst++);
 
 	select_meters = parse_energy_meters(payload);
-	printf("payload display : %s\n", payload);
+	//printf("payload display : %s\n", payload);
 
 	//-------------------------------------------
 	//extract data ------------------------------
 	if(select_meters != -1){
 		root = cJSON_Parse(payload);
-		printf("receive paylaod with mqtt : %s\n",payload);
-		printf("palyoad parsed : %s\n",cJSON_Print(root));
+		//printf("receive paylaod with mqtt : %s\n",payload);
+		//printf("palyoad parsed : %s\n",cJSON_Print(root));
 		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 		if (cJSON_IsNumber(data))
 		{
