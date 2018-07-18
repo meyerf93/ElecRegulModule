@@ -719,7 +719,7 @@ int main()
 
 	// end of the code for the service
 
-		printd("hiiii : the algorithm launched\n");
+		printf("hiiii : the algorithm launched\n");
 
   	MQTTClient  client_charger;
   	MQTTClient_connectOptions conn_opts_charger = MQTTClient_connectOptions_initializer;
