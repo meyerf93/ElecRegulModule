@@ -663,6 +663,7 @@ void Time_init(void)
 	Time_now = timeinfo->tm_hour*60 + timeinfo->tm_min;
 	Time_old = Time_now;
 }
+volatile MQTTClient_deliveryToken deliveredtoken;
 
 void connlost(void *context, char *cause)
 {
@@ -819,7 +820,7 @@ int main()
 		printf("initialize the var for mqtt\n");
   	int rc_charger;
 		//crée le client mqtt pour le charger inverter --------------------------------------------
-  	//MQTTClient_create(&client_charger, ADDRESS, CLIENTID_CHARGER,MQTTCLIENT_PERSISTENCE, NULL);
+  	MQTTClient_create(&client_charger, ADDRESS, CLIENTID_CHARGER,MQTTCLIENT_PERSISTENCE, NULL);
 
 		printf("create the first mqtt client\n");
 
