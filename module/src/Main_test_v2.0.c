@@ -119,8 +119,8 @@ static void fork_process()
 	t_param Grid_Feeding_allowed = 			     {1127, 2, 5, 1,    1}; // PCO OK selon algo
 	t_param Max_Grid_Feeding_current = 		   {1523, 2, 5, 6,   30};//step 0.2 // PCO Rajouter test et diminuer 30 à 2?
 	t_param Battery_voltage_forced_feeding = {1524, 2, 5, 6,    40};//step 0.1 à tester //PCO  Parm inutile ?
-	t_param Start_Time_forced_injection =	   {1525, 2, 5, 5,   10};//step : 1, regarder avec Flo le format PCO pourquoi ?
-	t_param Stop_Time_forced_injection =	   {1526, 2, 5, 5,   10};//step : 1, regarder avec Flo le format PCO pourquoi ?
+	t_param Start_Time_forced_injection =	   {1525, 2, 5, 5,   1439};//step : 1, regarder avec Flo le format PCO pourquoi ?
+	t_param Stop_Time_forced_injection =	   {1526, 2, 5, 5,   0};//step : 1, regarder avec Flo le format PCO pourquoi ?
 	t_param Use_defined_phase_shift_curve  = {1610, 2, 5, 1,    1}; // PCO Parm inutile
 	t_param Cos_phi_P_0 = 					         {1622, 2, 5, 6,    0};//step 0.01, à voir PCO parm inutile
 	t_param Cos_phi_P_100 = 				         {1624, 2, 5, 6,  0.1};//step 0.01, à voir PCO parm inutile
