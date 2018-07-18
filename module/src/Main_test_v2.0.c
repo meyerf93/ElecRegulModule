@@ -34,7 +34,6 @@ Parametres:
 #include "conversion.h"
 #include "connection.h"
 #include "Write_read_v20.h"
-#include "type.h"
 
 #define true 1
 #define false 0
