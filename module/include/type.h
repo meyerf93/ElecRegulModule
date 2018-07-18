@@ -1,4 +1,6 @@
 
+#ifndef _TYPE_H
+#define _TYPE_H
 
 
 typedef struct {
@@ -8,3 +10,4 @@ typedef struct {
 			   int 		Format;
 			   float 	Value;
 			   }t_param;
+#endif

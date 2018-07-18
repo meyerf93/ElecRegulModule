@@ -7,6 +7,11 @@
 //Status  : test
 
 //#include "conversion.h"
+#ifndef _CONNETION_H
+#define _CONNECTION_H
+
+// Header code here
+
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -82,3 +87,4 @@ void Write_p(MQTTClient* client);
 /*------------- Routine d'initialization de touts les parametres et de l'Xtender ---------------*/
 int Init(MQTTClient* client);
 /*----------------------------------------------------------------------------------------------*/
+#endif

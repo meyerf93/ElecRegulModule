@@ -6,6 +6,9 @@
 //Date 	  : 13.07.2018
 //Status  : test
 
+#ifndef _CONVERSION_H
+#define _CONVERSION_H
+
 //#include "connection.h"
 #include <stdio.h>
 #include <string.h>
@@ -47,3 +50,5 @@ int parse_energy_meters(char* payload);
 void parse_studer_message(char* payload,cJSON* data);
 
 void parse_batt_message(char* payload,cJSON* data);
+
+#endif
