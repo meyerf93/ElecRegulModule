@@ -26,6 +26,7 @@
 #include "MQTTClientPersistence.h"
 #include "MQTTAsync.h"
 #include "cJSON.h"
+#include "type.h"
 
 #define MQTTCLIENT_PERSISTENCE 0
 #define ADDRESS     "192.168.2.3:1883"
