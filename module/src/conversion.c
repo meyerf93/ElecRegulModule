@@ -62,46 +62,46 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64]
 //Parse the message from MQTT
 int parse_energy_meters(char* payload){
   if (strstr(payload,PV_WEST) != NULL) {
-		return = 0;
+		return 0;
 	}
 	else if (strstr(payload,PV_EAST) != NULL) {
-		return = 1;
+		return 1;
 	}
 	else if (strstr(payload,PV_SOUTH) != NULL){
-		return = 2;
+		return 2;
 	}
 	else if (strstr(payload,SECURE_LOAD)!= NULL) {
-		return = 3;
+		return 3;
 	}
 	else if (strstr(payload,OVEN)!= NULL) {
-		return = 4;
+		return 4;
 	}
 	else if (strstr(payload,COOKTOP) != NULL){
-		return = 5;
+		return 5;
 	}
 	else if (strstr(payload,CAR_CHARGER) != NULL){
-		return = 6;
+		return 6;
 	}
 	else if (strstr(payload,NORTH_RECEP)!= NULL) {
-		return = 7;
+		return 7;
 	}
 	else if (strstr(payload,SOUTH_RECEP)!= NULL) {
-		return = 8;
+		return 8;
 	}
 	else if (strstr(payload,SKIN_RECEP)!= NULL) {
-		return = 9;
+		return 9;
 	}
 	else if (strstr(payload,BATTERY_IN)!= NULL) {
-		return = 10;
+		return 10;
 	}
 	else if (strstr(payload,OPTI_KG) != NULL){
-		return = 11;
+		return 11;
 	}
 	else if (strstr(payload,OPTI_PROD) != NULL){
-		return = 12;
+		return 12;
 	}
 	else if (strstr(payload,OPTI_CONSO) != NULL){
-		return = 13;
+		return 13;
 	}
 	else if (strstr(payload,OPTI_POWER) != NULL){
 		return = 14;
