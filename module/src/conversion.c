@@ -315,6 +315,12 @@ void parse_studer_message(char* payload,cJSON* data) {
   else if (strstr(payload,BAT_TEMP_COMP_COEF) != NULL){
     Bat_Temp_Com_Coef.Value=(float) data->valueint;
   }
+  else if (strstr(payload,FAST_CHARGE_INJECT_REGULATION) != NULL){
+    Fast_charge_inject_regulation.Value=(float) data->valueint;
+  }
+  else if (strstr(payload,PULSE_CUTING_REGULATION_FOR_XT) != NULL) {
+    Pulses_cutting_regulation_for_XT.Value = (float) data->valueint;
+  }
 }
 
 void parse_batt_message(char* payload,cJSON* data){

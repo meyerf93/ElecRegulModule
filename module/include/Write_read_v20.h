@@ -135,6 +135,8 @@
 #define COS_PHI_P_100  "xcom1/:101/:/config/:/1624"
 #define COS_PHI_AT_P_1613  "xcom1/:101/:/config/:/1623"
 #define POWER_OF_SECOND_COS_PHI_POINT  "xcom1/:101/:/config/:/1613"
+#define FAST_CHARGE_INJECT_REGULATION "xcom1/:101/:/config/:/1615"
+#define PULSE_CUTING_REGULATION_FOR_XT "xcom1/:101/:/config/:/1645"
 	/*----------------- Grid Feeding --------------------------*/
 	extern t_param Grid_Feeding_allowed; // PCO OK selon algo
 	extern t_param Max_Grid_Feeding_current;//step 0.2 // PCO Rajouter test et diminuer 30 à 2?
@@ -146,6 +148,8 @@
 	extern t_param Cos_phi_P_100;//step 0.01, à voir PCO parm inutile
 	extern t_param Cos_phi_at_P_1613;//step 0.01 à voir PACO parm inutile
 	extern t_param Power_of_second_cos_phi_point;//step 5% of Pnom, à voir parm inutile
+	extern t_param Fast_charge_inject_regulation;
+	extern t_param Pulses_cutting_regulation_for_XT;
 /*------------------------------------------------------------------------------*/
 	//Format : BOOL(1) FORMAT(2) ENUM(3) ERROR(4) INT32(5) FLOAT(6) STRING(7) DYNAMIC(8) BYTE_STREAM(9) LONG_ENUM(10) SHORT_ENUM(11)
 #define I_BATTERY_VOLTAGE_STUDER  "xcom1/:101/:/config/:/3000"

@@ -260,6 +260,7 @@ void Write_p(MQTTClient* client)/*scom_frame_t* frame,scom_property_t* property 
 		Write(&Force_new_cycle,client);
 		Force_new_cycle.Value = 0;
 	}
+  Write(&Floating_voltage,client);
 }
 /*----------------------------------------------------------------------------------------------*/
 
@@ -307,6 +308,8 @@ int Init(MQTTClient* client){
 	Write(&Reduced_floating_allowed,client);
 	Write(&Periodic_absorption_allowed,client);
 	Write(&Inverter_Allowed,client);
+  Write(&Fast_charge_inject_regulation,client);
+  Write(&Pulses_cutting_regulation_for_XT,client);
 	return 1;
 }
 /*----------------------------------------------------------------------------------------------*/

@@ -60,7 +60,9 @@ static void fork_process()
 	default: exit(0);  // exit parent process with success
 	}
 }
-
+//niveau de tension -> floating voltage
+//forcer l'extender en float
+//bloquer absorption et egalisation
 
 //---------- DECLARATRION OF VAR -----------------------------------------------
  /*------------------------ Declaration parametres -------------------------------*/
@@ -75,7 +77,7 @@ static void fork_process()
 	t_param Voltage_2_start_new_cycle = 	{1145, 2, 5, 6,  44};//step 0.10 PCO parm inutile
 	t_param Time_1_under_voltage = 		{1144, 2, 5, 6, 180};//step 1 PCO Parm inutile
 	t_param Time_2_under_voltage = 		{1146, 2, 5, 6, 180};//step 10 PCO Parm inutile
-	t_param Absorption_phase_allowed = 	{1155, 2, 5, 1,   1}; // PCO OK
+	t_param Absorption_phase_allowed = 	{1155, 2, 5, 1,   0}; // PCO OK
 	t_param Absorption_voltage = 		{1156, 2, 5, 6,  61.5};//step 0.1 //PCO en mode inspect il faudrait lire avant 7061
 	t_param Absorption_duration = 		{1157, 2, 5, 6,   0};//step 0.25h PCO : V. Penas suggere zero
 	t_param End_absorption_current = 	{1158, 2, 5, 1,   1}; // PCO parm inutile
@@ -126,9 +128,12 @@ static void fork_process()
 	t_param Cos_phi_P_100 = 				         {1624, 2, 5, 6,  0.1};//step 0.01, à voir PCO parm inutile
 	t_param Cos_phi_at_P_1613 = 			       {1623, 2, 5, 6, 0.05};//step 0.01 à voir PACO parm inutile
 	t_param Power_of_second_cos_phi_point =  {1613, 2, 5, 6,   50};//step 5% of Pnom, à voir parm inutile
-/*------------------------------------------------------------------------------*/
+	t_param Fast_charge_inject_regulation =  {1615, 2, 5, 1, 	 1};
+	t_param Pulses_cutting_regulation_for_XT = {1645, 2, 5, 1, 1};
 
-/*--------------------------- Xtender_Infos --------------------------------------*/
+	/*------------------------------------------------------------------------------*/
+
+	/*--------------------------- Xtender_Infos --------------------------------------*/
 	t_param i_Battery_Voltage_Studer = 				 {3000, 1, 1,  6, Not_Value};
 	t_param i_Wanted_battery_charge_current =  {3004, 1, 1,  6, Not_Value};
 	t_param i_Battery_Charge_current = 			   {3005, 1, 1,  6, Not_Value};
@@ -387,6 +392,7 @@ struct tm * timeinfo;
 
 void State_management(int state){
 	switch (state){
+	Force_floating.Value = 1;
 	case 1:
 		printf("case 1 of state management ----------------\n");
 		//Activer l'onduleur;
@@ -401,7 +407,8 @@ void State_management(int state){
 		Transfer_relay_allowed.Value = 1; //Param 1128
 		//Utilisation de la batterie comme source prioritaire;
 		//Batt_priority_source.Value = true; //Param 1296;
-
+		
+		Floating_voltage.Value  = i_Battery_Voltage.Value-1;
 
 		//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
 		Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
@@ -446,6 +453,9 @@ void State_management(int state){
 		Smart_boost_allowed.Value = true; //Param 1126;
 		//Activation l'injection;
 		Grid_Feeding_allowed.Value = false; //Param 1127;
+
+		Floating_voltage.Value = 61; //tension maximun de charge de 61 Voltage_1_start_new_cycle
+
 
 
 		Battery_Charge_current_DC.Value = fabs(Ps)/i_Battery_Voltage.Value;
