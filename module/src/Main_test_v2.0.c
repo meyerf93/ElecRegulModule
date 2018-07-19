@@ -399,15 +399,13 @@ void State_management(int state){
 		//Activer l'onduleur;
 		Inverter_Allowed.Value = true; //Param 1124;
 		//Bloquer la charge;
-		Charger_allowed.Value = false;//Param 1125;
+		Charger_allowed.Value = true;//Param 1125;
 		//Activation du SmartBoost;
 		Smart_boost_allowed.Value = true; //Param 1126;
 		//Autoriser l'injection;
 		Grid_Feeding_allowed.Value = true; //Param 1127;
 		//tran transfert allowed
 		Transfer_relay_allowed.Value = 1; //Param 1128
-		//Utilisation de la batterie comme source prioritaire;
-		//Batt_priority_source.Value = true; //Param 1296;
 
 		Floating_voltage.Value  = i_Battery_Voltage.Value-1;
 
@@ -447,15 +445,15 @@ void State_management(int state){
 	case 4:
 	case 5:
 		printf("case 2,3, 4 and 5 of state management ----------------\n");
-		Inverter_Allowed.Value = false; //Param 1124;
+		Inverter_Allowed.Value = true; //Param 1124;
 		//Activer la charge
 		Charger_allowed.Value = true; //Param 1125;
 		//Activation du SmartBoost;
 		Smart_boost_allowed.Value = true; //Param 1126;
 		//Activation l'injection;
-		Grid_Feeding_allowed.Value = false; //Param 1127;
+		Grid_Feeding_allowed.Value = true; //Param 1127;
 
-		Floating_voltage.Value = 61.0; //tension maximun de charge de 61 Voltage_1_start_new_cycle
+		Floating_voltage.Value = 61.5; //tension maximun de charge de 61 Voltage_1_start_new_cycle
 
 		Battery_Charge_current_DC.Value = fabs(Ps)/i_Battery_Voltage.Value;
 		if(Battery_Charge_current_DC.Value > i_Battery_Current_Charge_limit.Value)
