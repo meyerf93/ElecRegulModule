@@ -399,7 +399,7 @@ void State_management(int state){
 		//Activer l'onduleur;
 		Inverter_Allowed.Value = true; //Param 1124;
 		//Bloquer la charge;
-		Charger_allowed.Value = true;//Param 1125;
+		Charger_allowed.Value = false;//Param 1125;
 		//Activation du SmartBoost;
 		Smart_boost_allowed.Value = true; //Param 1126;
 		//Autoriser l'injection;
