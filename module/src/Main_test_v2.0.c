@@ -451,7 +451,7 @@ void State_management(int state){
 		//Activation du SmartBoost;
 		Smart_boost_allowed.Value = true; //Param 1126;
 		//Activation l'injection;
-		Grid_Feeding_allowed.Value = true; //Param 1127;
+		Grid_Feeding_allowed.Value = false; //Param 1127;
 
 		Floating_voltage.Value = 61.5; //tension maximun de charge de 61 Voltage_1_start_new_cycle
 
