@@ -400,7 +400,7 @@ void State_management(int state){
 		//tran transfert allowed
 		Transfer_relay_allowed.Value = 1; //Param 1128
 		//Utilisation de la batterie comme source prioritaire;
-		Batt_priority_source.Value = true; //Param 1296;
+		//Batt_priority_source.Value = true; //Param 1296;
 
 
 		//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
@@ -412,9 +412,9 @@ void State_management(int state){
 		if(Max_Grid_Feeding_current.Value >= 34.0) Max_Grid_Feeding_current.Value = 34.0; // 8.6 pour 2 kW
 
 		//Temps d'injection;
-		Start_Time_forced_injection.Value = Time_now; //L?injection débuterai dans 1 minute
+		/*Start_Time_forced_injection.Value = Time_now; //L?injection débuterai dans 1 minute
 		Stop_Time_forced_injection.Value = Start_Time_forced_injection.Value +1;
-		Force_new_cycle.Value = true;
+		Force_new_cycle.Value = true;*/
 
 		/*//Bloquer l'onduleur;
 		Inverter_Allowed.Value = false; //Param 1124;
