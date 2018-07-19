@@ -391,8 +391,9 @@ struct tm * timeinfo;
 /*----------------------------------------------------------------------------------------------*/
 
 void State_management(int state){
-	switch (state){
 	Force_floating.Value = 1;
+
+	switch (state){
 	case 1:
 		printf("case 1 of state management ----------------\n");
 		//Activer l'onduleur;
@@ -407,7 +408,7 @@ void State_management(int state){
 		Transfer_relay_allowed.Value = 1; //Param 1128
 		//Utilisation de la batterie comme source prioritaire;
 		//Batt_priority_source.Value = true; //Param 1296;
-		
+
 		Floating_voltage.Value  = i_Battery_Voltage.Value-1;
 
 		//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
@@ -454,9 +455,7 @@ void State_management(int state){
 		//Activation l'injection;
 		Grid_Feeding_allowed.Value = false; //Param 1127;
 
-		Floating_voltage.Value = 61; //tension maximun de charge de 61 Voltage_1_start_new_cycle
-
-
+		Floating_voltage.Value = 61.0; //tension maximun de charge de 61 Voltage_1_start_new_cycle
 
 		Battery_Charge_current_DC.Value = fabs(Ps)/i_Battery_Voltage.Value;
 		if(Battery_Charge_current_DC.Value > i_Battery_Current_Charge_limit.Value)
