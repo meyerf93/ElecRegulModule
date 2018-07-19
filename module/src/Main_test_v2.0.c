@@ -387,39 +387,32 @@ struct tm * timeinfo;
 
 void State_management(int state){
 	switch (state){
-		/*charge_on = 0;
-		Batt_priority_source.Value = false;
-		if (fabs(P_s) > Plsec)
-		{
-			printf("========== Injceter sur le reseaux ==========\n");
-			printf("DECHARGE DE LA BATTERIE\n");
-			//Bloquer la charge;
-			Charger_allowed.Value = false;//Param 1125;
-			//Activer l'onduleur;
-			Inverter_Allowed.Value = true; //Param 1124;
-			//Autoriser l'injection;
-			Grid_Feeding_allowed.Value = true; //Param 1127;
-			//Activation du SmartBoost;
-			Smart_boost_allowed.Value = true; //Param 1126;
-			//tran transfert allowed
-			Transfer_relay_allowed.Value = 1; //Param 1128
-
-			//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
-			Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
-			if(Max_Grid_Feeding_current.Value >= (i_Battery_Current_Discharge_limit.Value*i_Battery_Voltage.Value)/i_Input_voltage_AC_IN.Value)
-			Max_Grid_Feeding_current.Value = (i_Battery_Current_Discharge_limit.Value*i_Battery_Voltage.Value)/i_Input_voltage_AC_IN.Value;													//value dynamic for discharge
-			printf("Max grid feeding : %f\n",Max_Grid_Feeding_current.Value);
-			printf("Battery current discharge limi : %f\n",i_Battery_Current_Discharge_limit.Value);
-			if(Max_Grid_Feeding_current.Value >= 34.0) Max_Grid_Feeding_current.Value = 34.0; // 8.6 pour 2 kW
-
-			//Temps d'injection;
-			Start_Time_forced_injection.Value = Time_now; //L?injection débuterai dans 1 minute
-			Stop_Time_forced_injection.Value = Start_Time_forced_injection.Value +1;
-			//L'injection s'arrêtera après le nouveau cycle;
-			printf("==========================================\n");*/
 	case 1:
 		printf("case 1 of state management ----------------\n");
-		//Bloquer l'onduleur;
+		//Activer l'onduleur;
+		Inverter_Allowed.Value = true; //Param 1124;
+		//Bloquer la charge;
+		Charger_allowed.Value = false;//Param 1125;
+		//Activation du SmartBoost;
+		Smart_boost_allowed.Value = true; //Param 1126;
+		//Autoriser l'injection;
+		Grid_Feeding_allowed.Value = true; //Param 1127;
+		//tran transfert allowed
+		Transfer_relay_allowed.Value = 1; //Param 1128
+
+		//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
+		Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
+		if(Max_Grid_Feeding_current.Value >= (i_Battery_Current_Discharge_limit.Value*i_Battery_Voltage.Value)/i_Input_voltage_AC_IN.Value)
+		Max_Grid_Feeding_current.Value = (i_Battery_Current_Discharge_limit.Value*i_Battery_Voltage.Value)/i_Input_voltage_AC_IN.Value;													//value dynamic for discharge
+		printf("Max grid feeding : %f\n",Max_Grid_Feeding_current.Value);
+		printf("Battery current discharge limi : %f\n",i_Battery_Current_Discharge_limit.Value);
+		if(Max_Grid_Feeding_current.Value >= 34.0) Max_Grid_Feeding_current.Value = 34.0; // 8.6 pour 2 kW
+
+		//Temps d'injection;
+		Start_Time_forced_injection.Value = Time_now; //L?injection débuterai dans 1 minute
+		Stop_Time_forced_injection.Value = Start_Time_forced_injection.Value +1;
+
+		/*//Bloquer l'onduleur;
 		Inverter_Allowed.Value = false; //Param 1124;
 		//Activer la charge
 		Charger_allowed.Value = true; //Param 1125;
@@ -433,7 +426,7 @@ void State_management(int state){
 		Max_Grid_Feeding_current.Value = (i_Battery_Current_Discharge_limit.Value*i_Battery_Voltage.Value)/i_Input_voltage_AC_IN.Value;													//value dynamic for discharge
 		if(Max_Grid_Feeding_current.Value >= 34.0) Max_Grid_Feeding_current.Value = 34.0; // 8.6 pour 2 kW
 
-		printf("Max grid feeding : %f\n",	Max_Grid_Feeding_current.Value );
+		printf("Max grid feeding : %f\n",	Max_Grid_Feeding_current.Value );*/
 		//L'injection s'arrêtera après le nouveau cycle;
 		Force_new_cycle.Value = true;
 		printf("end case 1 :--------------------------------------\n");
