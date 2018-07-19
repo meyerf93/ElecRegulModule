@@ -399,6 +399,9 @@ void State_management(int state){
 		Grid_Feeding_allowed.Value = true; //Param 1127;
 		//tran transfert allowed
 		Transfer_relay_allowed.Value = 1; //Param 1128
+		//Utilisation de la batterie comme source prioritaire;
+		Batt_priority_source.Value = true; //Param 1296;
+
 
 		//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
 		Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
