@@ -693,7 +693,7 @@ void Time_init(void)
 }
 
 int main()
-{/*
+{
 	// 1. fork off the parent process
 	fork_process();
 
@@ -742,7 +742,7 @@ int main()
 		syslog (LOG_ERR, "ERROR while opening '/dev/null' for stderr");
 		exit (1);
 	}
-	*/
+	
 
 	// end of the code for the service
 
