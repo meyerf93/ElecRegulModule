@@ -469,6 +469,7 @@ void State_management(int state){
 		if(Battery_Charge_current_DC.Value > 200) //limit des disjoncteur des batteries
 		Battery_Charge_current_DC.Value = 190;
 		printf("Charge current of bat : %f\n",Battery_Charge_current_DC.Value);
+		Force_new_cycle.Value = true;
 
 		printf("end case 2,3,4 & 5 :--------------------------------------\n");
 		break;
