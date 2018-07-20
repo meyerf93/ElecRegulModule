@@ -407,6 +407,8 @@ void State_management(int state){
 		//tran transfert allowed
 		Transfer_relay_allowed.Value = 1; //Param 1128
 
+		Absorption_phase_allowed.Value = true;
+
 		Floating_voltage.Value  = i_Battery_Voltage.Value-1;
 
 		//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
@@ -452,6 +454,8 @@ void State_management(int state){
 		Smart_boost_allowed.Value = true; //Param 1126;
 		//Activation l'injection;
 		Grid_Feeding_allowed.Value = false; //Param 1127;
+
+		Absorption_phase_allowed.Value = true;
 
 		Floating_voltage.Value = 61.5; //tension maximun de charge de 61 Voltage_1_start_new_cycle
 
@@ -695,7 +699,7 @@ void Time_init(void)
 }
 
 int main()
-{
+{/*
 	// 1. fork off the parent process
 	fork_process();
 
@@ -743,7 +747,7 @@ int main()
 	if (dup2 (STDIN_FILENO, STDERR_FILENO) != STDERR_FILENO) {
 		syslog (LOG_ERR, "ERROR while opening '/dev/null' for stderr");
 		exit (1);
-	}
+	}*/
 
 	// end of the code for the service
 
