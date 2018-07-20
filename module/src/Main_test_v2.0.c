@@ -391,8 +391,6 @@ struct tm * timeinfo;
 /*----------------------------------------------------------------------------------------------*/
 
 void State_management(int state){
-	Force_floating.Value = 1;
-
 	switch (state){
 	case 1:
 		printf("case 1 of state management ----------------\n");
@@ -410,7 +408,7 @@ void State_management(int state){
 		Absorption_phase_allowed.Value = false;
 		Fast_charge_inject_regulation.Value = true;
 		Pulses_cutting_regulation_for_XT.Value = true;
-
+		Force_floating.Value = true;
 		Floating_voltage.Value  = i_Battery_Voltage.Value-1;
 
 		//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
@@ -460,6 +458,8 @@ void State_management(int state){
 		Absorption_phase_allowed.Value = true;
 		Fast_charge_inject_regulation.Value = false;
 		Pulses_cutting_regulation_for_XT.Value = false;
+		Force_floating.Value = false;
+
 
 		Floating_voltage.Value = 61.5; //tension maximun de charge de 61 Voltage_1_start_new_cycle
 
