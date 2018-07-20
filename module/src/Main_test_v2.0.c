@@ -407,7 +407,9 @@ void State_management(int state){
 		//tran transfert allowed
 		Transfer_relay_allowed.Value = 1; //Param 1128
 
-		Absorption_phase_allowed.Value = true;
+		Absorption_phase_allowed.Value = false;
+		Fast_charge_inject_regulation.Value = true;
+		Pulses_cutting_regulation_for_XT.Value = true;
 
 		Floating_voltage.Value  = i_Battery_Voltage.Value-1;
 
@@ -456,6 +458,8 @@ void State_management(int state){
 		Grid_Feeding_allowed.Value = false; //Param 1127;
 
 		Absorption_phase_allowed.Value = true;
+		Fast_charge_inject_regulation.Value = false;
+		Pulses_cutting_regulation_for_XT.Value = false;
 
 		Floating_voltage.Value = 61.5; //tension maximun de charge de 61 Voltage_1_start_new_cycle
 
