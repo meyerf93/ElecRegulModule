@@ -404,10 +404,6 @@ void State_management(int state){
 		Grid_Feeding_allowed.Value = true; //Param 1127;
 		//tran transfert allowed
 		Transfer_relay_allowed.Value = 1; //Param 1128
-
-		Absorption_phase_allowed.Value = false;
-		Fast_charge_inject_regulation.Value = true;
-		Pulses_cutting_regulation_for_XT.Value = true;
 		Force_floating.Value = true;
 		Floating_voltage.Value  = i_Battery_Voltage.Value-1;
 
@@ -455,13 +451,10 @@ void State_management(int state){
 		//Activation l'injection;
 		Grid_Feeding_allowed.Value = false; //Param 1127;
 
-		Absorption_phase_allowed.Value = true;
-		Fast_charge_inject_regulation.Value = false;
-		Pulses_cutting_regulation_for_XT.Value = false;
-		Force_floating.Value = false;
+		Force_floating.Value = true;
 
 
-		Floating_voltage.Value = 61.5; //tension maximun de charge de 61 Voltage_1_start_new_cycle
+		Floating_voltage.Value = i_Battery_Voltage_Charge_limit.Value; //tension maximun de charge de 61 Voltage_1_start_new_cycle
 
 		Battery_Charge_current_DC.Value = fabs(Ps)/i_Battery_Voltage.Value;
 		if(Battery_Charge_current_DC.Value > i_Battery_Current_Charge_limit.Value)
