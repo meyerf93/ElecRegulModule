@@ -406,6 +406,13 @@ void State_management(int state){
 		Transfer_relay_allowed.Value = 1; //Param 1128
 		Force_floating.Value = true;
 		Floating_voltage.Value  = i_Battery_Voltage.Value-1;
+		printf("floating voltage : %f ; bat act u : %f\n",Floating_voltage.Value,i_Battery_Voltage.Value-1);
+		printf("battery volt charge limit : %f; batt volt discharge limit : %f \n",i_Battery_Voltage_Charge_limit.Value,i_Battery_Voltage_Discharge_limit.Value);
+		printf("batt current charge limit :%f\n",i_Battery_Current_Charge_limit.Value);
+		printf("batt current discharge limit : %f\n",i_Battery_Current_Discharge_limit.Value);
+		printf("batt charge current  : %f\n",Battery_Charge_current_DC.Value);
+		printf("max grid feeding : %f\n",Max_Grid_Feeding_current);
+		printf("actual vol : %f \n"i_Battery_Voltage.Value);
 
 		//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
 		Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
@@ -431,6 +438,13 @@ void State_management(int state){
 		Grid_Feeding_allowed.Value = false; //Param 1127;
 
 		printf("check the phase of the battery : %f\n",i_Battery_cycle_phase.Value);
+		printf("floating voltage : %f ; bat act u : %f\n",Floating_voltage.Value,i_Battery_Voltage.Value-1);
+		printf("battery volt charge limit : %f; batt volt discharge limit : %f \n",i_Battery_Voltage_Charge_limit.Value,i_Battery_Voltage_Discharge_limit.Value);
+		printf("batt current charge limit :%f\n",i_Battery_Current_Charge_limit.Value);
+		printf("batt current discharge limit : %f\n",i_Battery_Current_Discharge_limit.Value);
+		printf("batt charge current  : %f\n",Battery_Charge_current_DC.Value);
+		printf("max grid feeding : %f\n",Max_Grid_Feeding_current);
+		printf("actual vol : %f \n"i_Battery_Voltage.Value);
 
 		Force_floating.Value = true;
 		//Absorption_phase_allowed.Value = true;
