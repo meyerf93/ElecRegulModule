@@ -443,7 +443,7 @@ void State_management(int state){
 	case 4:
 	case 5:
 		printf("case 2,3, 4 and 5 of state management ----------------\n");
-		Inverter_Allowed.Value = true; //Param 1124;
+		Inverter_Allowed.Value = false; //Param 1124;
 		//Activer la charge
 		Charger_allowed.Value = true; //Param 1125;
 		//Activation du SmartBoost;
@@ -451,15 +451,19 @@ void State_management(int state){
 		//Activation l'injection;
 		Grid_Feeding_allowed.Value = false; //Param 1127;
 
-		Force_floating.Value = true;
-		Floating_voltage.Value = i_Battery_Voltage_Charge_limit.Value; //tension maximun de charge de 61 Voltage_1_start_new_cycle
-		printf("floating voltage : %f, actual voltage : %f\n",i_Battery_Voltage_Charge_limit.Value,i_Battery_Voltage.Value);
+		Force_floating.Value = false;
+		//Floating_voltage.Value = i_Battery_Voltage_Charge_limit.Value; //tension maximun de charge de 61 Voltage_1_start_new_cycle
+		//printf("floating voltage : %f, actual voltage : %f\n",i_Battery_Voltage_Charge_limit.Value,i_Battery_Voltage.Value);
+
 		Battery_Charge_current_DC.Value = fabs(Ps)/i_Battery_Voltage.Value;
 		if(Battery_Charge_current_DC.Value > i_Battery_Current_Charge_limit.Value)
 	 	Battery_Charge_current_DC.Value = i_Battery_Current_Charge_limit.Value;
 		if(Battery_Charge_current_DC.Value > 200) //limit des disjoncteur des batteries
 		Battery_Charge_current_DC.Value = 190;
 		printf("Charge current of bat : %f\n",Battery_Charge_current_DC.Value);
+
+		Force_new_cycle.Value = true;
+
 		printf("end case 2,3,4 & 5 :--------------------------------------\n");
 		break;
 	}
@@ -742,7 +746,7 @@ int main()
 		syslog (LOG_ERR, "ERROR while opening '/dev/null' for stderr");
 		exit (1);
 	}
-	
+
 
 	// end of the code for the service
 
