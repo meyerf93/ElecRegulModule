@@ -159,7 +159,7 @@ int Write(t_param* Parametre,MQTTClient* client)
 	char data[64];
 	switch (Parametre->Format)
 	{
-		case BOOL_F:i_Battery_cycle_phase
+		case BOOL_F:
 		if(Parametre->Value == 1)
 		{
 			sprintf(data,"[%d,%d,%d,%d,%d,%s]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_WRITE,"true");
