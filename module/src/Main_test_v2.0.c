@@ -405,7 +405,7 @@ void State_management(int state){
 		//tran transfert allowed
 		Transfer_relay_allowed.Value = 1; //Param 1128
 		Force_floating.Value = true;
-		Floating_voltage.Value  = i_Battery_Voltage.Value-1;
+		Floating_voltage.Value  = i_Battery_Voltage_Discharge_limit.Value-1;
 		printf("floating voltage : %f ; bat act u : %f\n",Floating_voltage.Value,i_Battery_Voltage.Value-1);
 		printf("battery volt charge limit : %f; batt volt discharge limit : %f \n",i_Battery_Voltage_Charge_limit.Value,i_Battery_Voltage_Discharge_limit.Value);
 		printf("batt current charge limit :%f\n",i_Battery_Current_Charge_limit.Value);
