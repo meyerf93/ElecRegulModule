@@ -238,156 +238,6 @@ int Time_old;
 time_t my_time;
 struct tm * timeinfo;
 
-//------------------------------------------------------------------------------
-/*-------------- Routine de la gestion de la batterie, charger, decharger, injecter ------------*/
-// PCO : hypothèse  la batterie va recevoir une instruction de charger ou décharger à la puissance ps
-
-// GESTION ACTIVE CONTROL, LA BATTERIE EST MASTER
-// ON DOIT JOUER POUR LES SOC,
-// Pour le pas de temps considéré correspondant au forecast , cela correspond à un nombre de kWh souhaité (consigne) sur une durée de 30'
-// Initialement avec le soft opti , on recevait une valeur Ps <0 ou Ps>0
-// kWh_disponible = 7057 state of heath% *10.8) *(soc_courant - SOCmin) La capacité intilale etant de 10.8 kWh
-// SOC_final = SOC_courant + kWh_consigne/kWh_disponible
-// delta_SOC=SOC_final-SOC_courant= kWh_consigne/kWh_disponible
-// Le delta_SOC peut être calculé dans l'algorithme
-// sa valeur max est SOCmax (inférieur au 100% de charge disponible)
-// sa valeur min est SOCmin (supérieur) au 100% de décharge disponible)
-
-// la gestion de la batterie fait la distinction Ps>plsec ou Ps<plsec
-// plsec est mesuré de manière instatanée dans calcul_p_k Plsec = i_Output_power_AC_OUT.Value*1000;
-// psmax_decharge = courant_decharge_limite IAdc (param 7068) x tension_dc (param 7000)
-// ps = kWh/ temps_en_heure
-
-// Question est-ce que smartboost toujours autorisé? aujourd'hui c'est initialisé TRUE dans le fichier Write_read.h
-
-/*void Battery_management(float P_s,MQTTClient* client)
-{
-	// Unité de P_s en Watt
-	//float Forcage_KWh_Charge_Decharge;
-	//float Delta_SOC;
-	//float Final_SOC;
-
-	//Forcage_KWh_Charge_Decharge=P_s/1000*0.5 ; //Unité kWh 0.5 pour 30 min corriger avec le pas de temps de la boucle du programme e
-	//MAX_current_of_AC_IN.Value=35.0; // 1107 deja dans le writeread.h
-
-	//Read_bat(&i_soc_value_battery,client); // Param 7002
-	//Read_bat(&i_State_of_Health, client); // Param 7057
-	//Bat_Capacite_disponible = i_State_of_Health.Value* Bat_Capacite_nominale*(i_soc_value_battery.Value - SOCmin);
-	//printf("Value for bat cap : %f, state of healt : %f, bat cap nomi : %f, soc value : %f, socmin %f\n",
-	//Bat_Capacite_disponible, i_State_of_Health.Value, Bat_Capacite_nominale, i_soc_value_battery.Value, SOCmin);
-	//Delta_SOC=Forcage_KWh_Charge_Decharge/Bat_Capacite_disponible*100;
-	//printf("Delta soc : %f, Forcage kwh : %f,Bap cat dispo : %f\n",Delta_SOC, Forcage_KWh_Charge_Decharge, Bat_Capacite_disponible);
-	//Final_SOC= i_soc_value_battery.Value + Delta_SOC;
-	//printf("Final soc : %f, I soc value : %f, Delta soc : %f\n",Final_SOC,i_soc_value_battery.Value, Delta_SOC);
-
-	//Calcul for next SOC
-	// Bk et inj identique car PV coté AC _in en AC coupling et pas du coté batterie
-	//Soc_Backup.Value = Final_SOC;
-	//Soc_Inject.Value = Final_SOC;
-
-	// ON CHARGE Ps>=0
-	if(Ps >= 0)
-	{
-		printf("CHARGE DE LA BATTERIE\n");
-		printf("========== Battery en charge ==========\n");
-		INJ=0;
-		//Bloquer l'injection;
-		Grid_Feeding_allowed.Value = false; //Param 1127;
-		//Activer l'onduleur;
-		Inverter_Allowed.Value = true; //Param 1124;
-		//Activation du SmartBoost;
-		Smart_boost_allowed.Value = true; //Param 1126;
-		//Autoriser la charge;
-		Charger_allowed.Value = true; //Param 1125;
-		//tran transfert allowed
-		Transfer_relay_allowed.Value = 1; //Param 1128
-		//force un nouveau cycle
-		Force_new_cycle.Value = 1;
-
-		//MODE INSPECT CONTROL : Calcul de la courant max de charge;
-		Battery_Charge_current_DC.Value = fabs(P_s) / i_Battery_Voltage_Studer.Value;
-		printf("Battery current charge limit : %f\n",i_Battery_Current_Charge_limit.Value);
-    if(Battery_Charge_current_DC.Value >= i_Battery_Current_Charge_limit.Value) Battery_Charge_current_DC.Value = i_Battery_Current_Charge_limit.Value;
-		if(Battery_Charge_current_DC.Value >= 55) Battery_Charge_current_DC.Value = 55;
-		printf("Battery charge current DC = %f\n", Battery_Charge_current_DC.Value);
-
-		MAX_current_of_AC_IN.Value = 8000 / i_Input_voltage_AC_IN.Value;
-		printf("Max current of ac in : %f\n", MAX_current_of_AC_IN.Value);
-		if(MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value = 34.0; // 8.6 pour 2 kw
-
-		printf("==========================================\n");
-
-	}
-  else // ON DECHARGE
-	{
-    	//Puissance des batteries suffisante pour alimenter le CS ?
-    	charge_on = 0;
-			Batt_priority_source.Value = false;
-			if (fabs(P_s) > Plsec)
-			{
-      	printf("========== Injceter sur le reseaux ==========\n");
-				printf("DECHARGE DE LA BATTERIE\n");
-				//Bloquer la charge;
-				Charger_allowed.Value = false;//Param 1125;
-				//Activer l'onduleur;
-				Inverter_Allowed.Value = true; //Param 1124;
-				//Autoriser l'injection;
-				Grid_Feeding_allowed.Value = true; //Param 1127;
-				//Activation du SmartBoost;
-				Smart_boost_allowed.Value = true; //Param 1126;
-				//tran transfert allowed
-				Transfer_relay_allowed.Value = 1; //Param 1128
-
-				//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
-				Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
-				if(Max_Grid_Feeding_current.Value >= (i_Battery_Current_Discharge_limit.Value*i_Battery_Voltage.Value)/i_Input_voltage_AC_IN.Value)
-			 	Max_Grid_Feeding_current.Value = (i_Battery_Current_Discharge_limit.Value*i_Battery_Voltage.Value)/i_Input_voltage_AC_IN.Value;													//value dynamic for discharge
-				printf("Max grid feeding : %f\n",Max_Grid_Feeding_current.Value);
-				printf("Battery current discharge limi : %f\n",i_Battery_Current_Discharge_limit.Value);
-				if(Max_Grid_Feeding_current.Value >= 34.0) Max_Grid_Feeding_current.Value = 34.0; // 8.6 pour 2 kW
-
-				//Temps d'injection;
-				Start_Time_forced_injection.Value = Time_now; //L?injection débuterai dans 1 minute
-				Stop_Time_forced_injection.Value = Start_Time_forced_injection.Value +1;
-				//L'injection s'arrêtera après le nouveau cycle;
-				printf("==========================================\n");
-			}
-			else
-			{
-				printf("ALIMENTATION DES CHARGES SECURISEES\n");
-				INJ=0;
-	     	printf("========== Puissance insuff pour injecter, alim le charge securisé ==========\n");
-				//Bloquer la charge
-				Charger_allowed.Value = false; //Param 1125;
-				//Bloquer l'injection;
-				Grid_Feeding_allowed.Value = false; //Param 1127;
-				//Activer l'onduleur;
-				Inverter_Allowed.Value = true; //Param 1124;
-				//Activation du SmartBoost;
-				Smart_boost_allowed.Value = true; //Param 1126;
-				//Utilisation de la batterie comme source prioritaire;
-				Batt_priority_source.Value = true; //Param 1296;
-
-				// PCO a priori pas de sécu à mettre ici pour batterie
-	    	MAX_current_of_AC_IN.Value = (Plsec-fabs(Ps))/i_Input_voltage_AC_IN.Value;
-	    	if (MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value=34.0;
-				Force_floating.Value = 1.0;
-
-				printf("==========================================\n");
-
-		}
-	}
-	if(Soc_Backup.Value > SOCmax) {
-		Soc_Backup.Value = SOCmax;
-		Soc_Inject.Value = SOCmax;
-	}
-	else if (Soc_Backup.Value < SOCmin) {
-		Soc_Backup.Value = SOCmin;
-		Soc_Inject.Value = SOCmin;
-	}
-	Write_bat(&Soc_Backup,client);
-	Write_bat(&Soc_Inject,client);
-}*/
 /*----------------------------------------------------------------------------------------------*/
 
 void State_management(int state){
@@ -405,22 +255,18 @@ void State_management(int state){
 		//tran transfert allowed
 		Transfer_relay_allowed.Value = 1; //Param 1128
 		Force_floating.Value = true;
-		Floating_voltage.Value  = i_Battery_Voltage_Discharge_limit.Value-1;
-		printf("floating voltage : %f ; bat act u : %f\n",Floating_voltage.Value,i_Battery_Voltage.Value-1);
-		printf("battery volt charge limit : %f; batt volt discharge limit : %f \n",i_Battery_Voltage_Charge_limit.Value,i_Battery_Voltage_Discharge_limit.Value);
-		printf("batt current charge limit :%f\n",i_Battery_Current_Charge_limit.Value);
-		printf("batt current discharge limit : %f\n",i_Battery_Current_Discharge_limit.Value);
-		printf("batt charge current  : %f\n",Battery_Charge_current_DC.Value);
-		printf("max grid feeding : %f\n",Max_Grid_Feeding_current);
-		printf("actual vol : %f \n",i_Battery_Voltage.Value);
+		Floating_voltage.Value  = i_Battery_Voltage_Discharge_limit.Value;
 
 		//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
 		Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
 		if(Max_Grid_Feeding_current.Value >= (i_Battery_Current_Discharge_limit.Value*i_Battery_Voltage.Value)/i_Input_voltage_AC_IN.Value)
 		Max_Grid_Feeding_current.Value = (i_Battery_Current_Discharge_limit.Value*i_Battery_Voltage.Value)/i_Input_voltage_AC_IN.Value;													//value dynamic for discharge
-		printf("Max grid feeding : %f\n",Max_Grid_Feeding_current.Value);
-		printf("Battery current discharge limi : %f\n",i_Battery_Current_Discharge_limit.Value);
+		//printf("Max grid feeding : %f\n",Max_Grid_Feeding_current.Value);
+		//printf("Battery current discharge limi : %f\n",i_Battery_Current_Discharge_limit.Value);
 		if(Max_Grid_Feeding_current.Value >= 34.0) Max_Grid_Feeding_current.Value = 34.0; // 8.6 pour 2 kW
+
+		MAX_current_of_AC_IN.Value = 8000 / i_Input_voltage_AC_IN.Value;
+		if(MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value = 34.0; // 8.6 pour 2 kw
 
 		printf("end case 1 :--------------------------------------\n");
 		break;
@@ -437,32 +283,17 @@ void State_management(int state){
 		//Activation l'injection;
 		Grid_Feeding_allowed.Value = false; //Param 1127;
 
-		printf("check the phase of the battery : %f\n",i_Battery_cycle_phase.Value);
-		printf("floating voltage : %f ; bat act u : %f\n",Floating_voltage.Value,i_Battery_Voltage.Value-1);
-		printf("battery volt charge limit : %f; batt volt discharge limit : %f \n",i_Battery_Voltage_Charge_limit.Value,i_Battery_Voltage_Discharge_limit.Value);
-		printf("batt current charge limit :%f\n",i_Battery_Current_Charge_limit.Value);
-		printf("batt current discharge limit : %f\n",i_Battery_Current_Discharge_limit.Value);
-		printf("batt charge current  : %f\n",Battery_Charge_current_DC.Value);
-		printf("max grid feeding : %f\n",Max_Grid_Feeding_current);
-		printf("actual vol : %f \n",i_Battery_Voltage.Value);
-
 		Force_floating.Value = true;
-		//Absorption_phase_allowed.Value = true;
 		Floating_voltage.Value = i_Battery_Voltage_Charge_limit.Value; //tension maximun de charge de 61 Voltage_1_start_new_cycle
-		printf("floating voltage : %f, actual voltage : %f\n",i_Battery_Voltage_Charge_limit.Value,i_Battery_Voltage.Value);
 
 		Battery_Charge_current_DC.Value = fabs(Ps)/i_Battery_Voltage.Value;
 		if(Battery_Charge_current_DC.Value > i_Battery_Current_Charge_limit.Value)
 	 	Battery_Charge_current_DC.Value = i_Battery_Current_Charge_limit.Value;
 		if(Battery_Charge_current_DC.Value > 200) //limit des disjoncteur des batteries
 		Battery_Charge_current_DC.Value = 190;
-		printf("Charge current of bat : %f\n",Battery_Charge_current_DC.Value);
 
 		MAX_current_of_AC_IN.Value = 8000 / i_Input_voltage_AC_IN.Value;
-		printf("Max current of ac in : %f\n", MAX_current_of_AC_IN.Value);
 		if(MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value = 34.0; // 8.6 pour 2 kw
-
-		//Force_new_cycle.Value = 1;
 
 		printf("end case 2,3,4 & 5 :--------------------------------------\n");
 		break;
@@ -620,12 +451,9 @@ void catch_alarm (int sig)
  	if(i == 6) i = 0;
  		get_Time();
    	printf("%d:%d;", (int)(Time_now/60), (int)(Time_now - (int)(Time_now/60)*60));
-		//printf(" Soc_Backup, = %f;", Soc_Backup);
-		//printf(" Soc_Inject, = %f;", Soc_Inject);
    	printf("SOC = %f;", SOC);
 		printf("Eb = %f;", Eb);
 		printf("Pr = %f;", Pr);
-   	//printf("Kg = %f;", Kg);
    	printf("Ps = %f;", Ps);
    	printf("Pl = %f;", Pl);
    	printf("Ppv = %f;", Ppv);
@@ -635,18 +463,23 @@ void catch_alarm (int sig)
    	printf("Ubat = %f;",i_Battery_Voltage_Studer.Value);
    	printf("Iac_in = %f;", i_Input_current_AC_IN.Value);
    	printf("Uac = %f;",i_Input_voltage_AC_IN.Value);
-		printf("Max_grid_geed = %f;\n",Max_Grid_Feeding_current.Value);
+		printf("Max_grid_geed = %f;",Max_Grid_Feeding_current.Value);
+
+		printf("floating voltage : %f ;bat actu : %f;",Floating_voltage.Value,i_Battery_Voltage.Value-1);
+		printf("battery volt charge limit : %f; batt volt discharge limit : %f;",i_Battery_Voltage_Charge_limit.Value,i_Battery_Voltage_Discharge_limit.Value);
+		printf("batt current charge limit :%f;",i_Battery_Current_Charge_limit.Value);
+		printf("batt current discharge limit : %f;",i_Battery_Current_Discharge_limit.Value);
+		printf("batt charge current  : %f;",Battery_Charge_current_DC.Value);
+		printf("max grid feeding : %f;",Max_Grid_Feeding_current);
+		printf("actual vol : %f;\n",i_Battery_Voltage.Value);
 
    	FILE * fd = 0;
    	fd = fopen("read_fast.txt", "a");
    	fprintf(fd,"STATE = %d;",STATE);
    	fprintf(fd,"%d:%d;", (int)(Time_now/60), (int)(Time_now - (int)(Time_now/60)*60));
-		//fprintf(fd," Soc_Backup, = %f;", Soc_Backup);
-		//fprintf(fd," Soc_Inject, = %f;", Soc_Inject);
    	fprintf(fd,"SOC = %f;", SOC);
 		fprintf(fd,"Eb = %f;",Eb);
 		fprintf(fd,"Pr = %f;",Pr);
-   	//fprintf(fd," Kg = %f;", Kg);
    	fprintf(fd,"Ps = %f;", Ps);
    	fprintf(fd,"Pl = %f;", Pl);
    	fprintf(fd,"Ppv = %f;", Ppv);
@@ -657,6 +490,14 @@ void catch_alarm (int sig)
    	fprintf(fd,"Iac_in = %f;", i_Input_current_AC_IN.Value);
    	fprintf(fd,"Uac = %f;",i_Input_voltage_AC_IN.Value);
 		fprintf(fd,"Max_grid_geed = %f;\n",Max_Grid_Feeding_current.Value);
+
+		fprintf(fd,"floating voltage : %f ; bat actu : %f;",Floating_voltage.Value,i_Battery_Voltage.Value-1);
+		fprintf(fd,"battery volt charge limit : %f; batt volt discharge limit : %f;",i_Battery_Voltage_Charge_limit.Value,i_Battery_Voltage_Discharge_limit.Value);
+		fprintf(fd,"batt current charge limit :%f;",i_Battery_Current_Charge_limit.Value);
+		fprintf(fd,"batt current discharge limit : %f;",i_Battery_Current_Discharge_limit.Value);
+		fprintf(fd,"batt charge current  : %f;",Battery_Charge_current_DC.Value);
+		fprintf(fd,"max grid feeding : %f;",Max_Grid_Feeding_current);
+		fprintf(fd,"actual vol : %f;\n",i_Battery_Voltage.Value);
   	fclose(fd);
 
   	//printf("time now %d:%d\n", (int)(Time_now/60), (int)(Time_now - (int)(Time_now/60)*60));
@@ -697,7 +538,7 @@ void Time_init(void)
 }
 
 int main()
-{/*
+{
 	// 1. fork off the parent process
 	fork_process();
 
@@ -745,8 +586,7 @@ int main()
 	if (dup2 (STDIN_FILENO, STDERR_FILENO) != STDERR_FILENO) {
 		syslog (LOG_ERR, "ERROR while opening '/dev/null' for stderr");
 		exit (1);
-	}*/
-
+	}
 
 	// end of the code for the service
 
@@ -830,43 +670,6 @@ int main()
 	   	Write_p(client_charger);//&frame, &property,buffer,sizeof(buffer), &ipv4_struct,&data,ret_val);
 
 	 		// Commented for test json
-	 		Read(&i_Battery_cycle_phase,client_charger);
-	 		Read(&i_Battery_Charge_current,client_charger);
-	 		Read(&i_Input_current_AC_IN,client_charger);
-
-			//display value in terminal
-
-			printf("%d:%d;", (int)(Time_now/60), (int)(Time_now - (int)(Time_now/60)*60));
-			printf(" SOC = %f;", SOC);
-			printf("Ps = %f;", Ps);
-			printf("Pl = %f;", Pl);
-			printf("Ppv = %f;", Ppv);
-			printf("Pb = %f;", Pb);
-			printf("Plsec = %f;", Plsec);
-			printf("Ibat = %f;", i_Battery_Charge_current.Value);
-			printf("Ubat = %f;",i_Battery_Voltage_Studer.Value);
-			printf("Iac_in = %f;", i_Input_current_AC_IN.Value);
-			printf("Uac = %f;",i_Input_voltage_AC_IN.Value);
-			printf("Kg = %f;\n", Kg);
-
-			printf("\n========== Write data of algorithm ==========\n");
-			//print data in file for data analysis
-			FILE * fd = 0;
-			fd = fopen("donnes.txt", "w");
-			fprintf(fd,"STATE = %d;",STATE);
-			fprintf(fd,"%d:%d;", (int)(Time_now/60), (int)(Time_now - (int)(Time_now/60)*60));
-			fprintf(fd," SOC = %f;", SOC);
-			fprintf(fd," Kg = %f;", Kg);
-			fprintf(fd,"Ps = %f;", Ps);
-			fprintf(fd,"Pl = %f;", Pl);
-			fprintf(fd,"Ppv = %f;", Ppv);
-			fprintf(fd,"Pb = %f;", Pb);
-			fprintf(fd,"Plsec = %f;", Plsec);
-			fprintf(fd,"Ibat = %f;", i_Battery_Charge_current.Value);
-			fprintf(fd,"Ubat = %f;",i_Battery_Voltage_Studer.Value);
-			fprintf(fd,"Iac_in = %f;", i_Input_current_AC_IN.Value);
-			fprintf(fd,"Uac = %f;\n",i_Input_voltage_AC_IN.Value);
-			fclose(fd);
 		}
 	} while(1);
 	MQTTClient_disconnect(client_charger, 10000);
