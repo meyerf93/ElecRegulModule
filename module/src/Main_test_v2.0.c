@@ -415,27 +415,6 @@ void State_management(int state){
 		printf("Battery current discharge limi : %f\n",i_Battery_Current_Discharge_limit.Value);
 		if(Max_Grid_Feeding_current.Value >= 34.0) Max_Grid_Feeding_current.Value = 34.0; // 8.6 pour 2 kW
 
-		//Temps d'injection;
-		/*Start_Time_forced_injection.Value = Time_now; //L?injection débuterai dans 1 minute
-		Stop_Time_forced_injection.Value = Start_Time_forced_injection.Value +1;
-		Force_new_cycle.Value = true;*/
-
-		/*//Bloquer l'onduleur;
-		Inverter_Allowed.Value = false; //Param 1124;
-		//Activer la charge
-		Charger_allowed.Value = true; //Param 1125;
-		//Activation du SmartBoost;
-		Smart_boost_allowed.Value = true; //Param 1126;
-		//Activation l'injection;
-		Grid_Feeding_allowed.Value = true; //Param 1127;
-
-		Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
-		if(Max_Grid_Feeding_current.Value >= (i_Battery_Current_Discharge_limit.Value*i_Battery_Voltage.Value)/i_Input_voltage_AC_IN.Value)
-		Max_Grid_Feeding_current.Value = (i_Battery_Current_Discharge_limit.Value*i_Battery_Voltage.Value)/i_Input_voltage_AC_IN.Value;													//value dynamic for discharge
-		if(Max_Grid_Feeding_current.Value >= 34.0) Max_Grid_Feeding_current.Value = 34.0; // 8.6 pour 2 kW
-
-		printf("Max grid feeding : %f\n",	Max_Grid_Feeding_current.Value );*/
-		//L'injection s'arrêtera après le nouveau cycle;
 		printf("end case 1 :--------------------------------------\n");
 		break;
 	case 2:
@@ -453,10 +432,10 @@ void State_management(int state){
 
 		printf("check the phase of the battery : %f\n",i_Battery_cycle_phase.Value);
 
-		Force_floating.Value = false;
-		Absorption_phase_allowed.Value = true;
-		//Floating_voltage.Value = i_Battery_Voltage_Charge_limit.Value; //tension maximun de charge de 61 Voltage_1_start_new_cycle
-		//printf("floating voltage : %f, actual voltage : %f\n",i_Battery_Voltage_Charge_limit.Value,i_Battery_Voltage.Value);
+		Force_floating.Value = true;
+		//Absorption_phase_allowed.Value = true;
+		Floating_voltage.Value = i_Battery_Voltage_Charge_limit.Value; //tension maximun de charge de 61 Voltage_1_start_new_cycle
+		printf("floating voltage : %f, actual voltage : %f\n",i_Battery_Voltage_Charge_limit.Value,i_Battery_Voltage.Value);
 
 		Battery_Charge_current_DC.Value = fabs(Ps)/i_Battery_Voltage.Value;
 		if(Battery_Charge_current_DC.Value > i_Battery_Current_Charge_limit.Value)
