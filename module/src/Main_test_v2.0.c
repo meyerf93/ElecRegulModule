@@ -451,6 +451,8 @@ void State_management(int state){
 		//Activation l'injection;
 		Grid_Feeding_allowed.Value = false; //Param 1127;
 
+		printf("check the phase of the battery : %f\n",i_Battery_cycle_phase.Value);
+
 		Force_floating.Value = false;
 		Absorption_phase_allowed.Value = true;
 		//Floating_voltage.Value = i_Battery_Voltage_Charge_limit.Value; //tension maximun de charge de 61 Voltage_1_start_new_cycle
@@ -467,7 +469,7 @@ void State_management(int state){
 		printf("Max current of ac in : %f\n", MAX_current_of_AC_IN.Value);
 		if(MAX_current_of_AC_IN.Value >= 34.0) MAX_current_of_AC_IN.Value = 34.0; // 8.6 pour 2 kw
 
-		Force_new_cycle.Value = 1;
+		//Force_new_cycle.Value = 1;
 
 		printf("end case 2,3,4 & 5 :--------------------------------------\n");
 		break;
