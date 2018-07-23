@@ -412,7 +412,7 @@ void State_management(int state){
 		printf("batt current discharge limit : %f\n",i_Battery_Current_Discharge_limit.Value);
 		printf("batt charge current  : %f\n",Battery_Charge_current_DC.Value);
 		printf("max grid feeding : %f\n",Max_Grid_Feeding_current);
-		printf("actual vol : %f \n"i_Battery_Voltage.Value);
+		printf("actual vol : %f \n",i_Battery_Voltage.Value);
 
 		//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
 		Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
@@ -444,7 +444,7 @@ void State_management(int state){
 		printf("batt current discharge limit : %f\n",i_Battery_Current_Discharge_limit.Value);
 		printf("batt charge current  : %f\n",Battery_Charge_current_DC.Value);
 		printf("max grid feeding : %f\n",Max_Grid_Feeding_current);
-		printf("actual vol : %f \n"i_Battery_Voltage.Value);
+		printf("actual vol : %f \n",i_Battery_Voltage.Value);
 
 		Force_floating.Value = true;
 		//Absorption_phase_allowed.Value = true;
