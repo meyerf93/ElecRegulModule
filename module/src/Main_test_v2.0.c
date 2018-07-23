@@ -470,7 +470,7 @@ void catch_alarm (int sig)
 		printf("batt current charge limit :%f;",i_Battery_Current_Charge_limit.Value);
 		printf("batt current discharge limit : %f;",i_Battery_Current_Discharge_limit.Value);
 		printf("batt charge current  : %f;",Battery_Charge_current_DC.Value);
-		printf("max grid feeding : %f;",Max_Grid_Feeding_current);
+		printf("max grid feeding : %lf;",Max_Grid_Feeding_current);
 		printf("actual vol : %f;\n",i_Battery_Voltage.Value);
 
    	FILE * fd = 0;
@@ -497,7 +497,7 @@ void catch_alarm (int sig)
 		fprintf(fd,"batt current discharge limit : %f;",i_Battery_Current_Discharge_limit.Value);
 		fprintf(fd,"batt charge current  : %f;",Battery_Charge_current_DC.Value);
 		fprintf(fd,"max grid feeding : %f;",Max_Grid_Feeding_current);
-		fprintf(fd,"actual vol : %f;\n",i_Battery_Voltage.Value);
+		fprintf(fd,"actual vol : %lf;\n",i_Battery_Voltage.Value);
   	fclose(fd);
 
   	//printf("time now %d:%d\n", (int)(Time_now/60), (int)(Time_now - (int)(Time_now/60)*60));

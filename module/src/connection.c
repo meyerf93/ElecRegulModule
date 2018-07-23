@@ -138,7 +138,7 @@ void Read_p(MQTTClient *client,MQTTClient *client_bat)/*scom_frame_t* frame,scom
  	Read(&i_Output_voltage_AC_OUT,client);
  	Read(&i_Output_power_AC_OUT,client);
   Read(&i_Battery_cycle_phase,client);
-  Read(&i_Input_current_AC_IN,client_charger);
+  Read(&i_Input_current_AC_IN,client);
  	Read_bat(&i_Battery_Voltage,client_bat);
 	Read_bat(&i_Battery_Current,client_bat);
 	Read_bat(&i_soc_value_battery,client_bat);
