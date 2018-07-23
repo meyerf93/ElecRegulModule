@@ -452,6 +452,7 @@ void State_management(int state){
 		Grid_Feeding_allowed.Value = false; //Param 1127;
 
 		Force_floating.Value = false;
+		Absorption_phase_allowed.Value = true;
 		//Floating_voltage.Value = i_Battery_Voltage_Charge_limit.Value; //tension maximun de charge de 61 Voltage_1_start_new_cycle
 		//printf("floating voltage : %f, actual voltage : %f\n",i_Battery_Voltage_Charge_limit.Value,i_Battery_Voltage.Value);
 
