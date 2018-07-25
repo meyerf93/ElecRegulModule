@@ -89,7 +89,8 @@ static void fork_process()
 	t_param Periodic_absorption_allowed = 	{1173, 2, 5, 1,   0}; // PCO Parm inutile
 	t_param Over_Voltage_Value_allowed = 	{1121, 2, 5, 6,  63}; // PCO OK
 	t_param Voltage_After_Over_allowed =    {1122, 2, 5, 6,  61.5}; // PCO OK
-	t_param Under_Voltage_Value_allowed =	{1108, 2, 5, 6, 41.0}; // PCO suggere 15 x 2.9V limite de declenchement au lieu de 41V
+	t_param Under_Voltage_Value_allowed =	{1108, 2, 5, 6, 43.0}; // PCO suggere 15 x 2.9V limite de declenchement au lieu de 41V
+	t_param
 	t_param Voltage_After_Under_allowed = 	{1110, 2, 5, 6, 45.0}; // PCO Pram inutile
 	t_param Bat_Temp_Com_Coef = {1139,2,5,6,0}; // PCO OK
 	/*-----------------------------------------------------------------------*/
