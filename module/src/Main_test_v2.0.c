@@ -73,12 +73,12 @@ static void fork_process()
 	t_param Use_dynamic_comp = 		{1608, 2, 5, 1,   0}; // PCO param Inutile ?
 	t_param Floating_voltage = 		{1140, 2, 5, 6,  61.5};//step 0.1 , PCO en mode inspect il faudrait lire avant 7061
 	t_param Force_floating = 		{1467, 2, 5, 5,   0}; // PCO param inutile
-	t_param Voltage_1_start_new_cycle = 	{1143, 2, 5, 6,  45};//step 0.10 PCO parm inutile
-	t_param Voltage_2_start_new_cycle = 	{1145, 2, 5, 6,  44};//step 0.10 PCO parm inutile
+	t_param Voltage_1_start_new_cycle = 	{1143, 2, 5, 6,  45.0};//step 0.10 PCO parm inutile
+	t_param Voltage_2_start_new_cycle = 	{1145, 2, 5, 6,  44.0};//step 0.10 PCO parm inutile
 	t_param Time_1_under_voltage = 		{1144, 2, 5, 6, 180};//step 1 PCO Parm inutile
 	t_param Time_2_under_voltage = 		{1146, 2, 5, 6, 180};//step 10 PCO Parm inutile
 	t_param Absorption_phase_allowed = 	{1155, 2, 5, 1,   0}; // PCO OK
-	t_param Absorption_voltage = 		{1156, 2, 5, 6,  61.5};//step 0.1 //PCO en mode inspect il faudrait lire avant 7061
+	t_param Absorption_voltage = 		{1156, 2, 5, 6,  63.0};//step 0.1 //PCO en mode inspect il faudrait lire avant 7061
 	t_param Absorption_duration = 		{1157, 2, 5, 6,   0};//step 0.25h PCO : V. Penas suggere zero
 	t_param End_absorption_current = 	{1158, 2, 5, 1,   1}; // PCO parm inutile
 	t_param Current_to_quit_absorption = 	{1159, 2, 5, 6,   2};//step 1A // PCO parm inutile
@@ -90,7 +90,7 @@ static void fork_process()
 	t_param Over_Voltage_Value_allowed = 	{1121, 2, 5, 6,  63}; // PCO OK
 	t_param Voltage_After_Over_allowed =    {1122, 2, 5, 6,  61.5}; // PCO OK
 	t_param Under_Voltage_Value_allowed =	{1108, 2, 5, 6, 41.0}; // PCO suggere 15 x 2.9V limite de declenchement au lieu de 41V
-	t_param Voltage_After_Under_allowed = 	{1110, 2, 5, 6, 55.5}; // PCO Pram inutile
+	t_param Voltage_After_Under_allowed = 	{1110, 2, 5, 6, 45.0}; // PCO Pram inutile
 	t_param Bat_Temp_Com_Coef = {1139,2,5,6,0}; // PCO OK
 	/*-----------------------------------------------------------------------*/
 	//Format : BOOL(1) FORMAT(2) ENUM(3) ERROR(4) INT32(5) FLOAT(6) STRING(7) DYNAMIC(8) BYTE_STREAM(9) LONG_ENUM(10) SHORT_ENUM(11

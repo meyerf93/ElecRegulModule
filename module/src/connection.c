@@ -270,20 +270,20 @@ void Write_p(MQTTClient* client)/*scom_frame_t* frame,scom_property_t* property 
 /*------------- Routine d'initialization de touts les parametres et de l'Xtender ---------------*/
 int Init(MQTTClient* client){
 	Write(&Parameters_saved_in_flash_memory,client);
-	Write(&Over_Voltage_Value_allowed,client);
 	Write(&Voltage_After_Over_allowed,client);
+  Write(&Over_Voltage_Value_allowed,client);
 	Write(&Under_Voltage_Value_allowed,client);
 	Write(&Voltage_After_Under_allowed,client);
 	Write(&Charger_allowed,client);
 	Write(&Battery_Charge_current_DC,client);
 	Write(&Use_dynamic_comp,client);
-	Write(&Floating_voltage,client);
+  Write(&Voltage_2_start_new_cycle,client);
 	Write(&Voltage_1_start_new_cycle,client);
-	Write(&Voltage_2_start_new_cycle,client);
 	Write(&Time_1_under_voltage,client);
 	Write(&Time_2_under_voltage,client);
 	Write(&Absorption_phase_allowed,client);
 	Write(&Absorption_voltage,client);
+  Write(&Floating_voltage,client);
 	Write(&Absorption_duration,client);
 	Write(&End_absorption_current,client);
 	Write(&Current_to_quit_absorption,client);
