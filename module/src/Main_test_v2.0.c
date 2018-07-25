@@ -256,6 +256,7 @@ void State_management(int state){
 		Transfer_relay_allowed.Value = 1; //Param 1128
 		Force_floating.Value = true;
 		Floating_voltage.Value  = i_Battery_Voltage_Discharge_limit.Value;
+		printf("value of floating : %f; %f\n",Floating_voltage.Value,i_Battery_Voltage_Discharge_limit.Value);
 
 		//Régulation du ratio de puissance Pbatt vs Pres via Iac AC-IN;
 		Max_Grid_Feeding_current.Value = fabs(Ps) / i_Input_voltage_AC_IN.Value;
@@ -285,6 +286,8 @@ void State_management(int state){
 
 		Force_floating.Value = true;
 		Floating_voltage.Value = i_Battery_Voltage_Charge_limit.Value; //tension maximun de charge de 61 Voltage_1_start_new_cycle
+		printf("value of floating : %f; %f\n",Floating_voltage.Value,i_Battery_Voltage_Charge_limit.Value);
+
 
 		Battery_Charge_current_DC.Value = fabs(Ps)/i_Battery_Voltage.Value;
 		if(Battery_Charge_current_DC.Value > i_Battery_Current_Charge_limit.Value)
