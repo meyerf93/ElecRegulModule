@@ -653,7 +653,7 @@ int main()
 
   	printf("Hey !\n");
 		printf("\n========== Launch Initialisation ==========\n");
-		Init(client_charger);
+		//Init(client_charger);
   	do
   	{
 		//printf("IN MAIN LOOP\n");
