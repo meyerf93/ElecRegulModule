@@ -31,7 +31,7 @@ void strip(char *s,char * to_remove)
         p += n;
         s += n + strspn(s+n, to_remove);
     }
-    p -=n;
+    //p -=n;
     free(p);
     *p = 0;
 
