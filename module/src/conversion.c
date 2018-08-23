@@ -23,6 +23,7 @@ void strip(char *s,char * to_remove)
     int n;
     while (*s)
     {
+        printf(" in loop of strip");
         n = strcspn(s, to_remove);
         strncpy(p, s, n);
         p += n;
@@ -41,6 +42,11 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64]
   cJSON_AddStringToObject(root,"mdl",mdl);
   cJSON_AddStringToObject(root,"cmd",id);
   cJSON_AddStringToObject(root,"value",data);
+
+  /*char temp_playload[100] ;
+  if (!cJSON_PrintPreallocated(root,*temp_playload, 100, true)){
+    printf("error when parsin file");
+  }*/
 	char* payload_json = cJSON_Print(root);
   //printf("message xcom to send json : %s\n",payload_json);
 	strip(payload_json,SPACE);
