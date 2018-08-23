@@ -19,14 +19,15 @@
 
 void strip(char *s,char * to_remove)
 {
-    char *p = s;
+    char p[100] = s;
+    //char *p = s;
     int n;
     while (*s)
     {
         printf(" in loop of strip");
         n = strcspn(s, to_remove);
-        strncpy(p, s, n);
-        p += n;
+        strncpy(&p, s, n);
+        &p += n;
         s += n + strspn(s+n, to_remove);
     }
     *p = 0;
