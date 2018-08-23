@@ -19,18 +19,22 @@
 
 void strip(char *s,char * to_remove)
 {
-    char p[100] = s;
-    //char *p = s;
+    char *p;
+    p = malloc(100*sizeof(char));
+    *p = s;
     int n;
     while (*s)
     {
         //printf(" in loop of strip");
         n = strcspn(s, to_remove);
-        strncpy(&p, s, n);
-        &p += n;
+        strncpy(p, s, n);
+        p += n;
         s += n + strspn(s+n, to_remove);
     }
+    p -=n;
+    free(p);
     *p = 0;
+
 }
 
 
