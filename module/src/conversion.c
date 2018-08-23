@@ -21,7 +21,7 @@ void strip(char *s,char * to_remove)
 {
     //char *p;
     //p = malloc(100*sizeof(char));
-    *p = s;
+    char *p = s;
     int n;
     while (*s)
     {
