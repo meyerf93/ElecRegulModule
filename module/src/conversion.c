@@ -24,7 +24,7 @@ void strip(char *s,char * to_remove)
     int n;
     while (*s)
     {
-        printf(" in loop of strip");
+        //printf(" in loop of strip");
         n = strcspn(s, to_remove);
         strncpy(&p, s, n);
         &p += n;
