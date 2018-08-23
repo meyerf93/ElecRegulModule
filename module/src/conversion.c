@@ -19,8 +19,9 @@
 
 void strip(char *s,char * to_remove)
 {
-    char *p;
-    p = malloc(100*sizeof(char));
+    //char *p;
+    //p = malloc(100*sizeof(char));
+    *p = s;
     int n;
     while (*s)
     {
@@ -30,8 +31,7 @@ void strip(char *s,char * to_remove)
         p += n;
         s += n + strspn(s+n, to_remove);
     }
-    //p -=n;
-    free(p);
+    //free(p);
     *p = 0;
 
 }
@@ -55,7 +55,7 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64]
   //printf("message xcom to send json : %s\n",payload_json);
 	strip(payload_json,SPACE);
 	char *temp_ptr = strstr(payload_json,"\"[");
-	printf("%s\n",temp_ptr);
+	//printf("%s\n",temp_ptr);
 	strip(temp_ptr,"\"");
 
 	MQTTClient_deliveryToken token;
