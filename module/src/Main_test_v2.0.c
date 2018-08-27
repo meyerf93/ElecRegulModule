@@ -664,15 +664,11 @@ int main()
 			//printf(" ********************** %d : %d **********************\n", (int)(Time_now/60), (int)(Time_now - (int)(Time_now/60)*60));
 			//printf("========== Lecture des    printf("Ibat = %f;", i_Battery_Charge_current.Value);informations Onduleur ==========\n");
 			printf("\n===========read =============\n");
-			printf("time now :  %s\n",Time_now);
 			Read_p(client_charger,client_bat);//&frame, &property,buffer,sizeof(buffer), &ipv4_struct,&data,ret_val);
 
 			printf("\n========== Algorithme =========\n");
-			printf("time now :  %s\n",Time_now);
 			Algo();
 			printf("\n========== Ecriture des parametres sur Onduleur ==========\n");
-			printf("time now :  %s\n",Time_now);
-
 
 	   	Write_p(client_charger);//&frame, &property,buffer,sizeof(buffer), &ipv4_struct,&data,ret_val);
 
