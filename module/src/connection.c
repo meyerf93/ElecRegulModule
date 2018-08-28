@@ -36,7 +36,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 {
     /* EXEMPLE CODE MQTT*/
   cJSON * root;
-  root = Init();
+  root = cJSON_CreateObject();
   cJSON *data;
   data = cJSON_CreateObject();
 
