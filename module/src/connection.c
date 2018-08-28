@@ -36,7 +36,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 {
     /* EXEMPLE CODE MQTT*/
   cJSON * root;
-  root = cJSON_CreateObject();
+  root = Init();
   cJSON *data;
   data = cJSON_CreateObject();
 
@@ -98,11 +98,11 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
      printf("data is not null, data after clean : %s\n",cJSON_Print(data));
      printf("data is not null, root after clean : %s\n",cJSON_Print(root));
    }
-   /*if(root != NULL) {
-     cJSON_Delete(root);
+   if(root != NULL) {
      printf("root is not null, data : %s\n",cJSON_Print(data));
      printf("root is not null, root : %s\n",cJSON_Print(root));
-   }*/
+     cJSON_Delete(root);
+   }
 	 return 1;
 }
 
