@@ -78,7 +78,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 		Pl = meters[3]+meters[4]+meters[5]+meters[6]+meters[7]+meters[8]+meters[9]; //+ meters[10];
 		Kg = meters[11];
 		Ps_opti = meters[14];
-    //cJSON_Delete(data);
+    cJSON_Delete(data);
 		//printf("receive data : %f,%f,%f\n",Ppv,Pl,Kg);
 	}
 
