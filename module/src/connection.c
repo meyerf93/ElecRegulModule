@@ -100,7 +100,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 			cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
       UNUSED(data);
 			parse_batt_message(payload,data);
-      //cJSON_Delete(data);
+      cJSON_Delete(data);
 	}
 	 MQTTClient_freeMessage(&message);
 	 MQTTClient_free(topicName);
