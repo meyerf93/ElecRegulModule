@@ -69,11 +69,11 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64]
 
 	//printf("json message send : %s\n",pubmsg.payload);
   MQTTClient_publishMessage(client, topic, &pubmsg, &token);
-  printf("Waiting for up to %d seconds for publication of %s\n"
+  /*printf("Waiting for up to %d seconds for publication of %s\n"
         "on topic %s for client with ClientID: %s\n",
-        (int)(TIMEOUT/1000), payload_json, topic, id);
+        (int)(TIMEOUT/1000), payload_json, topic, id);*/
   int rc = MQTTClient_waitForCompletion(client, token, TIMEOUT);
-  printf("Message with delivery token %d delivered\n", token);
+  //printf("Message with delivery token %d delivered\n", token);
 
 }
 
