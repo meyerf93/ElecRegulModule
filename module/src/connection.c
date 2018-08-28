@@ -37,6 +37,8 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
     /* EXEMPLE CODE MQTT*/
   cJSON * root;
   root = cJSON_CreateObject();
+  cJSON *data;
+  data = cJSON_CreateObject();
 
   UNUSED(context);
   UNUSED(topicLen);
@@ -62,15 +64,13 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
  	} while (*dst++);
 
 	select_meters = parse_energy_meters(payload);
-	//printf("payload display : %s\n", payload);
 
-	//-------------------------------------------
+  data = cJSON_GetObjectItemCaseSensitive(root, "data");
+  root = cJSON_Parse(payload);
+
+
 	//extract data ------------------------------
 	if(select_meters != -1){
-		root = cJSON_Parse(payload);
-		//printf("receive paylaod with mqtt : %s\n",payload);
-		//printf("palyoad parsed receive 1 : %s\n",cJSON_Print(root));
-		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 		if (cJSON_IsNumber(data))
 		{
   		meters[select_meters] = data->valuedouble;
@@ -79,56 +79,24 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 		Pl = meters[3]+meters[4]+meters[5]+meters[6]+meters[7]+meters[8]+meters[9]; //+ meters[10];
 		Kg = meters[11];
 		Ps_opti = meters[14];
-    //printf("data parsed : %s\n",cJSON_Print(data));
-
-    //cJSON_Delete(data);
-    //cJSON_Delete(root);
-    //printf("palyoad parsed after clean data 1 : %s\n",cJSON_Print(root));
-    //printf("data parsed after cleanm data 1: %s\n",cJSON_Print(data));
-
-
 		//printf("receive data : %f,%f,%f\n",Ppv,Pl,Kg);
 	}
 
 	//parse packet for xcom
 	if (strstr(payload,XCOM_ID_CHARGER) != NULL){
-		root = cJSON_Parse(payload);
-    //printf("receive paylaod with xcom : %s\n",payload);
-    //printf("palyoad parsed receive 2 : %s\n",cJSON_Print(root));
-
-		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 		parse_studer_message(payload,data);
-    //printf("data parsed : %s\n",cJSON_Print(data));
-
-    //cJSON_Delete(data);
-    //printf("palyoad parsed after clean data 2: %s\n",cJSON_Print(root));
-    //printf("data parsed after clean data 2 : %s\n",cJSON_Print(data));
-
 	}
 	else if (strstr(payload,XCOM_ID_BAT) != NULL){
-			root = cJSON_Parse(payload);
-			//printf("receive paylaod with xcom bat  : %s\n",payload);
-			//printf("palyoad parsed receive 3: %s\n",cJSON_Print(root));
-
-			cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
-			parse_batt_message(payload,data);
-      //printf("data parsed : %s\n",cJSON_Print(data));
-
-      //cJSON_Delete(data);
-      //printf("palyoad parsed after clean data 3 : %s\n",cJSON_Print(root));
-      //printf("data parsed after clean data 3: %s\n",cJSON_Print(data));
-
+		parse_batt_message(payload,data);
 	}
 	 MQTTClient_freeMessage(&message);
 	 MQTTClient_free(topicName);
-   //printf("payload parsed : %s\n",cJSON_Print(root));
-
-   //cJSON_Delete(root);
-   //printf("palyoad parsed end  : %s\n",cJSON_Print(root));
 
    if(root != NULL) {
      cJSON_Delete(root);
-     //printf("delete the root object on arrived\n");
+   }
+   if(data != NULL) {
+     cJSON_Delete(data);
    }
 	 return 1;
 }
@@ -156,7 +124,7 @@ int Read_bat(t_param* Parametre,MQTTClient* client)
 /*----------------------------------------------------------------------------------------------*/
 
 /*-------------------- Routine de lectures des parametres necessaires pour l'algo -------------*/
-void Read_p(MQTTClient *client,MQTTClient *client_bat)/*scom_frame_t* frame,scom_property_t* property ,char* buffer,size_t buffer_length, struct connection* socket_struct, struct studer_data* data,char* ret_val)MQTTClient *client)*/
+void Read_p(MQTTClient *client,MQTTClient *client_bat)
 {
  	Read(&i_Battery_Voltage_Studer,client);
  	Read(&i_Input_voltage_AC_IN,client);
@@ -260,7 +228,7 @@ int Write_bat(t_param* Parametre,MQTTClient* client)
 /*----------------------------------------------------------------------------------------------*/
 
 /*--------------- Routine Ecriture, ecriture des parametres modifie dans l'algo ----------------*/
-void Write_p(MQTTClient* client)/*scom_frame_t* frame,scom_property_t* property ,char* buffer,size_t buffer_length, struct connection* socket_struct, struct studer_data* data,char* ret_val)*/
+void Write_p(MQTTClient* client)
 {
 	Write(&Batt_priority_source,client);
   Write(&Charger_allowed,client);
