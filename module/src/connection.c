@@ -84,7 +84,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
     cJSON_Delete(data);
     //cJSON_Delete(root);
     printf("palyoad parsed after clean data 1 : %s\n",cJSON_Print(root));
-    printf("data parsed after cleanm data 1: %s\n",cJSON_Print(data));
+    //printf("data parsed after cleanm data 1: %s\n",cJSON_Print(data));
 
 
 		//printf("receive data : %f,%f,%f\n",Ppv,Pl,Kg);
@@ -101,7 +101,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
     //printf("data parsed : %s\n",cJSON_Print(data));
 
     cJSON_Delete(data);
-    //printf("palyoad parsed after clean data 2: %s\n",cJSON_Print(root));
+    printf("palyoad parsed after clean data 2: %s\n",cJSON_Print(root));
     //printf("data parsed after clean data 2 : %s\n",cJSON_Print(data));
 
 	}
@@ -115,7 +115,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
       //printf("data parsed : %s\n",cJSON_Print(data));
 
       cJSON_Delete(data);
-      //printf("palyoad parsed after clean data 3 : %s\n",cJSON_Print(root));
+      printf("palyoad parsed after clean data 3 : %s\n",cJSON_Print(root));
       //printf("data parsed after clean data 3: %s\n",cJSON_Print(data));
 
 	}
