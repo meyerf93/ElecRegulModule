@@ -37,7 +37,7 @@ Parametres:
 
 #define true 1
 #define false 0
-#define int_temp_s 60
+#define int_temp_s 10
 #define int_temp_us 0
 
 #include "cJSON.h"
