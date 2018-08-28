@@ -105,7 +105,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	}
 	 MQTTClient_freeMessage(&message);
 	 MQTTClient_free(topicName);
-   cJSON_Delete(root);
+   //cJSON_Delete(root);
 	 return 1;
 }
 
