@@ -90,7 +90,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 
 		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 		parse_studer_message(payload,data);
-    //cJSON_Delete(data);
+    cJSON_Delete(data);
 	}
 	else if (strstr(payload,XCOM_ID_BAT) != NULL){
 			root = cJSON_Parse(payload);
