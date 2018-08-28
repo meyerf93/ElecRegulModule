@@ -94,7 +94,8 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
      cJSON_Delete(root);
    }
    if(data != NULL) {
-     cJSON_Delete(data);
+     printf("data is not null %s\n",cJSON_Print(data));
+     //cJSON_Delete(data);
    }
 	 return 1;
 }
