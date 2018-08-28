@@ -69,7 +69,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	if(select_meters != -1){
 		root = cJSON_Parse(payload);
 		//printf("receive paylaod with mqtt : %s\n",payload);
-		printf("palyoad parsed receive 1 : %s\n",cJSON_Print(root));
+		//printf("palyoad parsed receive 1 : %s\n",cJSON_Print(root));
 		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 		if (cJSON_IsNumber(data))
 		{
@@ -79,7 +79,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 		Pl = meters[3]+meters[4]+meters[5]+meters[6]+meters[7]+meters[8]+meters[9]; //+ meters[10];
 		Kg = meters[11];
 		Ps_opti = meters[14];
-    printf("data parsed : %s\n",cJSON_Print(data));
+    //printf("data parsed : %s\n",cJSON_Print(data));
 
     cJSON_Delete(data);
     //cJSON_Delete(root);
@@ -126,7 +126,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
    //cJSON_Delete(root);
    //printf("palyoad parsed end  : %s\n",cJSON_Print(root));
 
-   if(root != NULL) cJSON_Delete(root);
+   //if(root != NULL) cJSON_Delete(root);
 	 return 1;
 }
 
