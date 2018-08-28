@@ -82,6 +82,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
     printf("data parsed : %s\n",cJSON_Print(data));
 
     cJSON_Delete(data);
+    cJSON_Delete(root);
     printf("palyoad parsed after clean data 1 : %s\n",cJSON_Print(root));
     printf("data parsed after cleanm data 1: %s\n",cJSON_Print(data));
 
@@ -93,15 +94,15 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	if (strstr(payload,XCOM_ID_CHARGER) != NULL){
 		root = cJSON_Parse(payload);
     //printf("receive paylaod with xcom : %s\n",payload);
-    printf("palyoad parsed receive 2 : %s\n",cJSON_Print(root));
+    //printf("palyoad parsed receive 2 : %s\n",cJSON_Print(root));
 
 		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 		parse_studer_message(payload,data);
-    printf("data parsed : %s\n",cJSON_Print(data));
+    //printf("data parsed : %s\n",cJSON_Print(data));
 
     cJSON_Delete(data);
-    printf("palyoad parsed after clean data 2: %s\n",cJSON_Print(root));
-    printf("data parsed after clean data 2 : %s\n",cJSON_Print(data));
+    //printf("palyoad parsed after clean data 2: %s\n",cJSON_Print(root));
+    //printf("data parsed after clean data 2 : %s\n",cJSON_Print(data));
 
 	}
 	else if (strstr(payload,XCOM_ID_BAT) != NULL){
