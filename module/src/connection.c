@@ -82,7 +82,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
     printf("data parsed : %s\n",cJSON_Print(data));
 
     cJSON_Delete(data);
-    cJSON_Delete(root);
+    //cJSON_Delete(root);
     printf("palyoad parsed after clean data 1 : %s\n",cJSON_Print(root));
     printf("data parsed after cleanm data 1: %s\n",cJSON_Print(data));
 
