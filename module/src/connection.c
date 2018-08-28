@@ -126,7 +126,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
    //cJSON_Delete(root);
    //printf("palyoad parsed end  : %s\n",cJSON_Print(root));
 
-   if(strstr(cJSON_Print(root),"(null)" == NULL) cJSON_Delete(root);
+   if(strstr(cJSON_Print(root),"(null)") == NULL) cJSON_Delete(root);
 	 return 1;
 }
 
