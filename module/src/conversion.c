@@ -51,7 +51,8 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64]
   if (!cJSON_PrintPreallocated(root,*temp_playload, 100, true)){
     printf("error when parsin file");
   }*/
-	char* payload_json = cJSON_Print(root);
+	char* payload_json = calloc(100,1);
+  payload_json = cJSON_Print(root);
   cJSON_Delete(root);
   //printf("message xcom to send json : %s\n",payload_json);
 	strip(payload_json,SPACE);
@@ -74,6 +75,7 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64]
         (int)(TIMEOUT/1000), payload_json, topic, id);*/
   int rc = MQTTClient_waitForCompletion(client, token, TIMEOUT);
   //printf("Message with delivery token %d delivered\n", token);
+  free(payload_json);
 
 }
 
