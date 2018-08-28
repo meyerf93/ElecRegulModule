@@ -17,7 +17,7 @@
 #include "type.h"
 ;
 
-void strip(char *s,char * to_remove)
+void strip(char *s,const char * to_remove)
 {
     //char *p;
     //p = malloc(100*sizeof(char));
@@ -52,6 +52,7 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64]
     printf("error when parsin file");
   }*/
 	char* payload_json = cJSON_Print(root);
+  cJSON_Delete(root);
   //printf("message xcom to send json : %s\n",payload_json);
 	strip(payload_json,SPACE);
 	char *temp_ptr = strstr(payload_json,"\"[");
@@ -68,6 +69,12 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64]
 
 	//printf("json message send : %s\n",pubmsg.payload);
   MQTTClient_publishMessage(client, topic, &pubmsg, &token);
+  printf("Waiting for up to %d seconds for publication of %s\n"
+        "on topic %s for client with ClientID: %s\n",
+        (int)(TIMEOUT/1000), PAYLOAD, TOPIC, CLIENTID);
+  rc = MQTTClient_waitForCompletion(client, token, TIMEOUT);
+  printf("Message with delivery token %d delivered\n", token);
+
 }
 
 //Parse the message from MQTT

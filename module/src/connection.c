@@ -35,10 +35,8 @@ void delivered(void *context, MQTTClient_deliveryToken dt)
 int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message)
 {
     /* EXEMPLE CODE MQTT*/
-  char* payloadptr;
   cJSON * root;
 
-  UNUSED(payloadptr);
   UNUSED(context);
   UNUSED(topicLen);
 
@@ -80,6 +78,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 		Pl = meters[3]+meters[4]+meters[5]+meters[6]+meters[7]+meters[8]+meters[9]; //+ meters[10];
 		Kg = meters[11];
 		Ps_opti = meters[14];
+    cJSON_Delete(data);
 		//printf("receive data : %f,%f,%f\n",Ppv,Pl,Kg);
 	}
 
@@ -91,6 +90,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 
 		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 		parse_studer_message(payload,data);
+    cJSON_Delete(data);
 	}
 	else if (strstr(payload,XCOM_ID_BAT) != NULL){
 			root = cJSON_Parse(payload);
@@ -100,9 +100,11 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 			cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
       UNUSED(data);
 			parse_batt_message(payload,data);
+      cJSON_Delete(data);
 	}
 	 MQTTClient_freeMessage(&message);
 	 MQTTClient_free(topicName);
+   cJSON_Delete(root);
 	return 1;
 }
 
