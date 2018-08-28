@@ -68,7 +68,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	//extract data ------------------------------
 	if(select_meters != -1){
 		root = cJSON_Parse(payload);
-		//printf("receive paylaod with mqtt : %s\n",payload);
+		printf("receive paylaod with mqtt : %s\n",payload);
 		//printf("palyoad parsed receive 1 : %s\n",cJSON_Print(root));
 		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 		if (cJSON_IsNumber(data))
@@ -93,7 +93,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	//parse packet for xcom
 	if (strstr(payload,XCOM_ID_CHARGER) != NULL){
 		root = cJSON_Parse(payload);
-    //printf("receive paylaod with xcom : %s\n",payload);
+    printf("receive paylaod with xcom : %s\n",payload);
     //printf("palyoad parsed receive 2 : %s\n",cJSON_Print(root));
 
 		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
@@ -107,7 +107,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	}
 	else if (strstr(payload,XCOM_ID_BAT) != NULL){
 			root = cJSON_Parse(payload);
-			//printf("receive paylaod with xcom bat  : %s\n",payload);
+			printf("receive paylaod with xcom bat  : %s\n",payload);
 			//printf("palyoad parsed receive 3: %s\n",cJSON_Print(root));
 
 			cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
