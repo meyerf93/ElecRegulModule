@@ -69,7 +69,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	if(select_meters != -1){
 		root = cJSON_Parse(payload);
 		//printf("receive paylaod with mqtt : %s\n",payload);
-		printf("palyoad parsed : %s\n",cJSON_Print(root));
+		printf("palyoad parsed receive 1 : %s\n",cJSON_Print(root));
 		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 		if (cJSON_IsNumber(data))
 		{
@@ -82,8 +82,8 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
     printf("data parsed : %s\n",cJSON_Print(data));
 
     cJSON_Delete(data);
-    printf("palyoad parsed : %s\n",cJSON_Print(root));
-    printf("data parsed : %s\n",cJSON_Print(data));
+    printf("palyoad parsed after clean data 1 : %s\n",cJSON_Print(root));
+    printf("data parsed after cleanm data 1: %s\n",cJSON_Print(data));
 
 
 		//printf("receive data : %f,%f,%f\n",Ppv,Pl,Kg);
@@ -93,21 +93,21 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	if (strstr(payload,XCOM_ID_CHARGER) != NULL){
 		root = cJSON_Parse(payload);
     //printf("receive paylaod with xcom : %s\n",payload);
-    printf("palyoad parsed : %s\n",cJSON_Print(root));
+    printf("palyoad parsed receive 2 : %s\n",cJSON_Print(root));
 
 		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 		parse_studer_message(payload,data);
     printf("data parsed : %s\n",cJSON_Print(data));
 
     cJSON_Delete(data);
-    printf("palyoad parsed : %s\n",cJSON_Print(root));
-    printf("data parsed : %s\n",cJSON_Print(data));
+    printf("palyoad parsed after clean data 2: %s\n",cJSON_Print(root));
+    printf("data parsed after clean data 2 : %s\n",cJSON_Print(data));
 
 	}
 	else if (strstr(payload,XCOM_ID_BAT) != NULL){
 			root = cJSON_Parse(payload);
 			//printf("receive paylaod with xcom bat  : %s\n",payload);
-			printf("palyoad parsed : %s\n",cJSON_Print(root));
+			printf("palyoad parsed receive 3: %s\n",cJSON_Print(root));
 
 			cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
       UNUSED(data);
@@ -115,16 +115,16 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
       printf("data parsed : %s\n",cJSON_Print(data));
 
       cJSON_Delete(data);
-      printf("palyoad parsed : %s\n",cJSON_Print(root));
-      printf("data parsed : %s\n",cJSON_Print(data));
+      printf("palyoad parsed after clean data 3 : %s\n",cJSON_Print(root));
+      printf("data parsed after clean data 3: %s\n",cJSON_Print(data));
 
 	}
 	 MQTTClient_freeMessage(&message);
 	 MQTTClient_free(topicName);
-   printf("data parsed : %s\n",cJSON_Print(root));
+   //printf("payload parsed : %s\n",cJSON_Print(root));
 
    //cJSON_Delete(root);
-   printf("palyoad parsed : %s\n",cJSON_Print(root));
+   printf("palyoad parsed end  : %s\n",cJSON_Print(root));
 
 
    //cJSON_Delete(root);
