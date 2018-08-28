@@ -2,8 +2,8 @@
 //Projet  : Pilotage-micro réseau - NeighborHub
 //But	    : Connection and mqtt method for charger inverter
 //Auteurs : Florian Meyer.
-//Version : 2.1
-//Date 	  : 13.07.2018
+//Version : 2.2
+//Date 	  : 28.08.2018
 //Status  : test
 #include "connection.h"
 #include "conversion.h"

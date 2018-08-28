@@ -1,17 +1,10 @@
 //Fichier : Main_test
 //Projet  : ∑PS6 Pilotage-micro réseau - Solar Decathlon 2017
 //But	  : Test des routine connect, deconnect read and write
-//Auteurs : Capone M., Botta D, Meyer F, Couty Philippe.
-//Version : 2.0
-//Date 	  : 25.06.2018
+//Auteurs : Capone M., Botta D, Meyer Florian.
+//Version : 2.1
+//Date 	  : 28.08.2018
 //Status  : test
-
-/*
-COMMENTAIRES POUR GUILLAUME
-
-Parametres:
-1107: Limite de courant de charge AC-in
-*/
 
 #include <stdio.h>
 #include <string.h>
@@ -446,8 +439,6 @@ void get_Time(void)
 void catch_alarm (int sig)
 {
  	static int i = 0;
- 	//printf("I'm running %d\n", i);
- 	//printf("**%d\n", i);
  	printf(" ");
  	algo_on = 1;
  	i++;
@@ -503,8 +494,6 @@ void catch_alarm (int sig)
 		fprintf(fd,"actual vol : %f;\n",i_Battery_Voltage.Value);
   	fclose(fd);
 
-  	//printf("time now %d:%d\n", (int)(Time_now/60), (int)(Time_now - (int)(Time_now/60)*60));
-  	//printf("time old %d:%d\n", (int)(Time_old/60), (int)(Time_old - (int)(Time_old/60)*60));
  	if(!(Time_old == Time_now))
   	{
    		Time_old = Time_now;
@@ -661,17 +650,14 @@ int main()
    		{
 			algo_on = 0;
 
-			//printf(" ********************** %d : %d **********************\n", (int)(Time_now/60), (int)(Time_now - (int)(Time_now/60)*60));
-			//printf("========== Lecture des    printf("Ibat = %f;", i_Battery_Charge_current.Value);informations Onduleur ==========\n");
 			printf("\n===========read =============\n");
-			Read_p(client_charger,client_bat);//&frame, &property,buffer,sizeof(buffer), &ipv4_struct,&data,ret_val);
+			Read_p(client_charger,client_bat);
 
 			printf("\n========== Algorithme =========\n");
 			Algo();
 			printf("\n========== Ecriture des parametres sur Onduleur ==========\n");
 
-	   	Write_p(client_charger);//&frame, &property,buffer,sizeof(buffer), &ipv4_struct,&data,ret_val);
-
+	   	Write_p(client_charger);
 	 		// Commented for test json
 		}
 	} while(1);
