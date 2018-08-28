@@ -36,6 +36,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 {
     /* EXEMPLE CODE MQTT*/
   cJSON * root;
+  root = cJSON_CreateObject();
 
   UNUSED(context);
   UNUSED(topicLen);
@@ -104,7 +105,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	}
 	 MQTTClient_freeMessage(&message);
 	 MQTTClient_free(topicName);
-   //cJSON_Delete(root);
+   cJSON_Delete(root);
 	 return 1;
 }
 
