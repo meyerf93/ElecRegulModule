@@ -79,11 +79,11 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 		Pl = meters[3]+meters[4]+meters[5]+meters[6]+meters[7]+meters[8]+meters[9]; //+ meters[10];
 		Kg = meters[11];
 		Ps_opti = meters[14];
-    //printf("data parsed : %s\n",cJSON_Print(data));
+    printf("data parsed : %s\n",cJSON_Print(data));
 
-    cJSON_Delete(data);
+    //cJSON_Delete(data);
     //cJSON_Delete(root);
-    //printf("palyoad parsed after clean data 1 : %s\n",cJSON_Print(root));
+    printf("palyoad parsed after clean data 1 : %s\n",cJSON_Print(root));
     //printf("data parsed after cleanm data 1: %s\n",cJSON_Print(data));
 
 
@@ -98,10 +98,10 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 
 		cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 		parse_studer_message(payload,data);
-    //printf("data parsed : %s\n",cJSON_Print(data));
+    printf("data parsed : %s\n",cJSON_Print(data));
 
-    cJSON_Delete(data);
-    //printf("palyoad parsed after clean data 2: %s\n",cJSON_Print(root));
+    //cJSON_Delete(data);
+    printf("palyoad parsed after clean data 2: %s\n",cJSON_Print(root));
     //printf("data parsed after clean data 2 : %s\n",cJSON_Print(data));
 
 	}
@@ -112,10 +112,10 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 
 			cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
 			parse_batt_message(payload,data);
-      //printf("data parsed : %s\n",cJSON_Print(data));
+      printf("data parsed : %s\n",cJSON_Print(data));
 
-      cJSON_Delete(data);
-      //printf("palyoad parsed after clean data 3 : %s\n",cJSON_Print(root));
+      //cJSON_Delete(data);
+      printf("palyoad parsed after clean data 3 : %s\n",cJSON_Print(root));
       //printf("data parsed after clean data 3: %s\n",cJSON_Print(data));
 
 	}
