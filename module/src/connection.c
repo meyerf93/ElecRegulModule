@@ -128,7 +128,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 
    if(root != NULL) {
      cJSON_Delete(root);
-     printf("delete the root object on arrived\n");
+     //printf("delete the root object on arrived\n");
    }
 	 return 1;
 }
