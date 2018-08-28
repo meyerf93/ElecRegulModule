@@ -65,9 +65,8 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 
 	select_meters = parse_energy_meters(payload);
 
-  data = cJSON_GetObjectItemCaseSensitive(root, "data");
   root = cJSON_Parse(payload);
-
+  data = cJSON_GetObjectItemCaseSensitive(root, "data");
 
 	//extract data ------------------------------
 	if(select_meters != -1){
@@ -79,7 +78,6 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 		Pl = meters[3]+meters[4]+meters[5]+meters[6]+meters[7]+meters[8]+meters[9]; //+ meters[10];
 		Kg = meters[11];
 		Ps_opti = meters[14];
-		//printf("receive data : %f,%f,%f\n",Ppv,Pl,Kg);
 	}
 
 	//parse packet for xcom
