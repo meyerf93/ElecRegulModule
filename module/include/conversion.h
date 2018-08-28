@@ -38,7 +38,7 @@
 #define SPACE "\t\r\n"
 
 
-void strip(char *s,char * to_remove);
+void strip(char *s,const char * to_remove);
 
 
 void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64], char id[64]);
