@@ -90,13 +90,14 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	 MQTTClient_freeMessage(&message);
 	 MQTTClient_free(topicName);
 
-   if(root != NULL) {
-     cJSON_Delete(root);
-   }
+
    if(data != NULL) {
      printf("data is not null %s\n",cJSON_Print(data));
-     printf("data is not null %s\n",cJSON_Print(root));
-     cJSON_Delete(data);
+     printf("root is not null %s\n",cJSON_Print(root));
+     //cJSON_Delete(data);
+   }
+   if(root != NULL) {
+     cJSON_Delete(root);
    }
 	 return 1;
 }
