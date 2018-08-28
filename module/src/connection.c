@@ -108,16 +108,16 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	else if (strstr(payload,XCOM_ID_BAT) != NULL){
 			root = cJSON_Parse(payload);
 			//printf("receive paylaod with xcom bat  : %s\n",payload);
-			printf("palyoad parsed receive 3: %s\n",cJSON_Print(root));
+			//printf("palyoad parsed receive 3: %s\n",cJSON_Print(root));
 
 			cJSON *data = cJSON_GetObjectItemCaseSensitive(root, "data");
       UNUSED(data);
 			parse_batt_message(payload,data);
-      printf("data parsed : %s\n",cJSON_Print(data));
+      //printf("data parsed : %s\n",cJSON_Print(data));
 
       cJSON_Delete(data);
-      printf("palyoad parsed after clean data 3 : %s\n",cJSON_Print(root));
-      printf("data parsed after clean data 3: %s\n",cJSON_Print(data));
+      //printf("palyoad parsed after clean data 3 : %s\n",cJSON_Print(root));
+      //printf("data parsed after clean data 3: %s\n",cJSON_Print(data));
 
 	}
 	 MQTTClient_freeMessage(&message);
