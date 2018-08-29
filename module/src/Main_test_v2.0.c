@@ -365,7 +365,7 @@ void Algo()
 			{
       	printf("STATE = 5;\n");
       	STATE = 5;
-				Ps = 0; //couvre l'autoconsomation de la batterie'
+				Ps = 100; //couvre l'autoconsomation de la batterie'
 				Pr = Pb;
 			}
 			else
@@ -400,7 +400,7 @@ void Algo()
 			{
       	STATE = 2;
       	printf("STATE = 2;\n");
-      	Ps = 5; //couvre l'autoconsomation de la batterie'
+      	Ps = 100; //couvre l'autoconsomation de la batterie'
 				Pr = Pb;
 			}
 			else
