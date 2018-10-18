@@ -16,19 +16,19 @@
 #define UNUSED(x) (void)(x)
 
 #define Not_Value -10
-#define PV_WEST 	"knx1/:1.1.8/:/power.1"
-#define PV_EAST 	"knx1/:1.1.10/:/power.1"
-#define PV_SOUTH 	"knx1/:1.1.9/:/power.1"
+#define PV_WEST 	"NH/Skin/Production/West/Power/Res"
+#define PV_EAST 	"NH/Skin/Production/South/Power/Res"
+#define PV_SOUTH 	"NH/Skin/Production/East/Power/Res"
 
-#define SECURE_LOAD 	"knx1/:1.1.18/:/power.1"
+#define SECURE_LOAD "NH/Core/Cons/Elec_Mng_out/Power/Res"
 
-#define OVEN 		"knx1/:1.1.11/:/power.1"
-#define COOKTOP		"knx1/:1.1.12/:/power.1"
-#define BATTERY_IN	"knx1/:1.1.17/:/power.1"
-#define CAR_CHARGER	"knx1/:1.1.13/:/power.1"
-#define NORTH_RECEP	"knx1/:1.1.14/:/power.1"
-#define SOUTH_RECEP	"knx1/:1.1.15/:/power.1"
-#define SKIN_RECEP	"knx1/:1.1.16/:/power.1"
+#define OVEN 				"NH/Core/Cons/Oven/Power/Res"
+#define COOKTOP			"NH/Core/Cons/Cooktop/Power/Res"
+#define BATTERY_IN	"NH/Core/Cons/Elec_Mng_in/Power/Res"
+#define CAR_CHARGER	"NH/Skin/Cons/Car_Battery/Power/Res"
+#define NORTH_RECEP	"NH/Core/Cons/Rec_core_north/Power/Res"
+#define SOUTH_RECEP	"NH/Core/Cons/Rec_core_south/Power/Res"
+#define SKIN_RECEP	"NH/Skin/Cons/Rec/Power/Res"
 
 #define OPTI_KG		"opti/:/kg"
 #define OPTI_PROD	"opti/:/next_production"

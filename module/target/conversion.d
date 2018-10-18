@@ -1,4 +1,4 @@
-target/connection.o: src/connection.c include/connection.h \
+target/conversion.o: src/conversion.c include/connection.h \
   /usr/include/stdio.h /usr/include/_stdio.h /usr/include/sys/cdefs.h \
   /usr/include/sys/_symbol_aliasing.h \
   /usr/include/sys/_posix_availability.h /usr/include/Availability.h \
@@ -98,4 +98,4 @@ target/connection.o: src/connection.c include/connection.h \
   /usr/local/include/json-c/json_object_iterator.h \
   /usr/local/include/json-c/json_c_version.h include/MQTTClient.h \
   include/MQTTClientPersistence.h include/cJSON.h include/type.h \
-  include/conversion.h include/MQTTAsync.h include/Write_read_v20.h
+  include/conversion.h include/Write_read_v20.h include/MQTTAsync.h

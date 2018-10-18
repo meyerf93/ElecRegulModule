@@ -1,92 +1,100 @@
-target/Main_test_v2.0.o: src/Main_test_v2.0.c /usr/include/stdc-predef.h \
- /usr/include/stdio.h /usr/include/features.h \
- /usr/include/arm-linux-gnueabihf/sys/cdefs.h \
- /usr/include/arm-linux-gnueabihf/bits/wordsize.h \
- /usr/include/arm-linux-gnueabihf/gnu/stubs.h \
- /usr/include/arm-linux-gnueabihf/gnu/stubs-hard.h \
- /usr/lib/gcc/arm-linux-gnueabihf/6/include/stddef.h \
- /usr/include/arm-linux-gnueabihf/bits/types.h \
- /usr/include/arm-linux-gnueabihf/bits/typesizes.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/arm-linux-gnueabihf/6/include/stdarg.h \
- /usr/include/arm-linux-gnueabihf/bits/stdio_lim.h \
- /usr/include/arm-linux-gnueabihf/bits/sys_errlist.h \
- /usr/include/arm-linux-gnueabihf/bits/stdio.h /usr/include/string.h \
- /usr/include/xlocale.h /usr/include/arm-linux-gnueabihf/bits/string.h \
- /usr/include/arm-linux-gnueabihf/bits/string2.h /usr/include/stdlib.h \
- include/scom_property.h include/scom_data_link.h include/scom_port_c99.h \
- /usr/lib/gcc/arm-linux-gnueabihf/6/include/stdint.h \
- /usr/include/stdint.h /usr/include/arm-linux-gnueabihf/bits/wchar.h \
- /usr/lib/gcc/arm-linux-gnueabihf/6/include/stdbool.h /usr/include/math.h \
- /usr/include/arm-linux-gnueabihf/bits/math-vector.h \
- /usr/include/arm-linux-gnueabihf/bits/libm-simd-decl-stubs.h \
- /usr/include/arm-linux-gnueabihf/bits/huge_val.h \
- /usr/include/arm-linux-gnueabihf/bits/huge_valf.h \
- /usr/include/arm-linux-gnueabihf/bits/huge_vall.h \
- /usr/include/arm-linux-gnueabihf/bits/inf.h \
- /usr/include/arm-linux-gnueabihf/bits/nan.h \
- /usr/include/arm-linux-gnueabihf/bits/mathdef.h \
- /usr/include/arm-linux-gnueabihf/bits/mathcalls.h \
- /usr/include/arm-linux-gnueabihf/bits/mathinline.h \
- /usr/local/include/json-c/json.h /usr/local/include/json-c/debug.h \
- /usr/include/arm-linux-gnueabihf/bits/waitflags.h \
- /usr/include/arm-linux-gnueabihf/bits/waitstatus.h \
- /usr/include/arm-linux-gnueabihf/sys/types.h /usr/include/time.h \
- /usr/include/endian.h /usr/include/arm-linux-gnueabihf/bits/endian.h \
- /usr/include/arm-linux-gnueabihf/bits/byteswap.h \
- /usr/include/arm-linux-gnueabihf/bits/byteswap-16.h \
- /usr/include/arm-linux-gnueabihf/sys/select.h \
- /usr/include/arm-linux-gnueabihf/bits/select.h \
- /usr/include/arm-linux-gnueabihf/bits/sigset.h \
- /usr/include/arm-linux-gnueabihf/bits/time.h \
- /usr/include/arm-linux-gnueabihf/sys/sysmacros.h \
- /usr/include/arm-linux-gnueabihf/bits/pthreadtypes.h \
- /usr/include/alloca.h \
- /usr/include/arm-linux-gnueabihf/bits/stdlib-bsearch.h \
- /usr/include/arm-linux-gnueabihf/bits/stdlib-float.h \
- /usr/local/include/json-c/linkhash.h \
- /usr/local/include/json-c/json_object.h \
- /usr/local/include/json-c/json_inttypes.h \
- /usr/local/include/json-c/json_config.h /usr/include/inttypes.h \
- /usr/local/include/json-c/printbuf.h \
- /usr/local/include/json-c/arraylist.h \
- /usr/local/include/json-c/json_util.h \
- /usr/local/include/json-c/json_pointer.h \
- /usr/local/include/json-c/json_tokener.h \
- /usr/local/include/json-c/json_object_iterator.h \
- /usr/local/include/json-c/json_c_version.h \
- /usr/include/arm-linux-gnueabihf/sys/stat.h \
- /usr/include/arm-linux-gnueabihf/bits/stat.h \
- /usr/include/arm-linux-gnueabihf/sys/time.h /usr/include/fcntl.h \
- /usr/include/arm-linux-gnueabihf/bits/fcntl.h \
- /usr/include/arm-linux-gnueabihf/bits/fcntl-linux.h \
- /usr/include/unistd.h /usr/include/arm-linux-gnueabihf/bits/posix_opt.h \
- /usr/include/arm-linux-gnueabihf/bits/environments.h \
- /usr/include/arm-linux-gnueabihf/bits/confname.h /usr/include/getopt.h \
- /usr/include/signal.h /usr/include/arm-linux-gnueabihf/bits/signum.h \
- /usr/include/arm-linux-gnueabihf/bits/siginfo.h \
- /usr/include/arm-linux-gnueabihf/bits/sigaction.h \
- /usr/include/arm-linux-gnueabihf/bits/sigcontext.h \
- /usr/include/arm-linux-gnueabihf/asm/sigcontext.h \
- /usr/include/arm-linux-gnueabihf/bits/sigstack.h \
- /usr/include/arm-linux-gnueabihf/sys/ucontext.h \
- /usr/include/arm-linux-gnueabihf/bits/sigthread.h /usr/include/syslog.h \
- /usr/include/arm-linux-gnueabihf/sys/syslog.h \
- /usr/include/arm-linux-gnueabihf/bits/syslog-path.h \
- include/Write_read_v2.0.h include/api_studer.h include/scom_property.h \
- include/connection.h /usr/include/termios.h \
- /usr/include/arm-linux-gnueabihf/bits/termios.h \
- /usr/include/arm-linux-gnueabihf/sys/ttydefaults.h \
- /usr/include/arm-linux-gnueabihf/sys/socket.h \
- /usr/include/arm-linux-gnueabihf/sys/uio.h \
- /usr/include/arm-linux-gnueabihf/bits/uio.h \
- /usr/include/arm-linux-gnueabihf/bits/socket.h \
- /usr/include/arm-linux-gnueabihf/bits/socket_type.h \
- /usr/include/arm-linux-gnueabihf/bits/sockaddr.h \
- /usr/include/arm-linux-gnueabihf/asm/socket.h \
- /usr/include/asm-generic/socket.h \
- /usr/include/arm-linux-gnueabihf/asm/sockios.h \
- /usr/include/asm-generic/sockios.h /usr/include/netinet/in.h \
- /usr/include/arm-linux-gnueabihf/bits/in.h include/MQTTClient.h \
- include/MQTTClientPersistence.h include/api_studer.h \
- include/connection.h include/scom_data_link.h include/cJSON.h
+target/Main_test_v2.0.o: src/Main_test_v2.0.c /usr/include/stdio.h \
+  /usr/include/_stdio.h /usr/include/sys/cdefs.h \
+  /usr/include/sys/_symbol_aliasing.h \
+  /usr/include/sys/_posix_availability.h /usr/include/Availability.h \
+  /usr/include/AvailabilityInternal.h /usr/include/_types.h \
+  /usr/include/sys/_types.h /usr/include/machine/_types.h \
+  /usr/include/i386/_types.h /usr/include/sys/_pthread/_pthread_types.h \
+  /usr/include/sys/_types/_va_list.h /usr/include/machine/types.h \
+  /usr/include/i386/types.h /usr/include/sys/_types/_int8_t.h \
+  /usr/include/sys/_types/_int16_t.h /usr/include/sys/_types/_int32_t.h \
+  /usr/include/sys/_types/_int64_t.h /usr/include/sys/_types/_u_int8_t.h \
+  /usr/include/sys/_types/_u_int16_t.h \
+  /usr/include/sys/_types/_u_int32_t.h \
+  /usr/include/sys/_types/_u_int64_t.h \
+  /usr/include/sys/_types/_intptr_t.h \
+  /usr/include/sys/_types/_uintptr_t.h /usr/include/sys/_types/_size_t.h \
+  /usr/include/sys/_types/_null.h /usr/include/sys/stdio.h \
+  /usr/include/sys/_types/_off_t.h /usr/include/sys/_types/_ssize_t.h \
+  /usr/include/secure/_stdio.h /usr/include/secure/_common.h \
+  /usr/include/string.h /usr/include/sys/_types/_rsize_t.h \
+  /usr/include/sys/_types/_errno_t.h /usr/include/strings.h \
+  /usr/include/secure/_strings.h /usr/include/secure/_string.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include/stdbool.h \
+  /usr/include/math.h /usr/local/include/json-c/json.h \
+  /usr/local/include/json-c/debug.h /usr/include/stdlib.h \
+  /usr/include/sys/wait.h /usr/include/sys/_types/_pid_t.h \
+  /usr/include/sys/_types/_id_t.h /usr/include/sys/signal.h \
+  /usr/include/sys/appleapiopts.h /usr/include/machine/signal.h \
+  /usr/include/i386/signal.h /usr/include/machine/_mcontext.h \
+  /usr/include/i386/_mcontext.h /usr/include/mach/machine/_structs.h \
+  /usr/include/mach/i386/_structs.h \
+  /usr/include/sys/_pthread/_pthread_attr_t.h \
+  /usr/include/sys/_types/_sigaltstack.h \
+  /usr/include/sys/_types/_ucontext.h \
+  /usr/include/sys/_types/_sigset_t.h /usr/include/sys/_types/_uid_t.h \
+  /usr/include/sys/resource.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include/stdint.h \
+  /usr/include/stdint.h /usr/include/_types/_uint8_t.h \
+  /usr/include/_types/_uint16_t.h /usr/include/_types/_uint32_t.h \
+  /usr/include/_types/_uint64_t.h /usr/include/_types/_intmax_t.h \
+  /usr/include/_types/_uintmax_t.h /usr/include/sys/_types/_timeval.h \
+  /usr/include/machine/endian.h /usr/include/i386/endian.h \
+  /usr/include/sys/_endian.h /usr/include/libkern/_OSByteOrder.h \
+  /usr/include/libkern/i386/_OSByteOrder.h /usr/include/alloca.h \
+  /usr/include/sys/_types/_ct_rune_t.h /usr/include/sys/_types/_rune_t.h \
+  /usr/include/sys/_types/_wchar_t.h /usr/include/sys/_types/_dev_t.h \
+  /usr/include/sys/_types/_mode_t.h /usr/local/include/json-c/linkhash.h \
+  /usr/local/include/json-c/json_object.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include/stddef.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include/__stddef_max_align_t.h \
+  /usr/local/include/json-c/json_inttypes.h \
+  /usr/local/include/json-c/json_config.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include/inttypes.h \
+  /usr/include/inttypes.h /usr/local/include/json-c/printbuf.h \
+  /usr/local/include/json-c/arraylist.h \
+  /usr/local/include/json-c/json_util.h \
+  /usr/local/include/json-c/json_pointer.h \
+  /usr/local/include/json-c/json_tokener.h \
+  /usr/local/include/json-c/json_object_iterator.h \
+  /usr/local/include/json-c/json_c_version.h /usr/include/sys/types.h \
+  /usr/include/sys/_types/_u_char.h /usr/include/sys/_types/_u_short.h \
+  /usr/include/sys/_types/_u_int.h /usr/include/sys/_types/_caddr_t.h \
+  /usr/include/sys/_types/_blkcnt_t.h \
+  /usr/include/sys/_types/_blksize_t.h /usr/include/sys/_types/_gid_t.h \
+  /usr/include/sys/_types/_in_addr_t.h \
+  /usr/include/sys/_types/_in_port_t.h /usr/include/sys/_types/_ino_t.h \
+  /usr/include/sys/_types/_ino64_t.h /usr/include/sys/_types/_key_t.h \
+  /usr/include/sys/_types/_nlink_t.h /usr/include/sys/_types/_clock_t.h \
+  /usr/include/sys/_types/_time_t.h \
+  /usr/include/sys/_types/_useconds_t.h \
+  /usr/include/sys/_types/_suseconds_t.h \
+  /usr/include/sys/_types/_fd_def.h \
+  /usr/include/sys/_types/_fd_setsize.h \
+  /usr/include/sys/_types/_fd_set.h /usr/include/sys/_types/_fd_clr.h \
+  /usr/include/sys/_types/_fd_zero.h /usr/include/sys/_types/_fd_isset.h \
+  /usr/include/sys/_types/_fd_copy.h \
+  /usr/include/sys/_pthread/_pthread_cond_t.h \
+  /usr/include/sys/_pthread/_pthread_condattr_t.h \
+  /usr/include/sys/_pthread/_pthread_mutex_t.h \
+  /usr/include/sys/_pthread/_pthread_mutexattr_t.h \
+  /usr/include/sys/_pthread/_pthread_once_t.h \
+  /usr/include/sys/_pthread/_pthread_rwlock_t.h \
+  /usr/include/sys/_pthread/_pthread_rwlockattr_t.h \
+  /usr/include/sys/_pthread/_pthread_t.h \
+  /usr/include/sys/_pthread/_pthread_key_t.h \
+  /usr/include/sys/_types/_fsblkcnt_t.h \
+  /usr/include/sys/_types/_fsfilcnt_t.h /usr/include/sys/stat.h \
+  /usr/include/sys/_types/_timespec.h /usr/include/sys/_types/_s_ifmt.h \
+  /usr/include/sys/_types/_filesec_t.h /usr/include/sys/time.h \
+  /usr/include/sys/_types/_timeval64.h /usr/include/time.h \
+  /usr/include/sys/_select.h /usr/include/fcntl.h \
+  /usr/include/sys/fcntl.h /usr/include/sys/_types/_o_sync.h \
+  /usr/include/sys/_types/_o_dsync.h /usr/include/sys/_types/_seek_set.h \
+  /usr/include/unistd.h /usr/include/sys/unistd.h \
+  /usr/include/sys/_types/_posix_vdisable.h /usr/include/sys/select.h \
+  /usr/include/sys/_types/_uuid_t.h /usr/include/gethostuuid.h \
+  /usr/include/signal.h /usr/include/syslog.h /usr/include/sys/syslog.h \
+  include/MQTTClient.h include/MQTTClientPersistence.h \
+  include/conversion.h include/cJSON.h include/connection.h \
+  include/type.h include/Write_read_v20.h

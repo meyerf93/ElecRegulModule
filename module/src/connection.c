@@ -244,11 +244,17 @@ void Write_p(MQTTClient* client)
   Write(&Battery_Charge_current_DC,client);
   Write(&Smart_boost_allowed,client);
 
- 	if(INJ==1)
+ 	/*if(INJ==1)
 	{
  		Write(&Start_Time_forced_injection,client);
   }
-  	Write(&Stop_Time_forced_injection,client);
+  	Write(&Stop_Time_forced_injection,client);*/
+
+    /*if(Force_new_cycle.Value == 1)
+    {
+      Write(&Force_new_cycle,client);
+      Force_new_cycle.Value = 0;
+    }*/
 
   if(Force_floating.Value == 1)
 	{
@@ -256,12 +262,6 @@ void Write_p(MQTTClient* client)
 
     	Force_floating.Value = 0;
   }
-
- 	if(Force_new_cycle.Value == 1)
-	{
-		Write(&Force_new_cycle,client);
-		Force_new_cycle.Value = 0;
-	}
   Write(&Floating_voltage,client);
 }
 /*----------------------------------------------------------------------------------------------*/
