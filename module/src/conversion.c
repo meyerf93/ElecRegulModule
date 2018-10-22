@@ -40,7 +40,7 @@ void strip(char *s,const char * to_remove)
 // MQTTT communication with studer
 void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64], char id[64])
 {
-  //printf("value receive in send_json : %s,%s,%s,%s\n",topic,data,mdl,id);
+  printf("value receive in send_json : %s,%s,%s,%s\n",topic,data,mdl,id);
   cJSON * root;
 	root = cJSON_CreateObject();
   cJSON_AddStringToObject(root,"mdl",mdl);
