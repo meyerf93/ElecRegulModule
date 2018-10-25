@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 typedef struct {
 			   uint32_t User_ref;
