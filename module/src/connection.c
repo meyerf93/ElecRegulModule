@@ -48,7 +48,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
   printf("init  the csjon object\n");
 
 	int select_meters;
-    
+
   	 //select right mqtt packet ----------
   	char payload[message->payloadlen+1];
   	memcpy (payload, message->payload, message->payloadlen);
@@ -66,7 +66,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
    	do {
    	   while (dst[offset] == ']') ++offset;
    	   *dst = dst[offset];
-   	} while (*dst++);$
+   	} while (*dst++);
 
     printf("payload after bizzare stuff : %s\n",payload);
   	select_meters = parse_energy_meters(payload);
