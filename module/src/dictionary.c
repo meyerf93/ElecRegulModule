@@ -3,6 +3,12 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+#include "type.h"
+
 Dictionary* dict_new() {
     Dictionary *dictionary = (Dictionary*)malloc(sizeof(Dictionary));
     assert(dictionary != NULL);
