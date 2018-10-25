@@ -41,7 +41,7 @@ int dict_has(Dictionary *dictionary, const char *key) {
     if (dictionary->head == NULL)
         return 0;
     while(dictionary != NULL) {
-        if(strcmp(dictionary->head->key, key) == 0)
+        if(strncmp(dictionary->head->key, key,strlen(key) + 1) == 0)
             return 1;
         dictionary = dictionary->tail;
     }
@@ -52,7 +52,8 @@ t_param* dict_get(Dictionary *dictionary, const char *key) {
     if (dictionary->head == NULL)
         return 0;
     while(dictionary != NULL) {
-        if(strcmp(dictionary->head->key, key) == 0)
+        printf("try to get the right parameter : %s\n",key);
+        if(strncmp(dictionary->head->key, key,strlen(key) + 1) == 0)
             return dictionary->head->value;
         dictionary = dictionary->tail;
     }
@@ -64,7 +65,7 @@ void dict_remove(Dictionary *dictionary, const char *key) {
         return;
     Dictionary *previous = NULL;
     while(dictionary != NULL) {
-        if(strcmp(dictionary->head->key, key) == 0) {
+        if(strncmp(dictionary->head->key, key,strlen(key) + 1) == 0) {
             if(previous == NULL) {
                 free(dictionary->head->key);
                 dictionary->head->key = NULL;
