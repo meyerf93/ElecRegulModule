@@ -54,13 +54,13 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
   data = cJSON_GetObjectItemCaseSensitive(root, "data");
   printf("get the object data in root\n");
 
-  char* temp_json = calloc(300,1);
+  /*char* temp_json = calloc(300,1);
   temp_json = cJSON_Print(root);
   printf("data to parse : %s\n",temp_json);
 
   char* temp_data = calloc(300,1);
   temp_data = cJSON_Print(data);
-  printf("data to parse : %s\n",temp_data);
+  printf("data to parse : %s\n",temp_data);*/
 
 	select_meters = parse_energy_meters(topicName);
 
@@ -75,13 +75,17 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 		Kg = meters[11];
 		Ps_opti = meters[14];
 	}
+  printf("parse the energy meters\n");
 
 	//parse packet for xcom
   if(parse_studer_message(topicName,data) == -1){
     printf("ERROR : can't parse the message");
   }
+  printf("parse the parameters\n");
 	MQTTClient_freeMessage(&message);
 	MQTTClient_free(topicName);
+
+  printf("parsing of the message is done\n");
 
    if(root != NULL) {
      //printf("root is not null, data : %s\n",cJSON_Print(data));
