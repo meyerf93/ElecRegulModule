@@ -41,12 +41,10 @@
 void strip(char *s,const char * to_remove);
 
 
-void send_json_obj(MQTTClient client,char topic[64], char data[64], char mdl[64], char id[64]);
+void send_json_obj(MQTTClient client,char topic[64], char data[64], char id[64]);
 
 int parse_energy_meters(char* payload);
 
-void parse_studer_message(char* payload,cJSON* data);
-
-void parse_batt_message(char* payload,cJSON* data);
+int parse_studer_message(char* payload,cJSON* data);
 
 #endif

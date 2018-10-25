@@ -9,6 +9,8 @@
 //#include "conversion.h"
 #ifndef CONNETION_H
 #define CONNECTION_H
+#endif
+
 
 // Header code here
 
@@ -30,18 +32,11 @@
 #include <MQTTClient.h>
 #include "cJSON.h"
 #include "type.h"
+#include "dictionary.h"
 
 #define MQTTCLIENT_PERSISTENCE 0
 #define ADDRESS     "192.168.2.3:1883"
-#define CLIENTID_CHARGER	"Regul_elec_charger"
-#define CLIENTID_BAT 			"Regul_elec_bat"
-
-#define TOPIC  			"new.statements"
-#define TOPIC_WRITE "device.command.set.value"
-
-#define XCOM 				"xcom1"
-#define XCOM_ID_CHARGER "xcom1/:101/:/config"
-#define XCOM_ID_BAT "xcom1/:600/:/config"
+#define CLIENT_ID	  "Regul_elec"
 
 #define XCOM_READ 1
 #define XCOM_WRITE 2
@@ -62,27 +57,13 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 /*---------------------- Routine de lecture d'un parametre sur l'Xtender -----------------------*/
 int Read(t_param* Parametre,MQTTClient* client);
 /*----------------------------------------------------------------------------------------------*/
-/*---------------------- Routine de lecture d'un parametre sur l'Xtender -----------------------*/
-int Read_bat(t_param* Parametre,MQTTClient* client);
-/*----------------------------------------------------------------------------------------------*/
 /*-------------------- Routine de lectures des parametres necessaires pour l'algo -------------*/
-void Read_p(MQTTClient *client,MQTTClient *client_bat);
+void Read_p(MQTTClient *client);
 /*----------------------------------------------------------------------------------------------*/
 
 /*---------------------- Routine d'ecriture d'un parametre sur l'Xtender -----------------------*/
 int Write(t_param* Parametre,MQTTClient* client);
 /*----------------------------------------------------------------------------------------------*/
-
-/*---------------------- Routine d'ecriture d'un parametre sur l'Xtender -----------------------*/
-int Write_bat(t_param* Parametre,MQTTClient* client);
-/*----------------------------------------------------------------------------------------------*/
-
 /*--------------- Routine Ecriture, ecriture des parametres modifie dans l'algo ----------------*/
 void Write_p(MQTTClient* client);
 /*----------------------------------------------------------------------------------------------*/
-
-
-/*------------- Routine d'initialization de touts les parametres et de l'Xtender ---------------*/
-int Init(MQTTClient* client);
-/*----------------------------------------------------------------------------------------------*/
-#endif

@@ -9,5 +9,7 @@ typedef struct {
 			   uint16_t Proprety_id;
 			   int 		Format;
 			   float 	Value;
+				 char Id_read[60];
+				 char Id_write[60];
 			   }t_param;
 #endif

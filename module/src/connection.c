@@ -44,29 +44,11 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
   UNUSED(topicLen);
 
 	int select_meters;
-	 //select right mqtt packet ----------
-	char payload[message->payloadlen+1];
-	memcpy (payload, message->payload, message->payloadlen);
-	payload[message->payloadlen] = 0;
-	//printf("payload display : %s\n",payload);
 
-  int offset = 0;
-	char* dst= payload;
-	do {
-	    while (dst[offset] == '[') ++offset;
-	    *dst = dst[offset];
-	} while (*dst++);
-
- 	offset = 0;
- 	do {
- 	   while (dst[offset] == ']') ++offset;
- 	   *dst = dst[offset];
- 	} while (*dst++);
-
-	select_meters = parse_energy_meters(payload);
-
-  root = cJSON_Parse(payload);
+  root = cJSON_Parse(message->payload);
   data = cJSON_GetObjectItemCaseSensitive(root, "data");
+
+	select_meters = parse_energy_meters(topicName);
 
 	//extract data ------------------------------
 	if(select_meters != -1){
@@ -81,27 +63,23 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 	}
 
 	//parse packet for xcom
-	if (strstr(payload,XCOM_ID_CHARGER) != NULL){
-		parse_studer_message(payload,data);
-	}
-	else if (strstr(payload,XCOM_ID_BAT) != NULL){
-		parse_batt_message(payload,data);
-	}
-	 MQTTClient_freeMessage(&message);
-	 MQTTClient_free(topicName);
+  if(parse_studer_message(topicName,data) == -1){
+    printf("ERROR : can't parse the message");
+  }
+	MQTTClient_freeMessage(&message);
+	MQTTClient_free(topicName);
 
-
-   /*if(data != NULL) {
-     printf("data is not null, data : %s\n",cJSON_Print(data));
-     printf("data is not null, root : %s\n",cJSON_Print(root));
-     cJSON_Delete(data);
-     printf("data is not null, data after clean : %s\n",cJSON_Print(data));
-     printf("data is not null, root after clean : %s\n",cJSON_Print(root));
-   }*/
    if(root != NULL) {
      //printf("root is not null, data : %s\n",cJSON_Print(data));
      //printf("root is not null, root : %s\n",cJSON_Print(root));
      cJSON_Delete(root);
+   }
+   if(data != NULL) {
+     //printf("data is not null, data : %s\n",cJSON_Print(data));
+     //printf("data is not null, root : %s\n",cJSON_Print(root));
+     cJSON_Delete(data);
+     //printf("data is not null, data after clean : %s\n",cJSON_Print(data));
+     //printf("data is not null, root after clean : %s\n",cJSON_Print(root));
    }
 	 return 1;
 }
@@ -113,23 +91,13 @@ int Read(t_param* Parametre,MQTTClient* client)
   char data[64];
   sprintf(data,"[%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_READ);
   //printf("data : %s\n",data);
-	send_json_obj(client,TOPIC_WRITE,data,XCOM,XCOM_ID_CHARGER);
-	return 1;
-}
-/*----------------------------------------------------------------------------------------------*/
-/*---------------------- Routine de lecture d'un parametre sur l'Xtender -----------------------*/
-int Read_bat(t_param* Parametre,MQTTClient* client)
-{
-  char data[64];
-  sprintf(data,"[%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_READ);
-  //printf("data : %s\n",data);
-	send_json_obj(client,TOPIC_WRITE,data,XCOM,XCOM_ID_BAT);
+	send_json_obj(client,Parametre->Id_write,data,Parametre->Id_write);
 	return 1;
 }
 /*----------------------------------------------------------------------------------------------*/
 
 /*-------------------- Routine de lectures des parametres necessaires pour l'algo -------------*/
-void Read_p(MQTTClient *client,MQTTClient *client_bat)
+void Read_p(MQTTClient *client)
 {
  	Read(&i_Battery_Voltage_Studer,client);
  	Read(&i_Input_voltage_AC_IN,client);
@@ -139,16 +107,16 @@ void Read_p(MQTTClient *client,MQTTClient *client_bat)
  	Read(&i_Output_power_AC_OUT,client);
   Read(&i_Battery_cycle_phase,client);
   Read(&i_Input_current_AC_IN,client);
- 	Read_bat(&i_Battery_Voltage,client_bat);
-	Read_bat(&i_Battery_Current,client_bat);
-	Read_bat(&i_soc_value_battery,client_bat);
-	Read_bat(&i_State_of_Health,client_bat);
-	Read_bat(&i_Battery_Voltage_Charge_limit,client_bat);
-	Read_bat(&i_Battery_Voltage_Discharge_limit,client_bat);
-	Read_bat(&i_Battery_Current_Charge_limit,client_bat);
-	Read_bat(&i_Battery_Current_Discharge_limit,client_bat);
-	Read_bat(&i_Battery_Current_Charge_recommanded,client_bat);
-	Read_bat(&i_Battery_Current_Discharge_recommanded,client_bat);
+ 	Read(&i_Battery_Voltage,client);
+	Read(&i_Battery_Current,client);
+	Read(&i_soc_value_battery,client);
+	Read(&i_State_of_Health,client);
+	Read(&i_Battery_Voltage_Charge_limit,client);
+	Read(&i_Battery_Voltage_Discharge_limit,client);
+	Read(&i_Battery_Current_Charge_limit,client);
+	Read(&i_Battery_Current_Discharge_limit,client);
+	Read(&i_Battery_Current_Charge_recommanded,client);
+	Read(&i_Battery_Current_Discharge_recommanded,client);
 }
 /*----------------------------------------------------------------------------------------------*/
 
@@ -187,47 +155,7 @@ int Write(t_param* Parametre,MQTTClient* client)
 	}
 
 	//printf("data : %s\n",data);
-	send_json_obj(client,TOPIC_WRITE,data,XCOM,XCOM_ID_CHARGER);
-	return 1;
-}
-/*----------------------------------------------------------------------------------------------*/
-
-
-/*---------------------- Routine d'ecriture d'un parametre sur l'Xtender -----------------------*/
-int Write_bat(t_param* Parametre,MQTTClient* client)
-{
-	char data[64];
-	switch (Parametre->Format)
-	{
-		case BOOL_F:
-		if(Parametre->Value == 1)
-		{
-			sprintf(data,"[%d,%d,%d,%d,%d,%s]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_WRITE,"true");
-		}
-		else
-		{
-			sprintf(data,"[%d,%d,%d,%d,%d,%s]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_WRITE,"false");
-		}
-		break;
-		case FLOAT_F:
-		sprintf(data,"[%d,%d,%d,%d,%d,%f]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_WRITE,Parametre->Value);
-		break;
-		case INT32_F:
-		sprintf(data,"[%d,%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_WRITE,(int)Parametre->Value);
-		break;
-		case LONG_ENUM:
-		sprintf(data,"[%d,%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_WRITE,(uint32_t)Parametre->Value);
-		break;
-		case ENUM:
-		case SHORT_ENUM:
-		sprintf(data,"[%d,%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_WRITE,(uint16_t)Parametre->Value);
-		break;
-		default:
-		printf("ERROR : can't convert this format\n");
-	}
-
-	//printf("data : %s\n",data);
-	send_json_obj(client,TOPIC_WRITE,data,XCOM,XCOM_ID_BAT);
+	send_json_obj(client,Parametre->Id_write,data,Parametre->Id_write);
 	return 1;
 }
 /*----------------------------------------------------------------------------------------------*/
@@ -244,17 +172,6 @@ void Write_p(MQTTClient* client)
   Write(&Battery_Charge_current_DC,client);
   Write(&Smart_boost_allowed,client);
 
- 	/*if(INJ==1)
-	{
- 		Write(&Start_Time_forced_injection,client);
-  }
-  	Write(&Stop_Time_forced_injection,client);*/
-
-    /*if(Force_new_cycle.Value == 1)
-    {
-      Write(&Force_new_cycle,client);
-      Force_new_cycle.Value = 0;
-    }*/
 
   if(Force_floating.Value == 1)
 	{
@@ -264,55 +181,5 @@ void Write_p(MQTTClient* client)
   }
   Write(&Floating_voltage,client);
 }
-/*----------------------------------------------------------------------------------------------*/
 
-
-/*------------- Routine d'initialization de touts les parametres et de l'Xtender ---------------*/
-int Init(MQTTClient* client){
-	Write(&Parameters_saved_in_flash_memory,client);
-	Write(&Voltage_After_Over_allowed,client);
-  Write(&Over_Voltage_Value_allowed,client);
-	Write(&Under_Voltage_Value_allowed,client);
-	Write(&Voltage_After_Under_allowed,client);
-	Write(&Charger_allowed,client);
-	Write(&Battery_Charge_current_DC,client);
-	Write(&Use_dynamic_comp,client);
-	Write(&Floating_voltage,client);
-  Write(&Voltage_2_start_new_cycle,client);
-	Write(&Voltage_1_start_new_cycle,client);
-	Write(&Time_1_under_voltage,client);
-	Write(&Time_2_under_voltage,client);
-	Write(&Absorption_phase_allowed,client);
-	Write(&Absorption_voltage,client);
-  Write(&Floating_voltage,client);
-	Write(&Absorption_duration,client);
-	Write(&End_absorption_current,client);
-	Write(&Current_to_quit_absorption,client);
-	Write(&Maximal_freq_absorption,client);
-	Write(&Delay_beetween_absorption,client);
-	Write(&Equalization_phase_allowed,client);
-	Write(&Reduced_floating_allowed,client);
-	Write(&Periodic_absorption_allowed,client);
-	Write(&Inverter_Allowed,client);
-	Write(&Inverter_Output_Voltage,client);
-	Write(&Inverter_Frequency,client);
-	Write(&Batt_priority_source,client);
-	Write(&Transfer_relay_allowed,client);
-	Write(&Smart_boost_allowed,client);
-	Write(&MAX_current_of_AC_IN,client);
-	Write(&Multi_inverters_allowed,client);
-	Write(&Integral_mode,client);
-	Write(&Grid_Feeding_allowed,client);
-	Write(&Battery_voltage_forced_feeding,client);
-	Write(&Use_defined_phase_shift_curve,client);
-	Write(&Maximal_freq_absorption,client);
-	Write(&Delay_beetween_absorption,client);
-	Write(&Equalization_phase_allowed,client);
-	Write(&Reduced_floating_allowed,client);
-	Write(&Periodic_absorption_allowed,client);
-	Write(&Inverter_Allowed,client);
-  Write(&Fast_charge_inject_regulation,client);
-  Write(&Pulses_cutting_regulation_for_XT,client);
-	return 1;
-}
 /*----------------------------------------------------------------------------------------------*/

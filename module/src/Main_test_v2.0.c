@@ -57,15 +57,64 @@ static void fork_process()
 //forcer l'extender en float
 //bloquer absorption et egalisation
 
-//---------- DECLARATRION OF VAR -----------------------------------------------
- /*------------------------ Declaration parametres -------------------------------*/
+	//---------- DECLARATRION OF VAR -----------------------------------------------
+	/*------------------------ Declaration parametres -------------------------------*/
 	/*----------------- Battery Charge ----------------------------*/
-	t_param Charger_allowed = 		{1125, 2, 13, 1,   1}; //PCO OK
-	t_param Battery_Charge_current_DC = 	{1138, 2, 13, 6,  0};//step 1A; PCO OK on init à zero
+	t_param Charger_allowed = 		{1125, 2, 13, 1,   1,"NH/Mng_elec/Ondu/Mode/Charger_allow/Res","NH/Mng_elec/Ondu/Mode/Charger_allow/Set"}; //PCO OK
+	t_param Battery_Charge_current_DC = 	{1138, 2, 13, 6,  0,"NH/Mng_elec/Ondu/Batt/Charge_cur/Res","NH/Mng_elec/Ondu/Batt/Charge_cur/Set"};//step 1A; PCO OK on init à zero
+	t_param Floating_voltage = 		{1140, 2, 13, 6,  61.5,"NH/Mng_elec/Ondu/Batt/Floating_volt/Res","NH/Mng_elec/Ondu/Batt/Floating_volt/Set"};//step 0.1 , PCO en mode inspect il faudrait lire avant 7061
+	t_param Force_floating = 		{1467, 2, 13, 5,   0,"NH/Mng_elec/Ondu/Batt/Force_Flt/Res","NH/Mng_elec/Ondu/Batt/Force_Flt/Set"}; // PCO param inutile
+	/*-----------------------------------------------------------------------*/
+	//Format : BOOL(1) FORMAT(2) ENUM(3) ERROR(4) INT32(5) FLOAT(6) STRING(7) DYNAMIC(8) BYTE_STREAM(9) LONG_ENUM(10) SHORT_ENUM(11
+	/* ----------------------------Inverter -----------------------------*/
+	t_param Inverter_Allowed = 	  	  {1124, 2, 13, 1, 1,"NH/Mng_elec/Ondu/Mode/Inverter_allow/Res","NH/Mng_elec/Ondu/Mode/Inverter_allow/Set"};//step 1 PCO OK
+	t_param Batt_priority_source =    {1296, 2, 13, 1, 0,"NH/Mng_elec/Ondu/Mode/Batt_prio/Res","NH/Mng_elec/Ondu/Mode/Batt_prio/Set"}; //PCO : parma inutile ?
+	/*------------------------------------------------------------------*/
+	/*-------------------- AC-IN and transfert ---------------------*/
+	t_param Smart_boost_allowed = 	 {1126, 2, 13, 1, 1,"NH/Mng_elec/Ondu/Mode/Smtboos_allow/Res","NH/Mng_elec/Ondu/Mode/Smtboos_allow/Set"}; // PCO OK voir alogo ensuite
+	t_param MAX_current_of_AC_IN =   {1107, 2, 13, 6, 35,"NH/Mng_elec/Ondu/Input/Max_cur/Res","NH/Mng_elec/Ondu/Input/Max_cur/Set"};//step 1 PCO : OK
+	t_param Transfer_relay_allowed = {1128, 2, 13, 1, 1,"NH/Mng_elec/Ondu/Mode/Transfer_relay_allowed/Res","NH/Mng_elec/Ondu/Mode/Transfer_relay_allowed/Set"}; // PCO param inutile ?
+	/*-------------------------------------------------------------*/
+	/*----------------- Grid Feeding --------------------------*/
+	t_param Grid_Feeding_allowed = 			     {1127, 2, 13, 1,    1,"NH/Mng_elec/Ondu/Mode/Grid_feed_allow/Res","NH/Mng_elec/Ondu/Mode/Grid_feed_allow/Set"}; // PCO OK selon algo
+	t_param Max_Grid_Feeding_current = 		   {1523, 2, 13, 6,   30.0,"NH/Mng_elec/Ondu/Input/Max_gird_cur/Res","NH/Mng_elec/Ondu/Input/Max_gird_cur/Set"};//step 0.2 // PCO Rajouter test et diminuer 30 à 2?
+	/*------------------------------------------------------------------------------*/
+	/*--------------------------- Xtender_Infos --------------------------------------*/
+	t_param i_Battery_Voltage_Studer = 				 {3000, 1, 1,  6, Not_Value,"NH/Mng_elec/Ondu/Voltage/Res","NH/Mng_elec/Ondu/Voltage/Set"};
+	t_param i_Battery_Charge_current = 			   {3005, 1, 1,  6, Not_Value,"NH/Mng_elec/Ondu/Batt/Meas/Charge_cur/Res","NH/Mng_elec/Ondu/Batt/Meas/Charge_cur/Set"};
+	t_param i_State_of_charge = 				       {3007, 1, 1,  6, Not_Value,"NH/Mng_elec/Ondu/Batt/Soc/Res","NH/Mng_elec/Ondu/Batt/Soc/Set"};
+	t_param i_Battery_cycle_phase = 			     {3010, 1, 1, 11, Not_Value,"NH/Mng_elec/Ondu/Batt/Cycle_phase/Res","NH/Mng_elec/Ondu/Batt/Cycle_phase/Set"}; // 0 = invalid , 1 = Bulk , 2 = absorption , 3 = equalize , 4 = floating , 5 = Reduce floating , 6 = Periodic absorption , 7 = mixing , 8 = forming
+	t_param i_Input_voltage_AC_IN = 			     {3011, 1, 1,  6, Not_Value,"NH/Mng_elec/Ondu/Input/Voltage/Res","NH/Mng_elec/Ondu/Input/Voltage/Set"};
+	t_param i_Input_current_AC_IN = 			     {3012, 1, 1,  6, Not_Value,"NH/Mng_elec/Ondu/Input/Cur/Res","NH/Mng_elec/Ondu/Input/Cur/Set"};
+	t_param i_Output_voltage_AC_OUT = 			   {3021, 1, 1,  6, Not_Value,"NH/Mng_elec/Ondu/Output/Voltage/Res","NH/Mng_elec/Ondu/Output/Voltage/Set"};
+	t_param i_Output_power_AC_OUT = 			     {3023, 1, 1,  6, Not_Value,"NH/Mng_elec/Ondu/Output/Power/Res","NH/Mng_elec/Ondu/Output/Power/Set"};
+	/*--------------------------- Batterry info --------------------------------------*/
+	// PCO
+	// psmax = courant_decharge_limite IAdc (param 7064) x tension_dc (param 7000)
+	// a voir s'il faut pas remplacer par des valeur moyenne de 1 min, autre param disponibles
+	t_param i_Battery_Voltage = 	{7000, 1, 1, 6, 0,"NH/Mng_elec/Batt/Voltage/Res","NH/Mng_elec/Batt/Voltage/Set"};
+	t_param i_Battery_Current = 	{7001, 1, 1, 6, 0,"NH/Mng_elec/Batt/Current/Res","NH/Mng_elec/Batt/Current/Set"};
+	t_param i_soc_value_battery = {7047, 1, 1, 6, 0,"NH/Mng_elec/Batt/Soc/Res","NH/Mng_elec/Batt/Soc/Set"};
+	t_param i_State_of_Health = 	{7057, 1, 1, 6, 0,"NH/Mng_elec/Batt/State_of_health/Res","NH/Mng_elec/Batt/State_of_health/Set"};
+
+	t_param i_Battery_Voltage_Charge_limit = 	 				{7061, 1, 1, 6, 0,"NH/Mng_elec/Batt/Charge/Volt_limit/Res","NH/Mng_elec/Batt/Charge/Volt_limit/Set"};
+	t_param i_Battery_Voltage_Discharge_limit =	 			{7062, 1, 1, 6, 0,"NH/Mng_elec/Batt/Discharge/Volt_limit/Res","NH/Mng_elec/Batt/Discharge/Volt_limit/Set"};
+	t_param i_Battery_Current_Charge_limit = 	 				{7063, 1, 1, 6, 0,"NH/Mng_elec/Batt/Charge/Curr_limit/Res","NH/Mng_elec/Batt/Charge/Curr_limit/Set"};
+	t_param i_Battery_Current_Discharge_limit =				{7064, 1, 1, 6, 0,"NH/Mng_elec/Batt/Discharge/Curr_limit/Res","NH/Mng_elec/Batt/Discharge/Curr_limit/Set"};
+	t_param i_Battery_Current_Charge_recommanded = 		{7065, 1, 1, 6, 0,"NH/Mng_elec/Batt/Charge/Curr_recommand/Res","NH/Mng_elec/Batt/Charge/Curr_recommand/Set"};
+	t_param i_Battery_Current_Discharge_recommanded = {7066, 1, 1, 6, 0,"NH/Mng_elec/Batt/Discharge/Curr_recommand/Res","NH/Mng_elec/Batt/Discharge/Curr_recommand/Set"};
+
+	// PCO : En mode inspect control, soit Xtender master
+  // On peut lire la tension de charge à appliquer sur {1140} et {1156} (={7061}) (floating et absorption voltages)
+  // de même courant de charge  -	décharge :
+  //{1523}[Aac] < {7064}[Adc]*{7000}[Udc]/230[Vac]
+  //charge {1138} [Adc] < {7065} [Adc] )
+
+
+	/* ----- Old Parameters not used ---------------------------
+	//----------------- Battery Charge ----------------------------
 	t_param Force_new_cycle = 		{1142, 2, 13, 5,   0}; // PCO param Inutile ?
 	t_param Use_dynamic_comp = 		{1608, 2, 13, 1,   0}; // PCO param Inutile ?
-	t_param Floating_voltage = 		{1140, 2, 13, 6,  61.5};//step 0.1 , PCO en mode inspect il faudrait lire avant 7061
-	t_param Force_floating = 		{1467, 2, 13, 5,   0}; // PCO param inutile
 	t_param Voltage_1_start_new_cycle = 	{1143, 2, 13, 6,  45.0};//step 0.10 PCO parm inutile
 	t_param Voltage_2_start_new_cycle = 	{1145, 2, 13, 6,  44.0};//step 0.10 PCO parm inutile
 	t_param Time_1_under_voltage = 		{1144, 2, 13, 6, 180};//step 1 PCO Parm inutile
@@ -85,34 +134,27 @@ static void fork_process()
 	t_param Under_Voltage_Value_allowed =	{1108, 2, 13, 6, 43.0}; // PCO suggere 15 x 2.9V limite de declenchement au lieu de 41V
 	t_param Voltage_After_Under_allowed = 	{1110, 2, 13, 6, 45.0}; // PCO Pram inutile
 	t_param Bat_Temp_Com_Coef = {1139,2,13,6,0}; // PCO OK
-	/*-----------------------------------------------------------------------*/
+	//-----------------------------------------------------------------------
 	//Format : BOOL(1) FORMAT(2) ENUM(3) ERROR(4) INT32(5) FLOAT(6) STRING(7) DYNAMIC(8) BYTE_STREAM(9) LONG_ENUM(10) SHORT_ENUM(11
-	/* ----------------------------Inverter -----------------------------*/
-	t_param Inverter_Allowed = 	  	  {1124, 2, 13, 1,   1};//step 1 PCO OK
+	// ----------------------------Inverter -----------------------------
 	t_param Inverter_Output_Voltage = {1286, 2, 13, 6, 230.0};//step 1 PCO : parma inutile ?
 	t_param Inverter_Frequency = 	    {1112, 2, 13, 6,  50.0};//step 0.1 PCO : parma inutile ?
-	t_param Batt_priority_source =    {1296, 2, 13, 1, 0}; //PCO : parma inutile ?
-	/*------------------------------------------------------------------*/
-	/*------------------------ Standby and turn on ------------------*/
+	//------------------------------------------------------------------
+	//------------------------ Standby and turn on ------------------
 	t_param Standby_level = 	    {1187, 2, 13, 6, 20};//step 10% , à tester PCO : parma inutile ?
 	t_param Standby_nbr_pulse =  {1188, 2, 13, 6,  1};//step 1 //PCO : parma inutile ?
-	/*--------------------------------------------------------------*/
-	/*-------------------- AC-IN and transfert ---------------------*/
-	t_param Transfer_relay_allowed = {1128, 2, 13, 1, 1}; // PCO param inutile ?
-	t_param Smart_boost_allowed = 	 {1126, 2, 13, 1, 1}; // PCO OK voir alogo ensuite
-	t_param MAX_current_of_AC_IN =   {1107, 2, 13, 6, 35};//step 1 PCO : OK
-	/*-------------------------------------------------------------*/
+	//--------------------------------------------------------------
+	//-------------------- AC-IN and transfert ---------------------
+	//-------------------------------------------------------------
 	//-------------- Multi Xtender System ----------------------
 	t_param Multi_inverters_allowed = {1461, 2, 13, 1, 0}; // PCO param inutile
 	t_param Integral_mode = 	  	    {1283, 2, 13, 1, 0}; // PCO param inutile
-	/*---------------------------------------------------------*/
+	//---------------------------------------------------------
 	//-------------- Multi Xtender System ----------------------
 	t_param Soc_Backup = {6062, 2, 13, 6, 80}; // PCO OK
 	t_param Soc_Inject = {6063, 2, 13, 6, 80}; // PCO OK corriger 6063 !
-	/*---------------------------------------------------------*/
-	/*----------------- Grid Feeding --------------------------*/
-	t_param Grid_Feeding_allowed = 			     {1127, 2, 13, 1,    1}; // PCO OK selon algo
-	t_param Max_Grid_Feeding_current = 		   {1523, 2, 13, 6,   30.0};//step 0.2 // PCO Rajouter test et diminuer 30 à 2?
+	//---------------------------------------------------------
+	//----------------- Grid Feeding --------------------------
 	t_param Battery_voltage_forced_feeding = {1524, 2, 13, 6,    40.0};//step 0.1 à tester //PCO  Parm inutile ?
 	t_param Start_Time_forced_injection =	   {1525, 2, 13, 5,   10};//step : 1, regarder avec Flo le format PCO pourquoi ?
 	t_param Stop_Time_forced_injection =	   {1526, 2, 13, 5,   10};//step : 1, regarder avec Flo le format PCO pourquoi ?
@@ -124,23 +166,15 @@ static void fork_process()
 	t_param Fast_charge_inject_regulation =  {1615, 2, 13, 1, 	 1};
 	t_param Pulses_cutting_regulation_for_XT = {1645, 2, 13, 1, 1};
 
-	/*------------------------------------------------------------------------------*/
+	//------------------------------------------------------------------------------
 
-	/*--------------------------- Xtender_Infos --------------------------------------*/
-	t_param i_Battery_Voltage_Studer = 				 {3000, 1, 1,  6, Not_Value};
+	//--------------------------- Xtender_Infos --------------------------------------
 	t_param i_Wanted_battery_charge_current =  {3004, 1, 1,  6, Not_Value};
-	t_param i_Battery_Charge_current = 			   {3005, 1, 1,  6, Not_Value};
-	t_param i_State_of_charge = 				       {3007, 1, 1,  6, Not_Value};
-	t_param i_Battery_cycle_phase = 			     {3010, 1, 1, 11, Not_Value}; // 0 = invalid , 1 = Bulk , 2 = absorption , 3 = equalize , 4 = floating , 5 = Reduce floating , 6 = Periodic absorption , 7 = mixing , 8 = forming
-	t_param i_Input_voltage_AC_IN = 			     {3011, 1, 1,  6, Not_Value};
-	t_param i_Input_current_AC_IN = 			     {3012, 1, 1,  6, Not_Value};
 	t_param i_Input_power_AC_IN = 				     {3013, 1, 1,  6, Not_Value};
 	t_param i_Input_current_limit = 			     {3017, 1, 1,  6, Not_Value};
 	t_param i_Input_current_limit_reached = 	 {3018, 1, 1, 11, Not_Value}; // 0 = Off , 1 = on
 	t_param i_Boost_active = 					         {3019, 1, 1, 11, Not_Value};// 0 = Off , 1 = on
-	t_param i_Output_voltage_AC_OUT = 			   {3021, 1, 1,  6, Not_Value};
 	t_param i_Output_current_AC_OUT = 			   {3022, 1, 1,  6, Not_Value};
-	t_param i_Output_power_AC_OUT = 			     {3023, 1, 1,  6, Not_Value};
 	t_param i_Operating_state = 				       {3028, 1, 1, 11, Not_Value}; // 0 = invalid, 1 = inverte, 2 = charger, 3 = Boost,  4 = Injection
 	t_param i_State_of_inverter = 				     {3049, 1, 1, 11, Not_Value}; // 0 = Off , 1 = on
 	t_param i_Discharge_Battery_Power_Day_ahead = {3076, 1, 1,  6, Not_Value};
@@ -156,51 +190,20 @@ static void fork_process()
 	t_param i_Battery_priority_active = 		   {3161, 1, 1, 11, Not_Value};// 0 = Off , 1 = on
 	t_param i_Forced_grid_feeding_active = 		 {3162, 1, 1, 11, Not_Value};// 0 = Off , 1 = on
 
-	/*--------------------------- Batterry info --------------------------------------*/
-
-
-// PCO
-// psmax = courant_decharge_limite IAdc (param 7064) x tension_dc (param 7000)
-// a voir s'il faut pas remplacer par des valeur moyenne de 1 min, autre param disponibles
-
-	t_param i_Battery_Voltage = 	{7000, 1, 1, 6, 0};
-	t_param i_Battery_Current = 	{7001, 1, 1, 6, 0};
-	t_param i_soc_value_battery = {7047, 1, 1, 6, 0};
-	t_param i_State_of_Health = 	{7057, 1, 1, 6, 0};
-
-	t_param i_Battery_Voltage_Charge_limit = 	 				{7061, 1, 1, 6, 0};
-	t_param i_Battery_Voltage_Discharge_limit =	 			{7062, 1, 1, 6, 0};
-	t_param i_Battery_Current_Charge_limit = 	 				{7063, 1, 1, 6, 0};
-	t_param i_Battery_Current_Discharge_limit =				{7064, 1, 1, 6, 0};
-	t_param i_Battery_Current_Charge_recommanded = 		{7065, 1, 1, 6, 0};
-	t_param i_Battery_Current_Discharge_recommanded = {7066, 1, 1, 6, 0};
-
-// PCO : En mode inspect control, soit Xtender master
-  // On peut lire la tension de charge à appliquer sur {1140} et {1156} (={7061}) (floating et absorption voltages)
-  // de même courant de charge  -	décharge :
-  //{1523}[Aac] < {7064}[Adc]*{7000}[Udc]/230[Vac]
-  //charge {1138} [Adc] < {7065} [Adc] )
-
-
-/*----------------------------------------------------------------------------------*/
+	//----------------------------------------------------------------------------------
 	//Format : BOOL(1) FORMAT(2) ENUM(3) ERROR(4) INT32(5) FLOAT(6) STRING(7) DYNAMIC(8) BYTE_STREAM(9) LONG_ENUM(10) SHORT_ENUM(11)
-  t_param Parameters_saved_in_flash_memory = {1550, 2, 5, 1, 1};
+	t_param Parameters_saved_in_flash_memory = {1550, 2, 5, 1, 1};*/
+
 
 double meters[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,0.0,0.0,0.0,0.0};
-
-float Bat_Capacite_nominale = 10.8;
-float Bat_Capacite_disponible =10.8; // avec un state of health de 100% batterie pleine et SOCmin=0%, 10.8 justeune valeu par défaut
 
 float Eb=0;
 float SOCmin = 20;
 float SOCmax = 80;
-float Cve = 0;
 float SOC = 0;
 float Ps = 0;
 float Ps_opti = 0;
 float Pr = 0;
-float Kg = 0;
-float Kr = 0;
 float Ppv = 0;
 float Pl = 0;
 float Psmax = 0;
@@ -208,28 +211,22 @@ float Psmax = 0;
 float Psmax_charge =0;
 float Psmax_discharge =0;
 float Prmax = 0;
-float Kc = 0;
 float Pb = 0;
 float Plsec = 0;
-float Kp = 0;
 float Time_now = 0;
 float Temps_routine = 0;
 float Epv = 0;
 float El = 0;
-float Km = 0;
-float Ke = 0;
-float K_g = 0;
+float Kg = 0;
 int algo_on = 1;
-float Kg_1 = 0;
-float Kg_2 = 0;
 int Time_now_i;
-int charge_on = 0;
-float AC_IN_INJ_I_Des = 0;
-int STATE;int INJ=0;
+int STATE;
 
 int Time_old;
 time_t my_time;
 struct tm * timeinfo;
+Dictionary *Parameter_dic;
+
 
 /*----------------------------------------------------------------------------------------------*/
 
@@ -305,8 +302,6 @@ void Calculs_p_k(void)
 	Epv = Ppv;//Ppv_1(int)Time_now]/60;       //Energie PV
 	El = Pl;//Pl_1[(int)Time_now]/60;       //Energie des chatges
 	Eb = Epv - El; //Energie bilan
-	Ppv = Ppv;//Ppv_1[(int)Time_now];
-	Pl = Pl;//Pl_1[(int)Time_now];
 	Pb = (Ppv - Pl);  //Puissance bilan
 
 	SOC = i_soc_value_battery.Value;
@@ -372,7 +367,7 @@ void Algo()
 			{
 				printf("STATE = 4;\n");
 				STATE = 4;
-				Ps =  Ps;
+				//Ps =  Ps;
 			}
 
 		}
@@ -403,10 +398,10 @@ void Algo()
       	Ps = 50; //couvre l'autoconsomation de la batterie'
 				Pr = Pb;
 			}
-			else
+			/*else
 			{
 				Ps = Ps;
-			}
+			}*/
 		}
 		else
 		{
@@ -414,13 +409,10 @@ void Algo()
     	printf("STATE = 1;\n");
 			Ps = Pb;
 			Pr = 0;
-			//Kr = Ppv / Pl;
 		}
-		//Ps = Ps * 3;
 		State_management(STATE);
 		if (fabs(Pr) >= Prmax)
 		{
-			//Kr = Prmax / Pr;
 			Pr = - Prmax;
 		}
 	}
@@ -528,7 +520,37 @@ void Time_init(void)
 	Time_now = timeinfo->tm_hour*60 + timeinfo->tm_min;
 	Time_old = Time_now;
 }
-
+void init_dic(Dictionary *dictionary){
+	dict_add(dictionary,Charger_allowed.Id_read,&Charger_allowed);
+	dict_add(dictionary,Battery_Charge_current_DC.Id_read,&Battery_Charge_current_DC);
+	dict_add(dictionary,Floating_voltage.Id_read,&Floating_voltage);
+	dict_add(dictionary,Force_floating.Id_read,&Force_floating);
+	dict_add(dictionary,Inverter_Allowed.Id_read,&Inverter_Allowed);
+	dict_add(dictionary,Batt_priority_source.Id_read,&Batt_priority_source);
+	dict_add(dictionary,Smart_boost_allowed.Id_read,&Smart_boost_allowed);
+	dict_add(dictionary,MAX_current_of_AC_IN.Id_read,&MAX_current_of_AC_IN);
+	dict_add(dictionary,Grid_Feeding_allowed.Id_read,&Grid_Feeding_allowed);
+	dict_add(dictionary,Max_Grid_Feeding_current.Id_read,&Max_Grid_Feeding_current);
+	dict_add(dictionary,i_Battery_Voltage_Studer.Id_read,&i_Battery_Voltage_Studer);
+	dict_add(dictionary,i_Battery_Charge_current.Id_read,&i_Battery_Charge_current);
+	dict_add(dictionary,i_State_of_charge.Id_read,&i_State_of_charge);
+	dict_add(dictionary,i_Battery_cycle_phase.Id_read,&i_Battery_cycle_phase);
+	dict_add(dictionary,i_Input_voltage_AC_IN.Id_read,&i_Input_voltage_AC_IN);
+	dict_add(dictionary,i_Input_current_AC_IN.Id_read,&i_Input_current_AC_IN);
+	dict_add(dictionary,i_Output_voltage_AC_OUT.Id_read,&i_Output_voltage_AC_OUT);
+	dict_add(dictionary,i_Output_power_AC_OUT.Id_read,&i_Output_power_AC_OUT);
+	dict_add(dictionary,i_Battery_Voltage.Id_read,&i_Battery_Voltage);
+	dict_add(dictionary,i_Battery_Current.Id_read,&i_Battery_Current);
+	dict_add(dictionary,i_soc_value_battery.Id_read,&i_soc_value_battery);
+	dict_add(dictionary,i_State_of_Health.Id_read,&i_State_of_Health);
+	dict_add(dictionary,i_Battery_Voltage_Charge_limit.Id_read,&i_Battery_Voltage_Charge_limit);
+	dict_add(dictionary,i_Battery_Voltage_Discharge_limit.Id_read,&i_Battery_Voltage_Discharge_limit);
+	dict_add(dictionary,i_Battery_Current_Charge_limit.Id_read,&i_Battery_Current_Charge_limit);
+	dict_add(dictionary,i_Battery_Current_Discharge_limit.Id_read,&i_Battery_Current_Discharge_limit);
+	dict_add(dictionary,i_Battery_Current_Charge_recommanded.Id_read,&i_Battery_Current_Charge_recommanded);
+	dict_add(dictionary,i_Battery_Current_Discharge_recommanded.Id_read,&i_Battery_Current_Discharge_recommanded);
+	dict_add(dictionary,Transfer_relay_allowed.Id_read,&Transfer_relay_allowed);
+}
 int main()
 {/*
 	// 1. fork off the parent process
@@ -584,52 +606,39 @@ int main()
 
 		printf("hiiii : the algorithm launched\n");
 
-  	MQTTClient  client_charger;
-  	MQTTClient_connectOptions conn_opts_charger = MQTTClient_connectOptions_initializer;
+		Parameter_dic = dict_new();
+		init_dic(Parameter_dic);
 
-		MQTTClient client_bat;
-  	MQTTClient_connectOptions conn_opts_bat = MQTTClient_connectOptions_initializer;
+
+  	MQTTClient  client;
+  	MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
+
 		printf("initialize the var for mqtt\n");
-  	int rc_charger;
+  	int rc;
 		//crée le client mqtt pour le charger inverter --------------------------------------------
-  	MQTTClient_create(&client_charger, ADDRESS, CLIENTID_CHARGER,MQTTCLIENT_PERSISTENCE_NONE, NULL);
+  	MQTTClient_create(&client, ADDRESS, CLIENT_ID,MQTTCLIENT_PERSISTENCE_NONE, NULL);
 
 		printf("create the first mqtt client\n");
 
-  	conn_opts_charger.keepAliveInterval = 20;
-  	conn_opts_charger.cleansession = 1;
-  	MQTTClient_setCallbacks(client_charger, NULL, connlost, msgarrvd, delivered);
+  	conn_opts.keepAliveInterval = 20;
+  	conn_opts.cleansession = 1;
+  	MQTTClient_setCallbacks(client, NULL, connlost, msgarrvd, delivered);
 
 		printf("set the first callback methods\n");
 
-  	if ((rc_charger = MQTTClient_connect(client_charger, &conn_opts_charger)) != MQTTCLIENT_SUCCESS)
+  	if ((rc = MQTTClient_connect(client, &conn_opts)) != MQTTCLIENT_SUCCESS)
   	{
-      	printf("Failed to connect, return code %d\n", rc_charger);
+      	printf("Failed to connect, return code %d\n", rc);
       	exit(EXIT_FAILURE);
   	}
-  	printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
-		"Press Q<Enter> to quit\n\n", TOPIC, CLIENTID_CHARGER, QOS);
 
-  	MQTTClient_subscribe(client_charger, TOPIC, QOS);
-
-		//--------------------------------------------------------------------------------------
-
-		//Crée le client mqtt pour la batterie -------------------------------------------------
-		int rc_bat;
-		MQTTClient_create(&client_bat, ADDRESS, CLIENTID_BAT,MQTTCLIENT_PERSISTENCE_NONE, NULL);
-		conn_opts_bat.keepAliveInterval = 20;
-		conn_opts_bat.cleansession = 1;
-		MQTTClient_setCallbacks(client_bat, NULL, connlost, msgarrvd, delivered);
-
-		if ((rc_bat = MQTTClient_connect(client_bat, &conn_opts_bat)) != MQTTCLIENT_SUCCESS)
-		{
-				printf("Failed to connect, return code %d\n", rc_bat);
-				exit(EXIT_FAILURE);
+		while(Parameter_dic->head != NULL && Parameter_dic->tail != NULL){
+			MQTTClient_subscribe(client, Parameter_dic->head->value->Id_read, QOS);
+			printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
+						 , Parameter_dic->head->value->Id_read, CLIENT_ID, QOS);
+					Parameter_dic = Parameter_dic->tail;
 		}
-		printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
-		"Press Q<Enter> to quit\n\n", TOPIC, CLIENTID_BAT, QOS);
-
-		MQTTClient_subscribe(client_bat, TOPIC, QOS);
+		//--------------------------------------------------------------------------------------
 
 		//Crée le client mqtt pour la batterie ---------------------------------------------------
 
@@ -651,19 +660,17 @@ int main()
 			algo_on = 0;
 
 			printf("\n===========read =============\n");
-			Read_p(client_charger,client_bat);
+			Read_p(client);
 
 			printf("\n========== Algorithme =========\n");
 			Algo();
 			printf("\n========== Ecriture des parametres sur Onduleur ==========\n");
 
-	   	Write_p(client_charger);
+	   	Write_p(client);
 	 		// Commented for test json
 		}
 	} while(1);
-	MQTTClient_disconnect(client_charger, 10000);
-	MQTTClient_destroy(&client_charger);
-	MQTTClient_disconnect(client_bat, 10000);
-	MQTTClient_destroy(&client_bat);
-	return rc_charger;
+	MQTTClient_disconnect(client, 10000);
+	MQTTClient_destroy(&client);
+	return rc;
 }
