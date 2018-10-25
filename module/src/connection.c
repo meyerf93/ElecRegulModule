@@ -35,6 +35,7 @@ void delivered(void *context, MQTTClient_deliveryToken dt)
 int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message)
 {
   printf("message arrived on the topic : %s\n",topicName);
+  printf("message is : %s\n",message->payload);
     /* EXEMPLE CODE MQTT*/
   cJSON * root;
   root = cJSON_CreateObject();

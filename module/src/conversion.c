@@ -39,7 +39,7 @@ void strip(char *s,const char * to_remove)
 // MQTTT communication with studer
 void send_json_obj(MQTTClient client,char topic[64], char data[64], char id[64])
 {
-  printf("value receive in send_json : %s,%s,%s\n",topic,data,id);
+  //printf("value receive in send_json : %s,%s,%s\n",topic,data,id);
   cJSON * root;
 	root = cJSON_CreateObject();
   cJSON_AddStringToObject(root,"cmd",id);
@@ -66,16 +66,16 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char id[64])
   pubmsg.qos = QOS;
   pubmsg.retained = 0;
 
-  printf("create the message to send\n");
+  //printf("create the message to send\n");
 
-	printf("json message send : %s\n",pubmsg.payload);
+	//printf("json message send : %s\n",pubmsg.payload);
   MQTTClient_publishMessage(client, topic, &pubmsg, &token);
-  printf("Waiting for up to %d seconds for publication of %s\n"
+  /*printf("Waiting for up to %d seconds for publication of %s\n"
         "on topic %s for client with ClientID: %s\n",
-        (int)(TIMEOUT/1000), payload_json, topic, id);
+        (int)(TIMEOUT/1000), payload_json, topic, id);*/
   MQTTClient_waitForCompletion(client, token, TIMEOUT);
   printf("message send`\n ");
-  //MQTTClient_freeMessage(&pubmsg);
+  MQTTClient_freeMessage(&pubmsg);
   MQTTClient_free(topic);
   printf("Message with delivery token %d delivered\n", token);
   free(payload_json);
