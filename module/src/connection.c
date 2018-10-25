@@ -48,6 +48,28 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
   printf("init  the csjon object\n");
 
 	int select_meters;
+    
+  	 //select right mqtt packet ----------
+  	char payload[message->payloadlen+1];
+  	memcpy (payload, message->payload, message->payloadlen);
+  	payload[message->payloadlen] = 0;
+  	printf("payload display : %s\n",payload);
+
+    int offset = 0;
+  	char* dst= payload;
+  	do {
+  	    while (dst[offset] == '[') ++offset;
+  	    *dst = dst[offset];
+  	} while (*dst++);
+
+   	offset = 0;
+   	do {
+   	   while (dst[offset] == ']') ++offset;
+   	   *dst = dst[offset];
+   	} while (*dst++);$
+
+    printf("payload after bizzare stuff : %s\n",payload);
+  	select_meters = parse_energy_meters(payload);
 
   root = cJSON_Parse(message->payload);
   printf("parse the maessage with payload\n");
