@@ -77,7 +77,7 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char id[64])
         (int)(TIMEOUT/1000), payload_json, topic, id);
   MQTTClient_waitForCompletion(client, token, TIMEOUT);
   printf("message send`\n ");
-  MQTTClient_freeMessage(&pubmsg);
+  //MQTTClient_freeMessage(&pubmsg);
   MQTTClient_free(topic);
   printf("Message with delivery token %d delivered\n", token);
   free(payload_json);
