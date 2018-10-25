@@ -133,6 +133,9 @@ int parse_energy_meters(char* payload){
 }
 
 int parse_studer_message(char* payload,cJSON* data) {
+  char* temp_json = calloc(100,1);
+  temp_json = cJSON_Print(data);
+  printf("data to search in the dictionnary : %s\n",temp_json);
   t_param *temp_parameter = dict_get(Parameter_dic,payload);
   if(temp_parameter != NULL){
     temp_parameter->Value=(float)data->valuedouble;
