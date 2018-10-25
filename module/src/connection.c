@@ -54,8 +54,12 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
   data = cJSON_GetObjectItemCaseSensitive(root, "data");
   printf("get the object data in root\n");
 
-  char* temp_json = calloc(500,1);
-  temp_json = cJSON_Print(data);
+  char* temp_json = calloc(300,1);
+  temp_json = cJSON_Print(root);
+  printf("data to parse : %s\n",temp_json);
+
+  char* temp_json = calloc(300,1);
+  temp_json = cJSON_Print(root);
   printf("data to parse : %s\n",temp_json);
 
 	select_meters = parse_energy_meters(topicName);
