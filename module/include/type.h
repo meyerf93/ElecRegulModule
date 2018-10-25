@@ -1,7 +1,11 @@
 
 #ifndef _TYPE_H
 #define _TYPE_H
-
+#include <stdio.h>
+#include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 typedef struct {
 			   uint32_t User_ref;
