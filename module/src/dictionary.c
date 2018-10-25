@@ -16,7 +16,7 @@ Dictionary* dict_new() {
     dictionary->tail = NULL;
     return dictionary;
 }
-void dict_print(){
+void dict_print(Dictionary *dictionary){
   printf("dictionnary : ");
   while(dictionary != NULL)
       printf("value : %s/n",dictionary->head->value->Id_read);

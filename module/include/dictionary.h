@@ -18,6 +18,7 @@ typedef struct Dictionary_t {
 } Dictionary;
 
 Dictionary* dict_new();
+void dict_print(Dictionary *dictionary);
 void dict_add(Dictionary *dictionary, const char *key, t_param *value);
 int dict_has(Dictionary *dictionary, const char *key);
 t_param* dict_get(Dictionary *dictionary, const char *key);
