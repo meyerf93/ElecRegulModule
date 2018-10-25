@@ -53,6 +53,7 @@ t_param* dict_get(Dictionary *dictionary, const char *key) {
         return 0;
     while(dictionary != NULL) {
         printf("try to get the right parameter : %s\n",key);
+        printf("key : %s, dictionary key : %s\n",key,dictionary->head->key);
         if(strncmp(dictionary->head->key, key,strlen(key) + 1) == 0)
             return dictionary->head->value;
         dictionary = dictionary->tail;

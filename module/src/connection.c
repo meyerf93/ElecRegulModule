@@ -101,10 +101,10 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 
 	//parse packet for xcom
   if(parse_studer_message(topicName,data) == -1){
-    printf("ERROR : can't parse the message");
+    printf("ERROR : can't parse the message\n");
   }
   printf("parse the parameters\n");
-	MQTTClient_freeMessage(&message);
+	//MQTTClient_freeMessage(&message);
 	MQTTClient_free(topicName);
 
   printf("parsing of the message is done\n");
