@@ -63,7 +63,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
   printf("data to parse : %s\n",temp_data);*/
 
 	select_meters = parse_energy_meters(topicName);
-
+  printf("select the metesr\n");
 	//extract data ------------------------------
 	if(select_meters != -1){
 		if (cJSON_IsNumber(data))
