@@ -45,10 +45,14 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
   UNUSED(context);
   UNUSED(topicLen);
 
+  printf("init  the csjon object\n");
+
 	int select_meters;
 
   root = cJSON_Parse(message->payload);
+  printf("parse the maessage with payload\n");
   data = cJSON_GetObjectItemCaseSensitive(root, "data");
+  printf("get the object data in root\n");
 
   char* temp_json = calloc(100,1);
   temp_json = cJSON_Print(data);
