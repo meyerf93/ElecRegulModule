@@ -16,7 +16,14 @@ Dictionary* dict_new() {
     dictionary->tail = NULL;
     return dictionary;
 }
-
+void dict_print(){
+  printf("dictionnary : ");
+  while(dictionary != NULL)
+      printf("value : %s/n",dictionary->head->value->Id_read);
+      dictionary = dictionary->tail;
+  }
+  printf("\n");
+}
 void dict_add(Dictionary *dictionary, const char *key, t_param *value) {
     if(dict_has(dictionary, key))
             dict_remove(dictionary, key);
