@@ -143,6 +143,7 @@ void Read_p(MQTTClient *client)
 int Write(t_param* Parametre,MQTTClient* client)
 {
 	char data[64];
+  printf("try to wirte the good message\n");
 	switch (Parametre->Format)
 	{
 		case BOOL_F:
@@ -172,7 +173,8 @@ int Write(t_param* Parametre,MQTTClient* client)
 		printf("ERROR : can't convert this format\n");
 	}
 
-	//printf("data : %s\n",data);
+
+	printf("data to send : %s\n",data);
 	send_json_obj(client,Parametre->Id_write,data,Parametre->Id_write);
 	return 1;
 }
