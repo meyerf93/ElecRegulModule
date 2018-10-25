@@ -71,7 +71,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
     printf("payload after bizzare stuff : %s\n",payload);
   	select_meters = parse_energy_meters(payload);
 
-  root = cJSON_Parse(message->payload);
+  root = cJSON_Parse(payload);
   printf("parse the maessage with payload\n");
   data = cJSON_GetObjectItemCaseSensitive(root, "data");
   printf("get the object data in root\n");
