@@ -48,6 +48,10 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
   root = cJSON_Parse(message->payload);
   data = cJSON_GetObjectItemCaseSensitive(root, "data");
 
+  char* temp_json = calloc(100,1);
+  temp_json = cJSON_Print(data);
+  printf("data to parse : %s\n",temp_json);
+
 	select_meters = parse_energy_meters(topicName);
 
 	//extract data ------------------------------
@@ -62,10 +66,6 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 		Ps_opti = meters[14];
 	}
 
-
-  char* temp_json = calloc(100,1);
-  temp_json = cJSON_Print(data);
-  printf("data to parse : %s\n",temp_json);
 	//parse packet for xcom
   if(parse_studer_message(topicName,data) == -1){
     printf("ERROR : can't parse the message");
