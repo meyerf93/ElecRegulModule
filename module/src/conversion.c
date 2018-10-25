@@ -51,7 +51,7 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char id[64])
   }*/
 	char* payload_json = calloc(100,1);
   payload_json = cJSON_Print(root);
-  printF("string for send json objs");
+  printf("string for send json objs\n");
 
   cJSON_Delete(root);
   printf("message xcom to send json : %s\n",payload_json);
