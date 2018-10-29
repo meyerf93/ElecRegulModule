@@ -45,7 +45,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
   UNUSED(context);
   UNUSED(topicLen);
 
-  printf("init  the csjon object\n");
+  //printf("init  the csjon object\n");
 
 	int select_meters;
 
@@ -110,17 +110,8 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
   //printf("parsing of the message is done\n");
 
    if(root != NULL) {
-     //printf("root is not null, data : %s\n",cJSON_Print(data));
-     //printf("root is not null, root : %s\n",cJSON_Print(root));
      cJSON_Delete(root);
    }
-   /*if(data != NULL) {
-     //printf("data is not null, data : %s\n",cJSON_Print(data));
-     //printf("data is not null, root : %s\n",cJSON_Print(root));
-     cJSON_Delete(data);
-     //printf("data is not null, data after clean : %s\n",cJSON_Print(data));
-     //printf("data is not null, root after clean : %s\n",cJSON_Print(root));
-   }*/
 	 return 1;
 }
 
@@ -165,7 +156,7 @@ void Read_p(MQTTClient *client)
 int Write(t_param* Parametre,MQTTClient* client)
 {
 	char data[64];
-  printf("try to wirte the good message\n");
+  //printf("try to wirte the good message\n");
 	switch (Parametre->Format)
 	{
 		case BOOL_F:
@@ -195,8 +186,7 @@ int Write(t_param* Parametre,MQTTClient* client)
 		printf("ERROR : can't convert this format\n");
 	}
 
-
-	printf("data to send : %s\n",data);
+	//printf("data to send : %s\n",data);
 	send_json_obj(client,Parametre->Id_write,data,Parametre->Id_write);
 	return 1;
 }

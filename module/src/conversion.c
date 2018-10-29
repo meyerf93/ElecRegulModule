@@ -76,9 +76,9 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char id[64])
         "on topic %s for client with ClientID: %s\n",
         (int)(TIMEOUT/1000), payload_json, topic, id);
   MQTTClient_waitForCompletion(client, token, TIMEOUT);
-  printf("message send`\n ");
-  //MQTTClient_freeMessage(&pubmsg);
-  //MQTTClient_free(topic);
+  //printf("message send`\n ");
+  MQTTClient_freeMessage(&pubmsg);
+  MQTTClient_free(topic);
   printf("Message with delivery token %d delivered\n", token);
   free(payload_json);
 
@@ -86,7 +86,7 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char id[64])
 
 //Parse the message from MQTT
 int parse_energy_meters(char* payload){
-  printf("try to find the good topic\n");
+  //printf("try to find the good topic\n");
   if (strstr(payload,PV_WEST) != NULL) {
 		return 0;
 	}
@@ -133,7 +133,7 @@ int parse_energy_meters(char* payload){
 		return 14;
 	}
   else {
-    printf("don't find the topic\n");
+    printf("ERROR : don't find the topic\n");
     return -1;
   }
 }
@@ -141,8 +141,8 @@ int parse_energy_meters(char* payload){
 int parse_studer_message(char* payload,cJSON* data) {
   char* temp_json = calloc(100,1);
   temp_json = cJSON_Print(data);
-  printf("data to search in the dictionnary : %s\n",temp_json);
-  printf("topic to search in the dic : %s\n",payload);
+  //printf("data to search in the dictionnary : %s\n",temp_json);
+  //printf("topic to search in the dic : %s\n",payload);
   t_param *temp_parameter = dict_get(Parameter_dic,payload);
   if(temp_parameter != NULL){
     temp_parameter->Value=(float)data->valuedouble;
