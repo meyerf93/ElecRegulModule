@@ -639,7 +639,7 @@ int main()
 					Parameter_dic = Parameter_dic->tail;
 		}
 		Parameter_dic = head;
-		printf("print the dictionnary after the subscribe");
+		//printf("print the dictionnary after the subscribe");
 		dict_print(Parameter_dic);
 		//--------------------------------------------------------------------------------------
 

@@ -34,8 +34,8 @@ void delivered(void *context, MQTTClient_deliveryToken dt)
 
 int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *message)
 {
-  printf("message arrived on the topic : %s\n",topicName);
-  printf("message is : %s\n",message->payload);
+  //printf("message arrived on the topic : %s\n",topicName);
+  //printf("message is : %s\n",message->payload);
     /* EXEMPLE CODE MQTT*/
   cJSON * root;
   root = cJSON_CreateObject();
@@ -49,32 +49,32 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 
 	int select_meters;
 
-  	 //select right mqtt packet ----------
-  	char payload[message->payloadlen+1];
-  	memcpy (payload, message->payload, message->payloadlen);
-  	payload[message->payloadlen] = 0;
-  	printf("payload display : %s\n",payload);
+  s //select right mqtt packet ----------
+  char payload[message->payloadlen+1];
+  memcpy (payload, message->payload, message->payloadlen);
+  payload[message->payloadlen] = 0;
+  //printf("payload display : %s\n",payload);
 
-    int offset = 0;
-  	char* dst= payload;
-  	do {
-  	    while (dst[offset] == '[') ++offset;
-  	    *dst = dst[offset];
-  	} while (*dst++);
+  int offset = 0;
+  char* dst= payload;
+  do {
+      while (dst[offset] == '[') ++offset;
+      *dst = dst[offset];
+  } while (*dst++);
 
-   	offset = 0;
-   	do {
-   	   while (dst[offset] == ']') ++offset;
-   	   *dst = dst[offset];
-   	} while (*dst++);
+  offset = 0;
+  do {
+     while (dst[offset] == ']') ++offset;
+     *dst = dst[offset];
+  } while (*dst++);
 
-    printf("payload after bizzare stuff : %s\n",payload);
-  	select_meters = parse_energy_meters(payload);
+  //printf("payload after bizzare stuff : %s\n",payload);
+  select_meters = parse_energy_meters(payload);
 
   root = cJSON_Parse(payload);
-  printf("parse the maessage with payload\n");
+  //printf("parse the maessage with payload\n");
   data = cJSON_GetObjectItemCaseSensitive(root, "data");
-  printf("get the object data in root\n");
+  //printf("get the object data in root\n");
 
   /*char* temp_json = calloc(300,1);
   temp_json = cJSON_Print(root);
@@ -85,7 +85,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
   printf("data to parse : %s\n",temp_data);*/
 
 	select_meters = parse_energy_meters(topicName);
-  printf("select the metesr\n");
+  //printf("select the metesr\n");
 	//extract data ------------------------------
 	if(select_meters != -1){
 		if (cJSON_IsNumber(data))
@@ -97,23 +97,23 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 		Kg = meters[11];
 		Ps_opti = meters[14];
 	}
-  printf("parse the energy meters\n");
+  //printf("parse the energy meters\n");
 
 	//parse packet for xcom
   if(parse_studer_message(topicName,data) == -1){
     printf("ERROR : can't parse the message\n");
   }
-  printf("parse the parameters\n");
+  //printf("parse the parameters\n");
 	//MQTTClient_freeMessage(&message);
 	//MQTTClient_free(topicName);
 
-  printf("parsing of the message is done\n");
+  //printf("parsing of the message is done\n");
 
-   if(root != NULL) {
+   /*if(root != NULL) {
      //printf("root is not null, data : %s\n",cJSON_Print(data));
      //printf("root is not null, root : %s\n",cJSON_Print(root));
-     cJSON_Delete(root);
-   }
+     //cJSON_Delete(root);
+   }*/
    if(data != NULL) {
      //printf("data is not null, data : %s\n",cJSON_Print(data));
      //printf("data is not null, root : %s\n",cJSON_Print(root));

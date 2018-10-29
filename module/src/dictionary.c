@@ -58,14 +58,14 @@ int dict_has(Dictionary *dictionary, const char *key) {
 }
 
 t_param* dict_get(Dictionary *dictionary, const char *key) {
-    printf("print dictionnary when print\n");
+    //printf("print dictionnary when print\n");
     dict_print(dictionary);
     if (dictionary->head == NULL)
         return NULL;
     while(dictionary != NULL) {
-        printf("try to get the right parameter : %s\n",key);
-        printf("key : %s, dictionary key : %s\n",key,dictionary->head->key);
-        printf("Compare the two key and pass to the next one\n");
+        //printf("try to get the right parameter : %s\n",key);
+        //printf("key : %s, dictionary key : %s\n",key,dictionary->head->key);
+        //printf("Compare the two key and pass to the next one\n");
         if(strncmp(dictionary->head->key, key,strlen(key) + 1) == 0)
             return dictionary->head->value;
         dictionary = dictionary->tail;
