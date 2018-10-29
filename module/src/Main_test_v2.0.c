@@ -631,7 +631,7 @@ int main()
       	printf("Failed to connect, return code %d\n", rc);
       	exit(EXIT_FAILURE);
   	}
-		Dictionary head = Parameter_dic;
+		Dictionary *head = Parameter_dic;
 		while(Parameter_dic->head != NULL && Parameter_dic->tail != NULL){
 			MQTTClient_subscribe(client, Parameter_dic->head->value->Id_read, QOS);
 			printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
