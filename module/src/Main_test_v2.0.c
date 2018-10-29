@@ -71,7 +71,7 @@ static void fork_process()
 	t_param Batt_priority_source =    {1296, 2, 13, 1, 0,"NH/Mng_elec/Ondu/Mode/Batt_prio/Res","NH/Mng_elec/Ondu/Mode/Batt_prio/Set"}; //PCO : parma inutile ?
 	/*------------------------------------------------------------------*/
 	/*-------------------- AC-IN and transfert ---------------------*/
-	t_param Smart_boost_allowed = 	 {1126, 2, 13, 1, 1,"NH/Mng_elec/Ondu/Mode/Smtboos_allow/Res","NH/Mng_elec/Ondu/Mode/Smtboos_allow/Set"}; // PCO OK voir alogo ensuite
+	t_param Smart_boost_allowed = 	 {1126, 2, 13, 1, 1,"NH/Mng_elec/Ondu/Mode/Smartboost_allow/Res","NH/Mng_elec/Ondu/Mode/Smartboost_allow/Set"}; // PCO OK voir alogo ensuite
 	t_param MAX_current_of_AC_IN =   {1107, 2, 13, 6, 35,"NH/Mng_elec/Ondu/Input/Max_cur/Res","NH/Mng_elec/Ondu/Input/Max_cur/Set"};//step 1 PCO : OK
 	t_param Transfer_relay_allowed = {1128, 2, 13, 1, 1,"NH/Mng_elec/Ondu/Mode/Transfer_relay_allowed/Res","NH/Mng_elec/Ondu/Mode/Transfer_relay_allowed/Set"}; // PCO param inutile ?
 	/*-------------------------------------------------------------*/

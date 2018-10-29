@@ -121,7 +121,7 @@ int Read(t_param* Parametre,MQTTClient* client)
 {
   char data[64];
   sprintf(data,"[%d,%d,%d,%d,%d]",Parametre->Object_type,Parametre->User_ref,Parametre->Proprety_id,Parametre->Format,XCOM_READ);
-  printf("data : %s\n",data);
+  //printf("data : %s\n",data);
 	send_json_obj(client,Parametre->Id_write,data,Parametre->Id_write);
 	return 1;
 }
