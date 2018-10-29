@@ -1,20 +1,18 @@
-FROM python:2.7.13-jessie
+FROM ubuntu:16.04
 
-RUN apt-get install libpq-dev
+MAINTAINER nirae
 
-EXPOSE 9000
+RUN apt-get -y update
 
-COPY requirements.txt /.deembox/xcommodule/requirements.txt
-RUN pip install -r /.deembox/xcommodule/requirements.txt
+RUN apt-get -y install build-essential valgrind bsdmainutils curl git-all
 
-COPY ./entrypoint.sh /entrypoint.sh
-RUN chmod -R +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+ENV APP_PATH /app
+ENV MAKEFILE_DIR .
+ENV	EXE ./a.out
 
-RUN mkdir /src \
- && mkdir /src/modules
+RUN mkdir -p APP_PATH
+WORKDIR $APP_PATH
 
-COPY ./run.py /src/run.py
-COPY ./modules /src/modules
+COPY . .
 
-CMD [ "python", "/src/run.py" ]
+CMD sh run_script.sh
