@@ -19,7 +19,7 @@ Dictionary* dict_new() {
 void dict_print(Dictionary *dictionary){
   printf("dictionnary : ");
   while(dictionary != NULL){
-      printf("value : %s/n",dictionary->head->value->Id_read);
+      printf("value : %s\n",dictionary->head->value->Id_read);
       dictionary = dictionary->tail;
   }
   printf("\n");
@@ -61,9 +61,11 @@ t_param* dict_get(Dictionary *dictionary, const char *key) {
     while(dictionary != NULL) {
         printf("try to get the right parameter : %s\n",key);
         printf("key : %s, dictionary key : %s\n",key,dictionary->head->key);
-        if(strncmp(dictionary->head->key, key,strlen(key) + 1) == 0)
+        printf("Compare the two key and pass to the next one\n");
+        if(strcmp(dictionary->head->key, key,strlen(key) + 1) == 0)
             return dictionary->head->value;
         dictionary = dictionary->tail;
+        printf("key : %s, dictionary key : %s\n",key,dictionary->head->key);
     }
     return NULL;
 }
