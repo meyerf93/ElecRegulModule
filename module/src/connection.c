@@ -100,7 +100,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
   //printf("parse the energy meters\n");
 
 	//parse packet for xcom
-  if(parse_studer_message(topicName,data) == -1){
+  else if (parse_studer_message(topicName,data) == -1){
     printf("ERROR : can't parse the message\n");
   }
   //printf("parse the parameters\n");
