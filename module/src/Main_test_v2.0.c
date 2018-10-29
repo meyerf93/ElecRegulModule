@@ -551,6 +551,17 @@ void init_dic(Dictionary *dictionary){
 	dict_add(dictionary,i_Battery_Current_Discharge_recommanded.Id_read,&i_Battery_Current_Discharge_recommanded);
 	dict_add(dictionary,Transfer_relay_allowed.Id_read,&Transfer_relay_allowed);
 }
+sub_energ_counter()
+{
+	char parameter[] = {PV_WEST,PV_EAST,PV_SOUTH,SECURE_LOAD,OVEN,COOKTOP,BATTERY_IN,
+											CAR_CHARGER,NORTH_RECEP,SOUTH_RECEP,SKIN_RECEP};
+
+	for (int i = 0; i < strlen(parameter), i++){
+		MQTTClient_subscribe(client, parameter[i], QOS);
+		printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
+					 , parameter[i], CLIENT_ID, QOS);
+	}
+}
 int main()
 {/*
 	// 1. fork off the parent process
@@ -639,6 +650,7 @@ int main()
 					Parameter_dic = Parameter_dic->tail;
 		}
 		Parameter_dic = head;
+		sub_energ_counter(client);
 		//printf("print the dictionnary after the subscribe");
 		dict_print(Parameter_dic);
 		//--------------------------------------------------------------------------------------
