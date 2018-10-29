@@ -5,3 +5,4 @@
 #
 
 docker build -f Dockerfile.rpi3 -t neighborhub/neighborhub:ElecRegulModule .
+docker push neighborhub/neighborhub:ElecRegulModule
