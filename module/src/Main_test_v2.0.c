@@ -608,7 +608,7 @@ int main()
 
 		Parameter_dic = dict_new();
 		init_dic(Parameter_dic);
-		//dict_print(Parameter_dic);
+		dict_print(Parameter_dic);
 
   	MQTTClient  client;
   	MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
@@ -631,13 +631,14 @@ int main()
       	printf("Failed to connect, return code %d\n", rc);
       	exit(EXIT_FAILURE);
   	}
-
+		Dictionary head = Parameter_dic;
 		while(Parameter_dic->head != NULL && Parameter_dic->tail != NULL){
 			MQTTClient_subscribe(client, Parameter_dic->head->value->Id_read, QOS);
 			printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
 						 , Parameter_dic->head->value->Id_read, CLIENT_ID, QOS);
 					Parameter_dic = Parameter_dic->tail;
 		}
+		Parameter_dic = head;
 		//--------------------------------------------------------------------------------------
 
 		//Crée le client mqtt pour la batterie ---------------------------------------------------
