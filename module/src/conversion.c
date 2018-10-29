@@ -57,7 +57,7 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char id[64])
   //printf("message xcom to send json : %s\n",payload_json);
 	strip(payload_json,SPACE);
 	char *temp_ptr = strstr(payload_json,"\"[");
-	printf("%s\n",temp_ptr);
+	//printf("%s\n",temp_ptr);
 	strip(temp_ptr,"\"");
 
 	MQTTClient_deliveryToken token;
@@ -133,7 +133,7 @@ int parse_energy_meters(char* payload){
 		return 14;
 	}
   else {
-    printf("ERROR : don't find the topic\n");
+    printf("ERROR : don't find the topic : %s\n",payload);
     return -1;
   }
 }
