@@ -553,7 +553,7 @@ void init_dic(Dictionary *dictionary){
 }
 sub_energ_counter()
 {
-	char[] parameter[][] = {PV_WEST,PV_EAST,PV_SOUTH,SECURE_LOAD,OVEN,COOKTOP,BATTERY_IN,
+	const char *parameter[] = {PV_WEST,PV_EAST,PV_SOUTH,SECURE_LOAD,OVEN,COOKTOP,BATTERY_IN,
 											CAR_CHARGER,NORTH_RECEP,SOUTH_RECEP,SKIN_RECEP};
 
 	for (int i = 0; i < strlen(parameter), i++){
