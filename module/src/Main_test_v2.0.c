@@ -551,12 +551,12 @@ void init_dic(Dictionary *dictionary){
 	dict_add(dictionary,i_Battery_Current_Discharge_recommanded.Id_read,&i_Battery_Current_Discharge_recommanded);
 	dict_add(dictionary,Transfer_relay_allowed.Id_read,&Transfer_relay_allowed);
 }
-sub_energ_counter()
+sub_energ_counter(MQTTClient *client)
 {
 	const char *parameter[] = {PV_WEST,PV_EAST,PV_SOUTH,SECURE_LOAD,OVEN,COOKTOP,BATTERY_IN,
 											CAR_CHARGER,NORTH_RECEP,SOUTH_RECEP,SKIN_RECEP};
 
-	for (int i = 0; i < 10, i++){
+	for (int i = 0; i < 10; i++){
 		MQTTClient_subscribe(client, parameter[i], QOS);
 		printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
 					 , parameter[i], CLIENT_ID, QOS);
