@@ -638,7 +638,9 @@ int main()
 						 , Parameter_dic->head->value->Id_read, CLIENT_ID, QOS);
 					Parameter_dic = Parameter_dic->tail;
 		}
-		Parameter_dic = head;
+		//Parameter_dic = head;
+		printf("print the dictionnary after the subscribe");
+		dict_print(Parameter_dic);
 		//--------------------------------------------------------------------------------------
 
 		//Crée le client mqtt pour la batterie ---------------------------------------------------
