@@ -59,7 +59,7 @@ int dict_has(Dictionary *dictionary, const char *key) {
 
 t_param* dict_get(Dictionary *dictionary, const char *key) {
     if (dictionary->head == NULL)
-        return 0;
+        return NULL;
     while(dictionary != NULL) {
         printf("try to get the right parameter : %s\n",key);
         printf("key : %s, dictionary key : %s\n",key,dictionary->head->key);
