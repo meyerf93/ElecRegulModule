@@ -18,11 +18,13 @@ Dictionary* dict_new() {
 }
 void dict_print(Dictionary *dictionary){
   printf("dictionnary : ");
+  Dictionary *head = dictionary;
   while(dictionary != NULL){
       printf("value : %s\n",dictionary->head->value->Id_read);
       dictionary = dictionary->tail;
   }
   printf("\n");
+  dictionnary = head;
 }
 void dict_add(Dictionary *dictionary, const char *key, t_param *value) {
     if(dict_has(dictionary, key))
@@ -65,7 +67,6 @@ t_param* dict_get(Dictionary *dictionary, const char *key) {
         if(strncmp(dictionary->head->key, key,strlen(key) + 1) == 0)
             return dictionary->head->value;
         dictionary = dictionary->tail;
-        printf("key : %s, dictionary key : %s\n",key,dictionary->head->key);
     }
     return NULL;
 }
