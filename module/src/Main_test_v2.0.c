@@ -608,7 +608,7 @@ int main()
 
 		Parameter_dic = dict_new();
 		init_dic(Parameter_dic);
-		dict_print(Parameter_dic);
+		//dict_print(Parameter_dic);
 
   	MQTTClient  client;
   	MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
