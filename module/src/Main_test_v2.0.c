@@ -556,7 +556,7 @@ sub_energ_counter()
 	const char *parameter[] = {PV_WEST,PV_EAST,PV_SOUTH,SECURE_LOAD,OVEN,COOKTOP,BATTERY_IN,
 											CAR_CHARGER,NORTH_RECEP,SOUTH_RECEP,SKIN_RECEP};
 
-	for (int i = 0; i < strlen(parameter), i++){
+	for (int i = 0; i < 10, i++){
 		MQTTClient_subscribe(client, parameter[i], QOS);
 		printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
 					 , parameter[i], CLIENT_ID, QOS);
