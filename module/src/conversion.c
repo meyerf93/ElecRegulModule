@@ -51,10 +51,10 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char id[64])
   }*/
 	char* payload_json = calloc(100,1);
   payload_json = cJSON_Print(root);
-  printf("string for send json objs\n");
+  //printf("string for send json objs\n");
 
   cJSON_Delete(root);
-  printf("message xcom to send json : %s\n",payload_json);
+  //printf("message xcom to send json : %s\n",payload_json);
 	strip(payload_json,SPACE);
 	char *temp_ptr = strstr(payload_json,"\"[");
 	printf("%s\n",temp_ptr);
@@ -68,18 +68,18 @@ void send_json_obj(MQTTClient client,char topic[64], char data[64], char id[64])
   pubmsg.qos = QOS;
   pubmsg.retained = 0;
 
-  printf("create the message to send\n");
+  //printf("create the message to send\n");
 
-	printf("json message send : %s\n",pubmsg.payload);
+	//printf("json message send : %s\n",pubmsg.payload);
   MQTTClient_publishMessage(client, topic, &pubmsg, &token);
-  printf("Waiting for up to %d seconds for publication of %s\n"
+  /*printf("Waiting for up to %d seconds for publication of %s\n"
         "on topic %s for client with ClientID: %s\n",
-        (int)(TIMEOUT/1000), payload_json, topic, id);
+        (int)(TIMEOUT/1000), payload_json, topic, id);*/
   MQTTClient_waitForCompletion(client, token, TIMEOUT);
-  printf("message send`\n ");
+  //printf("message send`\n ");
   //MQTTClient_freeMessage(&pubmsg);
   MQTTClient_free(topic);
-  printf("Message with delivery token %d delivered\n", token);
+  //printf("Message with delivery token %d delivered\n", token);
   free(payload_json);
 
 }
