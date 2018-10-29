@@ -133,7 +133,7 @@ int parse_energy_meters(char* payload){
 		return 14;
 	}
   else {
-    printf("ERROR : don't find the topic : %s\n",payload);
+    //printf("ERROR : don't find the topic : %s\n",payload);
     return -1;
   }
 }
