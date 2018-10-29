@@ -104,8 +104,8 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
     printf("ERROR : can't parse the message\n");
   }
   //printf("parse the parameters\n");
-	//MQTTClient_freeMessage(&message);
-	//MQTTClient_free(topicName);
+	MQTTClient_freeMessage(&message);
+	MQTTClient_free(topicName);
 
   //printf("parsing of the message is done\n");
 
