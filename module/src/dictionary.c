@@ -62,7 +62,7 @@ t_param* dict_get(Dictionary *dictionary, const char *key) {
         printf("try to get the right parameter : %s\n",key);
         printf("key : %s, dictionary key : %s\n",key,dictionary->head->key);
         printf("Compare the two key and pass to the next one\n");
-        if(strcmp(dictionary->head->key, key,strlen(key) + 1) == 0)
+        if(strncmp(dictionary->head->key, key,strlen(key) + 1) == 0)
             return dictionary->head->value;
         dictionary = dictionary->tail;
         printf("key : %s, dictionary key : %s\n",key,dictionary->head->key);
