@@ -59,7 +59,7 @@ int dict_has(Dictionary *dictionary, const char *key) {
 
 t_param* dict_get(Dictionary *dictionary, const char *key) {
     printf("print dictionnary when print\n");
-    dict_print(dictionary)
+    dict_print(dictionary);
     if (dictionary->head == NULL)
         return NULL;
     while(dictionary != NULL) {
