@@ -3,5 +3,3 @@ FROM resin/rpi-raspbian:jessie
 RUN apt-get -y update
 
 RUN apt-get -y install build-essential valgrind bsdmainutils curl git-all
-
-Run ./ElecRegulModule/module/target/test_alog
