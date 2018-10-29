@@ -49,7 +49,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
 
 	int select_meters;
 
-  s //select right mqtt packet ----------
+  //select right mqtt packet ----------
   char payload[message->payloadlen+1];
   memcpy (payload, message->payload, message->payloadlen);
   payload[message->payloadlen] = 0;
