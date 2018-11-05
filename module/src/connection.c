@@ -142,6 +142,7 @@ void Read_p(MQTTClient *client)
 	Read(&i_Battery_Current,client);
 	Read(&i_soc_value_battery,client);
 	Read(&i_State_of_Health,client);
+  Read(&i_Battery_temp,client);
 	Read(&i_Battery_Voltage_Charge_limit,client);
 	Read(&i_Battery_Voltage_Discharge_limit,client);
 	Read(&i_Battery_Current_Charge_limit,client);

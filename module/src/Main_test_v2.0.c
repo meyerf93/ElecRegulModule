@@ -96,7 +96,7 @@ static void fork_process()
 	t_param i_Battery_Current = 	{7001, 1, 1, 6, 0,"NH/Mng_elec/Batt/Current/Res","NH/Mng_elec/Batt/Current/Set"};
 	t_param i_soc_value_battery = {7047, 1, 1, 6, 0,"NH/Mng_elec/Batt/Soc/Res","NH/Mng_elec/Batt/Soc/Set"};
 	t_param i_State_of_Health = 	{7057, 1, 1, 6, 0,"NH/Mng_elec/Batt/State_of_health/Res","NH/Mng_elec/Batt/State_of_health/Set"};
-
+	t_param i_Battery_temp =			{7029, 1, 1, 6, 0,"NH/Mng_elec/Batt/Battery_temp/Res","NH/Mng_elec/Batt/Battery_temp/Set"};
 	t_param i_Battery_Voltage_Charge_limit = 	 				{7061, 1, 1, 6, 0,"NH/Mng_elec/Batt/Charge/Volt_limit/Res","NH/Mng_elec/Batt/Charge/Volt_limit/Set"};
 	t_param i_Battery_Voltage_Discharge_limit =	 			{7062, 1, 1, 6, 0,"NH/Mng_elec/Batt/Discharge/Volt_limit/Res","NH/Mng_elec/Batt/Discharge/Volt_limit/Set"};
 	t_param i_Battery_Current_Charge_limit = 	 				{7063, 1, 1, 6, 0,"NH/Mng_elec/Batt/Charge/Curr_limit/Res","NH/Mng_elec/Batt/Charge/Curr_limit/Set"};
@@ -543,6 +543,7 @@ void init_dic(Dictionary *dictionary){
 	dict_add(dictionary,i_Battery_Current.Id_read,&i_Battery_Current);
 	dict_add(dictionary,i_soc_value_battery.Id_read,&i_soc_value_battery);
 	dict_add(dictionary,i_State_of_Health.Id_read,&i_State_of_Health);
+	dict_add(dictionary,i_Battery_temp.Id_read,&i_Battery_temp);
 	dict_add(dictionary,i_Battery_Voltage_Charge_limit.Id_read,&i_Battery_Voltage_Charge_limit);
 	dict_add(dictionary,i_Battery_Voltage_Discharge_limit.Id_read,&i_Battery_Voltage_Discharge_limit);
 	dict_add(dictionary,i_Battery_Current_Charge_limit.Id_read,&i_Battery_Current_Charge_limit);
