@@ -75,6 +75,7 @@ extern t_param i_Battery_Voltage;
 extern t_param i_Battery_Current;
 extern t_param i_soc_value_battery;
 extern t_param i_State_of_Health;
+extern t_param i_Battery_temp;
 extern t_param i_Battery_Voltage_Charge_limit;
 extern t_param i_Battery_Voltage_Discharge_limit;
 extern t_param i_Battery_Current_Charge_limit;
